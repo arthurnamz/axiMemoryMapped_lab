@@ -50,8 +50,6 @@ always @(posedge s0_axi_aclk) begin
     end
 end
 
-// Write address channel
-assign s0_axi_awready = 1'b1;
 
 // Write data channel
 always @(posedge s0_axi_aclk) begin
@@ -61,6 +59,7 @@ always @(posedge s0_axi_aclk) begin
             operandB <= 0;
             result <= 0;
             s0_axi_rdata <= 0;
+            s0_axi_awready <= 1'b1;
         end
         else if (s0_axi_awvalid && s0_axi_wvalid)
         begin
@@ -83,12 +82,13 @@ always @(posedge s0_axi_aclk) begin
                 operandB[31:24] <= s0_axi_wdata[31:24];
 
             result <= operandA + operandB;
+            // Write response channel
+            s0_axi_bvalid <= 1'b0;
+            s0_axi_bresp <= 2'b00;
         end
 end
 
-// Write response channel
-assign s0_axi_bvalid = 1'b0;
-assign s0_axi_bresp = 2'b00;
+
 
 // Read data channel
 always @(posedge s0_axi_aclk) begin
