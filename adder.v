@@ -70,7 +70,6 @@ always @(posedge s0_axi_aclk) begin
             s0_axi_awready <= 1'b1;
         end
 end
-
             assign operandA = s0_axi_wdata;
             assign operandB = s0_axi_wdata;
             assign result = operandA + operandB;
