@@ -3,37 +3,154 @@ module adder#(
     parameter ADDR_WIDTH = 8
 )
 (
-    // Global signal  
-    input s0_axi_s0_axi_aclk,  // Global clock signal
-    input s0_axi_aresetn, //Global reset signal, of type active LOW 
+    // Global signals
+    input s0_axi_aclk,
+    input s0_axi_aresetn,
 
-    // write address channel
-    input [ADDR_WIDTH-1:0] s0_axi_awaddr, 
-    input s0_axi_awvalid,  
-    output s0_axi_awready, 
+    // Write address channel
+    input [ADDR_WIDTH-1:0] s0_axi_awaddr,
+    input s0_axi_awvalid,
+    output reg s0_axi_awready,
 
-    // write data channel
-    input [DATA_WIDTH-1:0] s0_axi_wdata, //  (Write data, data to be sent from Master to slave)
-    input [DATA_WIDTH / 8:0] s0_axi_wstrb, //  (  Write strobes. This signal indicates which byte lanes hold valid data)
-    input s0_axi_wvalid, // ( Write valid, This signal indicates that valid write data and strobes are available)
-    output s0_axi_wready, // ( Write ready. This signal indicates that the slave can accept the write data)
+    // Write data channel
+    input [DATA_WIDTH-1:0] s0_axi_wdata,
+    input [DATA_WIDTH/8:0] s0_axi_wstrb,
+    input s0_axi_wvalid,
+    output reg s0_axi_wready,
 
-    // write response channel
-    output s0_axi_bresp,  // ( Write response. This signal indicates the status of the write transaction )
-    output s0_axi_bvalid, // ( Write response valid. This signal indicates that the channel is signaling a valid write response )
-    input s0_axi_bready, // ( Response ready. This signal indicates that the master can accept a write response. )
+    // Write response channel
+    output reg s0_axi_bresp,
+    output reg s0_axi_bvalid,
+    input s0_axi_bready,
 
-    //Read address channel
-    input [ADDR_WIDTH-1:0] s0_axi_araddr, //  ( Read address. The read address gives the address of the first transfer in a read burst transaction )
-    input s0_axi_arvalid, // ( Read address valid. This signal indicates that the channel is signaling valid read address and control information )
-    output s0_axi_arready, // ( Read address ready. This signal indicates that the slave is ready to accept an address and associated control signals )
+    // Read address channel
+    input [ADDR_WIDTH-1:0] s0_axi_araddr,
+    input s0_axi_arvalid,
+    output reg s0_axi_arready,
 
-    //Read data channel 
-    output [DATA_WIDTH-1:0] s0_axi_rdata, //  (Read data, This data is retrieved from the address which was asserted by the read address from the master)
-    output s0_axi_rresp, // ( Read response. This signal indicates the status of the read transfer)
-    output s0_axi_rvalid, // ( Read valid, This signal indicates that the channel is signaling the required read data )
-    input s0_axi_rready // ( Read ready. y. This signal indicates that the master can accept the read data and response information )
-
+    // Read data channel
+    output reg [DATA_WIDTH-1:0] s0_axi_rdata,
+    output reg s0_axi_rresp,
+    output reg s0_axi_rvalid,
+    input s0_axi_rready
 );
 
+reg [DATA_WIDTH-1:0] operandA;
+reg [DATA_WIDTH-1:0] operandB;
+reg [DATA_WIDTH-1:0] result;
+
+// Read address channel
+always @(posedge s0_axi_aclk) begin
+    if (s0_axi_aresetn == 0) begin
+        operandA <= 0;
+        operandB <= 0;
+    end else if (s0_axi_arvalid && s0_axi_arready) begin
+        operandA <= s0_axi_rdata;
+        operandB <= s0_axi_rdata;
+    end
+end
+
+// Write address channel
+assign s0_axi_awready = 1'b1;
+
+// Write data channel
+always @(posedge s0_axi_aclk) begin
+    if (!s0_axi_aresetn)
+        begin
+            operandA <= 0;
+            operandB <= 0;
+            result <= 0;
+            s0_axi_rdata <= 0;
+        end
+        else if (s0_axi_awvalid && s0_axi_wvalid)
+        begin
+            if (s0_axi_wstrb[0])
+                operandA[7:0] <= s0_axi_wdata[7:0];
+            if (s0_axi_wstrb[1])
+                operandA[15:8] <= s0_axi_wdata[15:8];
+            if (s0_axi_wstrb[2])
+                operandA[23:16] <= s0_axi_wdata[23:16];
+            if (s0_axi_wstrb[3])
+                operandA[31:24] <= s0_axi_wdata[31:24];
+
+            if (s0_axi_wstrb[4])
+                operandB[7:0] <= s0_axi_wdata[7:0];
+            if (s0_axi_wstrb[5])
+                operandB[15:8] <= s0_axi_wdata[15:8];
+            if (s0_axi_wstrb[6])
+                operandB[23:16] <= s0_axi_wdata[23:16];
+            if (s0_axi_wstrb[7])
+                operandB[31:24] <= s0_axi_wdata[31:24];
+
+            result <= operandA + operandB;
+        end
+end
+
+// Write response channel
+assign s0_axi_bvalid = 1'b0;
+assign s0_axi_bresp = 2'b00;
+
+// Read data channel
+always @(posedge s0_axi_aclk) begin
+    if (s0_axi_aresetn == 0) begin
+        s0_axi_rdata <= 0;
+        s0_axi_rresp <= 2'b0;
+        s0_axi_rvalid <= 1'b0;
+    end else if (s0_axi_arvalid && s0_axi_arready) begin
+        s0_axi_rdata <= result;
+        s0_axi_rresp <= 2'b0;
+        s0_axi_rvalid <= 1'b1;
+    end
+end
+
 endmodule
+
+
+// reg [DATA_WIDTH-1:0] operandA, operandB, result;
+//     wire carry;
+
+//     assign carry = result[DATA_WIDTH-1] & (operandA[DATA_WIDTH-1] ^ operandB[DATA_WIDTH-1]);
+
+//     always @ (posedge s0_axi_aclk)
+//     begin
+//         if (!s0_axi_aresetn)
+//         begin
+//             operandA <= 0;
+//             operandB <= 0;
+//             result <= 0;
+//             s0_axi_rdata <= 0;
+//         end
+//         else if (s0_axi_awvalid && s0_axi_wvalid)
+//         begin
+//             if (s0_axi_wstrb[0])
+//                 operandA[7:0] <= s0_axi_wdata[7:0];
+//             if (s0_axi_wstrb[1])
+//                 operandA[15:8] <= s0_axi_wdata[15:8];
+//             if (s0_axi_wstrb[2])
+//                 operandA[23:16] <= s0_axi_wdata[23:16];
+//             if (s0_axi_wstrb[3])
+//                 operandA[31:24] <= s0_axi_wdata[31:24];
+
+//             if (s0_axi_wstrb[4])
+//                 operandB[7:0] <= s0_axi_wdata[7:0];
+//             if (s0_axi_wstrb[5])
+//                 operandB[15:8] <= s0_axi_wdata[15:8];
+//             if (s0_axi_wstrb[6])
+//                 operandB[23:16] <= s0_axi_wdata[23:16];
+//             if (s0_axi_wstrb[7])
+//                 operandB[31:24] <= s0_axi_wdata[31:24];
+
+//             result <= operandA + operandB;
+//         end
+//         else if (s0_axi_arvalid && s0_axi_rready)
+//         begin
+//             if (s0_axi_araddr[ADDR_WIDTH-1:0] == 0)
+//                 s0_axi_rdata <= result;
+//         end
+//     end
+
+
+
+
+
+
