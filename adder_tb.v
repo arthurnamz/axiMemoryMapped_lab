@@ -75,13 +75,13 @@ initial begin
 // Write 0x0000_0000 to address 0x00
     s0_axi_aresetn = 1;
     s0_axi_awvalid = 1;
+    s0_axi_awaddr = 8'b0000_0000;
+    #100;
     s0_axi_wvalid = 1;
     s0_axi_wstrb = 4'b1111; // write all 4 bytes
-    s0_axi_awaddr = 8'b0000_0000;
     s0_axi_wdata = 32'h56780;
-
     #200;
-
+    s0_axi_awvalid = 0;
     #100 $finish;
 end 
 
