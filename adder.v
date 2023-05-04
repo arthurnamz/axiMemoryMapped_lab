@@ -59,20 +59,20 @@ always @(posedge s0_axi_aclk) begin
                 memory[3] <= s0_axi_awaddr[3];
 
             if (s0_axi_wstrb[0])
-                memory[4] <= s0_axi_awaddr[5];
+                memory[4] <= s0_axi_awaddr[4];
             if (s0_axi_wstrb[1])
-                memory[5] <= s0_axi_awaddr[6];
+                memory[5] <= s0_axi_awaddr[5];
             if (s0_axi_wstrb[2])
-                memory[6] <= s0_axi_awaddr[7];
+                memory[6] <= s0_axi_awaddr[6];
             if (s0_axi_wstrb[3])
-                memory[7] <= s0_axi_awaddr[8];
+                memory[7] <= s0_axi_awaddr[7];
 
             s0_axi_awready <= 1'b1;
         end
 end
 
-            assign operandA = s0_axi_wdata[15:0];
-            assign operandB = s0_axi_wdata[31:16];
+            assign operandA = s0_axi_wdata;
+            assign operandB = s0_axi_wdata;
             assign result = operandA + operandB;
 
 // Write data channel
@@ -81,28 +81,32 @@ always @(posedge s0_axi_aclk) begin
         begin
             s0_axi_awready <= 1'b1;
         end
-        else if (s0_axi_awvalid && s0_axi_wvalid)
+        else if (s0_axi_wvalid)
         begin
-            if (s0_axi_wstrb[0])
-                memory[0] <= operandA[7:0];
-            if (s0_axi_wstrb[1])
-                memory[1] <= operandA[15:8];
-            if (s0_axi_wstrb[2])
-                memory[2] <= operandA[23:16];
-            if (s0_axi_wstrb[3])
-                memory[3] <= operandA[31:24];
+            // operandA
+            if (s0_axi_wstrb[0]) memory[0] <= operandA[7:0];
+            if (s0_axi_wstrb[1]) memory[1] <= operandA[15:8];
+            if (s0_axi_wstrb[2]) memory[2] <= operandA[23:16];
+            if (s0_axi_wstrb[3]) memory[3] <= operandA[31:24];
 
-            if (s0_axi_wstrb[0])
-                memory[4] <= operandB[7:0];
-            if (s0_axi_wstrb[1])
-                memory[65] <= operandB[15:8];
-            if (s0_axi_wstrb[2])
-                memory[6] <= operandB[23:16];
-            if (s0_axi_wstrb[3])
-                memory[7] <= operandB[31:24];
+            // operandB
+            if (s0_axi_wstrb[0]) memory[4] <= operandB[7:0];
+            if (s0_axi_wstrb[1]) memory[5] <= operandB[15:8];
+            if (s0_axi_wstrb[2]) memory[6] <= operandB[23:16];
+            if (s0_axi_wstrb[3]) memory[7] <= operandB[31:24];
 
-             memory[11:8] <= result;
-             memory[15:12] <= overflow;
+            // results
+            if (s0_axi_wstrb[0]) memory[8] <= result[7:0];
+            if (s0_axi_wstrb[1]) memory[9] <= result[15:8];
+            if (s0_axi_wstrb[2]) memory[10] <= result[23:16];
+            if (s0_axi_wstrb[3]) memory[11] <= result[31:24];
+
+            // overflow
+            if (s0_axi_wstrb[0]) memory[12] <= overflow[7:0];
+            if (s0_axi_wstrb[1]) memory[13] <= overflow[15:8];
+            if (s0_axi_wstrb[2]) memory[14] <= overflow[23:16];
+            if (s0_axi_wstrb[3]) memory[15] <= overflow[31:24];
+
             // Write response channel
             s0_axi_bvalid <= 1'b0;
             s0_axi_bresp <= 2'b00;

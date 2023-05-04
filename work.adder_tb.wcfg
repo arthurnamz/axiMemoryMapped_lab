@@ -11,11 +11,11 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="138.226 ns"></ZoomEndTime>
+      <ZoomEndTime time="79.389 ns"></ZoomEndTime>
       <Cursor1Time time="300.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="250"></NameColumnWidth>
+      <NameColumnWidth column_width="246"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="16" />
@@ -42,6 +42,7 @@
    <wvobject type="array" fp_name="/adder_tb/s0_axi_wdata">
       <obj_property name="ElementShortName">s0_axi_wdata[31:0]</obj_property>
       <obj_property name="ObjectShortName">s0_axi_wdata[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/adder_tb/s0_axi_wstrb">
       <obj_property name="ElementShortName">s0_axi_wstrb[4:0]</obj_property>
