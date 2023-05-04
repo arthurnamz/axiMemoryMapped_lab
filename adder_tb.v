@@ -1,7 +1,7 @@
 module adder_tb;
 
   // Parameters
-  parameter DATA_WIDTH = 128;
+  parameter DATA_WIDTH = 32;
   parameter ADDR_WIDTH = 8;
 
   // Signals
@@ -78,7 +78,7 @@ initial begin
     s0_axi_wvalid = 1;
     s0_axi_wstrb = 4'b1111; // write all 4 bytes
     s0_axi_awaddr = 8'b0000_0000;
-    s0_axi_wdata = 128'h56789098765;
+    s0_axi_wdata = 32'h56780;
 
     #200;
 

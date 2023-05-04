@@ -11,14 +11,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="300.001 ns"></ZoomEndTime>
+      <ZoomEndTime time="138.226 ns"></ZoomEndTime>
       <Cursor1Time time="300.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="262"></NameColumnWidth>
+      <NameColumnWidth column_width="250"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="22" />
+   <WVObjectSize size="16" />
    <wvobject type="logic" fp_name="/adder_tb/s0_axi_aclk">
       <obj_property name="ElementShortName">s0_axi_aclk</obj_property>
       <obj_property name="ObjectShortName">s0_axi_aclk</obj_property>
@@ -68,34 +68,6 @@
       <obj_property name="ElementShortName">s0_axi_bready</obj_property>
       <obj_property name="ObjectShortName">s0_axi_bready</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/adder_tb/s0_axi_araddr">
-      <obj_property name="ElementShortName">s0_axi_araddr[7:0]</obj_property>
-      <obj_property name="ObjectShortName">s0_axi_araddr[7:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/adder_tb/s0_axi_arvalid">
-      <obj_property name="ElementShortName">s0_axi_arvalid</obj_property>
-      <obj_property name="ObjectShortName">s0_axi_arvalid</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/adder_tb/s0_axi_arready">
-      <obj_property name="ElementShortName">s0_axi_arready</obj_property>
-      <obj_property name="ObjectShortName">s0_axi_arready</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/adder_tb/s0_axi_rdata">
-      <obj_property name="ElementShortName">s0_axi_rdata[31:0]</obj_property>
-      <obj_property name="ObjectShortName">s0_axi_rdata[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/adder_tb/s0_axi_rresp">
-      <obj_property name="ElementShortName">s0_axi_rresp</obj_property>
-      <obj_property name="ObjectShortName">s0_axi_rresp</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/adder_tb/s0_axi_rvalid">
-      <obj_property name="ElementShortName">s0_axi_rvalid</obj_property>
-      <obj_property name="ObjectShortName">s0_axi_rvalid</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/adder_tb/s0_axi_rready">
-      <obj_property name="ElementShortName">s0_axi_rready</obj_property>
-      <obj_property name="ObjectShortName">s0_axi_rready</obj_property>
-   </wvobject>
    <wvobject type="array" fp_name="/adder_tb/dut/operandA">
       <obj_property name="ElementShortName">operandA[31:0]</obj_property>
       <obj_property name="ObjectShortName">operandA[31:0]</obj_property>
@@ -108,5 +80,10 @@
    <wvobject type="array" fp_name="/adder_tb/dut/result">
       <obj_property name="ElementShortName">result[31:0]</obj_property>
       <obj_property name="ObjectShortName">result[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/adder_tb/dut/memory">
+      <obj_property name="ElementShortName">memory[0:31][7:0]</obj_property>
+      <obj_property name="ObjectShortName">memory[0:31][7:0]</obj_property>
    </wvobject>
 </wave_config>
