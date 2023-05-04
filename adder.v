@@ -109,6 +109,7 @@ always @(posedge s0_axi_aclk) begin
             // Write response channel
             s0_axi_bvalid <= 1'b0;
             s0_axi_bresp <= 2'b00;
+            
         end
 end
 
