@@ -1,5 +1,4 @@
 module adder#(
-    parameter MEM_SIZE = 32,
     parameter DATA_WIDTH = 32,
     parameter ADDR_WIDTH = 8
 )
