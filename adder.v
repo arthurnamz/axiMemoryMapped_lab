@@ -35,82 +35,68 @@ module adder#(
     output reg s0_axi_rvalid,
     input s0_axi_rready
 );
-reg [ADDR_WIDTH-1:0] memory [0:MEM_SIZE - 1];
-wire [DATA_WIDTH-1:0] operandA;
-wire [DATA_WIDTH-1:0] operandB;
-wire [DATA_WIDTH-1:0] result;
-wire [DATA_WIDTH-1:0] overflow;
+reg [DATA_WITDH-1:0] operandA, operandB;
+reg [(2*DATA_WITDH-1):0] result_tmp;
+wire [DATA_WITDH-1:0] overflow_adder;
 
-// write address channel
-always @(posedge s0_axi_aclk) begin
-    if (!s0_axi_aresetn)
-        begin
-            s0_axi_awready <= 1'b0;
-        end
-        else if (s0_axi_awvalid)
-        begin
-            if (s0_axi_wstrb[0])
-                memory[0] <= s0_axi_awaddr[0];
-            if (s0_axi_wstrb[1])
-                memory[1] <= s0_axi_awaddr[1];
-            if (s0_axi_wstrb[2])
-                memory[2] <= s0_axi_awaddr[2];
-            if (s0_axi_wstrb[3])
-                memory[3] <= s0_axi_awaddr[3];
+//getting data from the master
+always@(posedge clk)
+begin
+    if(rstn ==0)
+	   ready <= 0;
+	else   
+	if(awvalid == 1 && wvalid == 1)
+	  begin
+	     case(awaddr)
+		   0:
+		     begin
+		      operandA <= wdata;
+			  bresp <= 1;
+			 end  
+		   4: 
+		     begin
+		      operandB <= wdata;
+			  bresp <= 1;
+			 end 
+		   default:
+		      begin
+			     ready <= 1;
+			  end
 
-            if (s0_axi_wstrb[0])
-                memory[4] <= s0_axi_awaddr[4];
-            if (s0_axi_wstrb[1])
-                memory[5] <= s0_axi_awaddr[5];
-            if (s0_axi_wstrb[2])
-                memory[6] <= s0_axi_awaddr[6];
-            if (s0_axi_wstrb[3])
-                memory[7] <= s0_axi_awaddr[7];
+      endcase
+	  
+	  end
+	else
+	  begin
+	     // maybe other controls need to be set
+	  end
 
-            s0_axi_awready <= 1'b1;
-        end
 end
-            assign operandA = s0_axi_wdata;
-            assign operandB = s0_axi_wdata;
-            assign result = operandA + operandB;
 
-// Write data channel
-always @(posedge s0_axi_aclk) begin
-    if (!s0_axi_aresetn)
-        begin
-            s0_axi_awready <= 1'b1;
-        end
-        else if (s0_axi_wvalid)
-        begin
-            // operandA
-            if (s0_axi_wstrb[0]) memory[0] <= operandA[7:0];
-            if (s0_axi_wstrb[1]) memory[1] <= operandA[15:8];
-            if (s0_axi_wstrb[2]) memory[2] <= operandA[23:16];
-            if (s0_axi_wstrb[3]) memory[3] <= operandA[31:24];
+always@(operandA, operandB)
+begin
+  result_tmp <= operandA + operandB;
+end
 
-            // operandB
-            if (s0_axi_wstrb[0]) memory[4] <= operandB[7:0];
-            if (s0_axi_wstrb[1]) memory[5] <= operandB[15:8];
-            if (s0_axi_wstrb[2]) memory[6] <= operandB[23:16];
-            if (s0_axi_wstrb[3]) memory[7] <= operandB[31:24];
+assign overflow_adder = (result_tmp > (2**DATA_WITDH)-1)?1:0;   //tri-state assignment
 
-            // results
-            if (s0_axi_wstrb[0]) memory[8] <= result[7:0];
-            if (s0_axi_wstrb[1]) memory[9] <= result[15:8];
-            if (s0_axi_wstrb[2]) memory[10] <= result[23:16];
-            if (s0_axi_wstrb[3]) memory[11] <= result[31:24];
 
-            // overflow
-            if (s0_axi_wstrb[0]) memory[12] <= overflow[7:0];
-            if (s0_axi_wstrb[1]) memory[13] <= overflow[15:8];
-            if (s0_axi_wstrb[2]) memory[14] <= overflow[23:16];
-            if (s0_axi_wstrb[3]) memory[15] <= overflow[31:24];
-
-            // Write response channel
-            s0_axi_bvalid <= 1'b0;
-            s0_axi_bresp <= 2'b00;
-            
-        end
+//returning results to the master
+always@(posedge clk)
+begin
+   
+   if(arvalid)
+   begin
+      case(araddress)
+	     8:
+		    rdata <= result_tmp[31:0];
+		 12:
+		    rdata <= overflow_adder;
+	     default:
+                  //do something		 
+      endcase
+   end
+   
 end
 
 endmodule
