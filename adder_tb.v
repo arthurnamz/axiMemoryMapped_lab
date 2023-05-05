@@ -7,7 +7,7 @@ module adder_tb;
   parameter ADDR_WIDTH = 8;
 
   // Signals
-  reg s1_axi_aclk;
+  reg s1_axi_aclk = 0;
   reg s1_axi_aresetn;
 
   reg [ADDR_WIDTH-1:0] s1_axi_awaddr;
@@ -66,19 +66,11 @@ module adder_tb;
     s1_axi_aresetn = 0;
     #10;
     s1_axi_aresetn = 1;
-    #10;
-    s1_axi_aresetn = 0;
-    #10;
-    s1_axi_aresetn = 1;
-    #10;
-    s1_axi_aresetn = 0;
-    #10;
-    s1_axi_aresetn = 1;
-    #10;
   end
 
   // Write data
   initial begin
+    #10;
     s1_axi_awaddr = 0;
     s1_axi_awvalid = 1;
     s1_axi_wdata = 32'hAABB;

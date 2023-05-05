@@ -10,12 +10,12 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="12.913 ns"></ZoomStartTime>
-      <ZoomEndTime time="88.208 ns"></ZoomEndTime>
-      <Cursor1Time time="22.902 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="130.000 ns"></ZoomEndTime>
+      <Cursor1Time time="99.993 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="238"></NameColumnWidth>
+      <NameColumnWidth column_width="230"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="23" />
@@ -48,6 +48,7 @@
    <wvobject type="array" fp_name="/adder_tb/s1_axi_wstrb">
       <obj_property name="ElementShortName">s1_axi_wstrb[4:0]</obj_property>
       <obj_property name="ObjectShortName">s1_axi_wstrb[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/adder_tb/s1_axi_wvalid">
       <obj_property name="ElementShortName">s1_axi_wvalid</obj_property>
@@ -100,19 +101,23 @@
       <obj_property name="ObjectShortName">s1_axi_rready</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/adder_tb/dut/operandA">
-      <obj_property name="ElementShortName">operandA[7:0]</obj_property>
-      <obj_property name="ObjectShortName">operandA[7:0]</obj_property>
+      <obj_property name="ElementShortName">operandA[31:0]</obj_property>
+      <obj_property name="ObjectShortName">operandA[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/adder_tb/dut/operandB">
-      <obj_property name="ElementShortName">operandB[7:0]</obj_property>
-      <obj_property name="ObjectShortName">operandB[7:0]</obj_property>
+      <obj_property name="ElementShortName">operandB[31:0]</obj_property>
+      <obj_property name="ObjectShortName">operandB[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/adder_tb/dut/result_tmp">
-      <obj_property name="ElementShortName">result_tmp[15:0]</obj_property>
-      <obj_property name="ObjectShortName">result_tmp[15:0]</obj_property>
+      <obj_property name="ElementShortName">result_tmp[63:0]</obj_property>
+      <obj_property name="ObjectShortName">result_tmp[63:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/adder_tb/dut/overflow_adder">
-      <obj_property name="ElementShortName">overflow_adder[7:0]</obj_property>
-      <obj_property name="ObjectShortName">overflow_adder[7:0]</obj_property>
+      <obj_property name="ElementShortName">overflow_adder[31:0]</obj_property>
+      <obj_property name="ObjectShortName">overflow_adder[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>

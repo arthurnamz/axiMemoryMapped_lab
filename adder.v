@@ -98,7 +98,7 @@ begin
 	   s1_axi_rvalid <= 0;
        s1_axi_rresp <= 0;
    end 
-	else if(s1_axi_rready)
+	else if(s1_axi_rready == 1 && s1_axi_arvalid == 1)
    begin
       case(s1_axi_araddr)
 	     8: begin
@@ -112,13 +112,15 @@ begin
             s1_axi_rresp <= 1;
          end
 	     default: begin
-            s1_axi_rdata <= 'bz; 
+            s1_axi_rdata <= 'bz;  
+            s1_axi_arready <= 1;
          end
       endcase
    end
    else
 	  begin
 	     s1_axi_rdata <= 'bz; 
+         s1_axi_arready <= 1;
 	  end
    
 end
