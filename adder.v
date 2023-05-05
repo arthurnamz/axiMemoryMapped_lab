@@ -45,21 +45,25 @@ begin
 	   s1_axi_awready <= 0;
        s1_axi_wready <= 0;
 	else   
-	if(s1_axi_awvalid == 1 && s1_axi_wvalid == 1)
+	if(s1_axi_awvalid == 1 && s1_axi_wvalid == 1 )
 	  begin
 	     case(s1_axi_awaddr)
 		   0:
 		     begin
 		      operandA <= s1_axi_wdata;
-			  s1_axi_bresp <= 1;
-              s1_axi_bvalid <= 1;
+              if (s1_axi_bready == 1) begin
+                s1_axi_bresp <= 1;
+                s1_axi_bvalid <= 1;
+              end
 
 			 end  
 		   4: 
 		     begin
 		      operandB <= s1_axi_wdata;
-			  s1_axi_bresp <= 1;
-              s1_axi_bvalid <= 1;
+              if (s1_axi_bready == 1) begin
+                s1_axi_bresp <= 1;
+                s1_axi_bvalid <= 1;
+              end
 			 end 
 		   default:
 		      begin
@@ -72,7 +76,8 @@ begin
 	  end
 	else
 	  begin
-	     // maybe other controls need to be set
+	     s1_axi_bresp <= 0;
+         s1_axi_bvalid <= 0;
 	  end
 
 end
