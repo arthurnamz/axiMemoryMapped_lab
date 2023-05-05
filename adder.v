@@ -53,12 +53,14 @@ begin
 		     begin
 		      operandA <= s1_axi_wdata;
 			  s1_axi_bresp <= 1;
+              s1_axi_bvalid <= 1;
 
 			 end  
 		   4: 
 		     begin
 		      operandB <= s1_axi_wdata;
 			  s1_axi_bresp <= 1;
+              s1_axi_bvalid <= 1;
 			 end 
 		   default:
 		      begin
@@ -88,18 +90,22 @@ assign overflow_adder = (result_tmp > (2**DATA_WIDTH)-1)?1:0;   //tri-state assi
 always@(posedge s1_axi_aclk)
 begin
    if(~s1_axi_aresetn)
-	   s1_axi_awready <= 0;
-       s1_axi_wready <= 0;
+	   s1_axi_rvalid <= 0;
+       s1_axi_rresp <= 0;
 
 	else if(s1_axi_arvalid)
    begin
       case(s1_axi_araddr)
 	     8:
 		    s1_axi_rdata <= result_tmp[31:0];
+            s1_axi_rvalid <= 1;
+            s1_axi_rresp <= 1;
 		 12:
-		    rdata <= overflow_adder;
+		    s1_axi_rdata <= overflow_adder;
+            s1_axi_rvalid <= 1;
+            s1_axi_rresp <= 1;
 	     default:
-                  //do something		 
+            s1_axi_rdata <= 'bz; 
       endcase
    end
    else
