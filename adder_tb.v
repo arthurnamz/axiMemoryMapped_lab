@@ -81,7 +81,7 @@ module adder_tb;
   initial begin
     s1_axi_awaddr = 0;
     s1_axi_awvalid = 1;
-    s1_axi_wdata = 32'hAABB
+    s1_axi_wdata = 32'hAABB;
     s1_axi_wstrb = 4'hF;
     s1_axi_wvalid = 1;
     s1_axi_bready = 1;

@@ -34,18 +34,19 @@ module adder#(
     output reg s1_axi_rvalid,
     input s1_axi_rready
 );
-reg [DATA_WITDH-1:0] operandA, operandB;
-reg [(2*DATA_WITDH-1):0] result_tmp;
-wire [DATA_WITDH-1:0] overflow_adder;
+reg [ADDR_WIDTH-1:0] operandA, operandB;
+reg [(2*ADDR_WIDTH-1):0] result_tmp;
+wire [ADDR_WIDTH-1:0] overflow_adder;
 
 //getting data from the master
 always@(posedge s1_axi_aclk)
 begin
-    if(~s1_axi_aresetn)
+    if(~s1_axi_aresetn) 
+    begin
 	   s1_axi_awready <= 0;
        s1_axi_wready <= 0;
-	else   
-	if(s1_axi_awvalid == 1 && s1_axi_wvalid == 1 )
+    end
+	else if(s1_axi_awvalid == 1 && s1_axi_wvalid == 1 )
 	  begin
 	     case(s1_axi_awaddr)
 		   0:
@@ -93,23 +94,26 @@ assign overflow_adder = (result_tmp > (2**DATA_WIDTH)-1)?1:0;   //tri-state assi
 //returning results to the master
 always@(posedge s1_axi_aclk)
 begin
-   if(~s1_axi_aresetn)
+   if(~s1_axi_aresetn) begin
 	   s1_axi_rvalid <= 0;
        s1_axi_rresp <= 0;
-
+   end 
 	else if(s1_axi_arvalid)
    begin
       case(s1_axi_araddr)
-	     8:
+	     8: begin
 		    s1_axi_rdata <= result_tmp[31:0];
             s1_axi_rvalid <= 1;
             s1_axi_rresp <= 1;
-		 12:
+         end
+		 12: begin
 		    s1_axi_rdata <= overflow_adder;
             s1_axi_rvalid <= 1;
             s1_axi_rresp <= 1;
-	     default:
+         end
+	     default: begin
             s1_axi_rdata <= 'bz; 
+         end
       endcase
    end
    else
