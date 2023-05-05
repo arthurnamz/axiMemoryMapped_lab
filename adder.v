@@ -34,9 +34,9 @@ module adder#(
     output reg s1_axi_rvalid,
     input s1_axi_rready
 );
-reg [ADDR_WIDTH-1:0] operandA, operandB;
-reg [(2*ADDR_WIDTH-1):0] result_tmp;
-wire [ADDR_WIDTH-1:0] overflow_adder;
+reg [DATA_WIDTH-1:0] operandA, operandB;
+reg [(2*DATA_WIDTH-1):0] result_tmp;
+wire [DATA_WIDTH-1:0] overflow_adder;
 
 //getting data from the master
 always@(posedge s1_axi_aclk)
@@ -98,7 +98,7 @@ begin
 	   s1_axi_rvalid <= 0;
        s1_axi_rresp <= 0;
    end 
-	else if(s1_axi_arvalid)
+	else if(s1_axi_rready)
    begin
       case(s1_axi_araddr)
 	     8: begin
