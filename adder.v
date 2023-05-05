@@ -110,7 +110,7 @@ begin
    end
    else
 	  begin
-	     // maybe other controls need to be set
+	     s1_axi_rdata <= 'bz; 
 	  end
    
 end
