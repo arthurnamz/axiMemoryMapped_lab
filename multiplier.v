@@ -49,7 +49,7 @@ begin
 	else if(s2_axi_awvalid == 1 && s2_axi_wvalid == 1 )
 	  begin
 	     case(s2_axi_awaddr)
-		   0:
+		   16:
 		     begin
 		      operandA <= s2_axi_wdata;
               if (s2_axi_bready == 1) begin
@@ -58,7 +58,7 @@ begin
               end
 
 			 end  
-		   4: 
+		   20: 
 		     begin
 		      operandB <= s2_axi_wdata;
               if (s2_axi_bready == 1) begin
@@ -85,7 +85,7 @@ end
 
 always@(operandA, operandB)
 begin
-  result_tmp <= operandA + operandB;
+  result_tmp <= operandA * operandB;
 end
 
 assign overflow_adder = (result_tmp > (2**DATA_WIDTH)-1)?1:0;   //tri-state assignment
@@ -101,12 +101,12 @@ begin
 	else if(s2_axi_rready == 1 && s2_axi_arvalid == 1)
    begin
       case(s2_axi_araddr)
-	     8: begin
+	     24: begin
 		    s2_axi_rdata <= result_tmp[31:0];
             s2_axi_rvalid <= 1;
             s2_axi_rresp <= 1;
          end
-		 12: begin
+		 28: begin
 		    s2_axi_rdata <= overflow_adder;
             s2_axi_rvalid <= 1;
             s2_axi_rresp <= 1;
