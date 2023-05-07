@@ -1,4 +1,4 @@
-module adder#(
+module multiplier#(
     parameter DATA_WIDTH = 32,
     parameter ADDR_WIDTH = 8
 )
