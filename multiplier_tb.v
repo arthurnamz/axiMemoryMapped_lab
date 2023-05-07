@@ -71,7 +71,7 @@ module multiplier_tb;
   // Write data
   initial begin
     #10;
-    s2_axi_awaddr = 0;
+    s2_axi_awaddr = 16;
     s2_axi_awvalid = 1;
     s2_axi_wdata = 32'h278;
     s2_axi_wstrb = 4'hF;
@@ -79,7 +79,7 @@ module multiplier_tb;
     s2_axi_bready = 1;
     #20;
     
-    s2_axi_awaddr = 4;
+    s2_axi_awaddr = 20;
     s2_axi_awvalid = 1;
     s2_axi_wdata = 32'h1468;
     s2_axi_wstrb = 4'hF;
@@ -91,12 +91,12 @@ module multiplier_tb;
     s2_axi_wvalid = 0;
     #20;
     
-    s2_axi_araddr = 8;
+    s2_axi_araddr = 24;
     s2_axi_arvalid = 1;
     s2_axi_rready = 1;
     #20;
     
-    s2_axi_araddr = 12;
+    s2_axi_araddr = 28;
     s2_axi_arvalid = 1;
     s2_axi_rready = 1;
     #20;
