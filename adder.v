@@ -43,16 +43,22 @@ always@(posedge s1_axi_aclk)
 begin
     if(~s1_axi_aresetn) 
     begin
-	   s1_axi_awready <= 0;
+	    s1_axi_awready <= 0;
        s1_axi_wready <= 0;
     end
 	else if(s1_axi_awvalid == 1 && s1_axi_wvalid == 1 )
 	  begin
+       s1_axi_awready <= 1;
+       s1_axi_wready <= 1;
 	     case(s1_axi_awaddr)
 		   0:
 		     begin
+            s1_axi_awready <= 0;
+            s1_axi_wready <= 0;
 		      operandA <= s1_axi_wdata;
               if (s1_axi_bready == 1) begin
+                s1_axi_awready <= 1;
+                s1_axi_wready <= 1;
                 s1_axi_bresp <= 1;
                 s1_axi_bvalid <= 1;
               end
@@ -60,8 +66,12 @@ begin
 			 end  
 		   4: 
 		     begin
+            s1_axi_awready <= 0;
+            s1_axi_wready <= 0;
 		      operandB <= s1_axi_wdata;
               if (s1_axi_bready == 1) begin
+                s1_axi_awready <= 1;
+                s1_axi_wready <= 1;
                 s1_axi_bresp <= 1;
                 s1_axi_bvalid <= 1;
               end
@@ -69,16 +79,15 @@ begin
 		   default:
 		      begin
 			     s1_axi_awready <= 1;
-                 s1_axi_wready <= 1;
+              s1_axi_wready <= 1;
 			  end
 
-      endcase
-	  
+        endcase
 	  end
 	else
 	  begin
-	     s1_axi_bresp <= 0;
-         s1_axi_bvalid <= 0;
+	   s1_axi_bresp <= 0;
+      s1_axi_bvalid <= 0;
 	  end
 
 end
