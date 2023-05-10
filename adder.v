@@ -88,8 +88,6 @@ begin
 	  begin
 	   s1_axi_bresp <= 0;
       s1_axi_bvalid <= 0;
-      s1_axi_awready <= 1;
-      s1_axi_wready <= 1;
 	  end
 
 end
