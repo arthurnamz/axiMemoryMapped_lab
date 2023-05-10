@@ -71,8 +71,62 @@ module adder_tb;
   // Write data
  always @(posedge s1_axi_aclk) 
  begin
-  
+  if (s1_axi_awready == 1 && s1_axi_wready == 1)
+  begin
+    #20;
+    s2_axi_awvalid = 0;
+    s2_axi_wvalid = 0;
+    s2_axi_awaddr = 0;
+    s2_axi_wdata = 39;
+    s2_axi_wstrb = 15;
+    s2_axi_bready = 1;
+    #20;
+    s2_axi_awvalid = 1;
+    s2_axi_wvalid = 1;
+    s2_axi_awaddr = 0;
+    s2_axi_wdata = 39;
+    s2_axi_wstrb = 15;
+    s2_axi_bready = 1;
+
+    #20;
+    s2_axi_awvalid = 0;
+    s2_axi_wvalid = 0;
+    s2_axi_awaddr = 4;
+    s2_axi_wdata = 40;
+    s2_axi_wstrb = 15;
+    s2_axi_bready = 1;
+    #20;
+    s2_axi_awvalid = 1;
+    s2_axi_wvalid = 1;
+    s2_axi_awaddr = 4;
+    s2_axi_wdata = 40;
+    s2_axi_wstrb = 15;
+    s2_axi_bready = 1;
+
+    #200;
+  end
  end
 
+ // Read data
+ always @(posedge s1_axi_aclk) 
+ begin
+  if (s1_axi_rready == 1 && s1_axi_arvalid == 1)
+  begin
+    #20;
+    s2_axi_araddr = 24;
+    s2_axi_arvalid = 1;
+    s2_axi_rready = 1;
+    #20;
+    
+    s2_axi_araddr = 28;
+    s2_axi_arvalid = 1;
+    s2_axi_rready = 1;
+    #20;
+
+    #200;
+  end
+ end
+#200;
+$finish;
 endmodule
 
