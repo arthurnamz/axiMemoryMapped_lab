@@ -69,43 +69,10 @@ module adder_tb;
   end
 
   // Write data
-  initial begin
-    #10;
-    s1_axi_awaddr = 0;
-    s1_axi_awvalid = 1;
-    s1_axi_wdata = 32'hAABB;
-    s1_axi_wstrb = 4'hF;
-    s1_axi_wvalid = 1;
-    s1_axi_bready = 1;
-    #20;
-    
-    s1_axi_awaddr = 4;
-    s1_axi_awvalid = 1;
-    s1_axi_wdata = 32'hCCDD;
-    s1_axi_wstrb = 4'hF;
-    s1_axi_wvalid = 1;
-    s1_axi_bready = 1;
-    #20;
-    
-    s1_axi_awvalid = 0;
-    s1_axi_wvalid = 0;
-    #20;
-    
-    s1_axi_araddr = 8;
-    s1_axi_arvalid = 1;
-    s1_axi_rready = 1;
-    #20;
-    
-    s1_axi_araddr = 12;
-    s1_axi_arvalid = 1;
-    s1_axi_rready = 1;
-    #20;
-    
-    s1_axi_arvalid = 0;
-    #20;
-    
-    $finish;
-  end
+ always @(posedge s1_axi_aclk) 
+ begin
+  
+ end
 
 endmodule
 
