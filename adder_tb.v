@@ -80,6 +80,8 @@ module adder_tb;
     s1_axi_wstrb = 15;
     s1_axi_bready = 1;
     end
+    #200;
+    $finish;
  end
  always @(posedge s1_axi_aclk) 
  begin
@@ -93,6 +95,8 @@ module adder_tb;
     s1_axi_wstrb = 15;
     s1_axi_bready = 1;
     end
+    #200;
+    $finish;
  end
  always @(posedge s1_axi_aclk) 
  begin
@@ -107,6 +111,7 @@ module adder_tb;
     s1_axi_bready = 1;
     end
     #200;
+    $finish;
  end
  always @(posedge s1_axi_aclk) 
  begin
