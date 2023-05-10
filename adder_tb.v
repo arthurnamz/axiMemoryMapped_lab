@@ -64,49 +64,38 @@ module adder_tb;
   // Reset generation
   initial begin
     s1_axi_aresetn = 0;
-    #10;
+    #5;
     s1_axi_aresetn = 1;
-    #4000;
+    #200;
     $finish;
   end
 
   // Write data
  always @(posedge s1_axi_aclk) 
  begin
-    #200;
-    s1_axi_awvalid = 0;
-    s1_axi_wvalid = 0;
-    #30;
-    if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
-    s1_axi_awaddr = 35;
-    s1_axi_wdata = 76;
-    s1_axi_wstrb = 15;
-    s1_axi_bready = 1;
-    end
-    #200;
- 
+   
+    #20; 
     s1_axi_awvalid = 1;
     s1_axi_wvalid = 1;
-
-    #30;
+    #10;
     if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
     s1_axi_awaddr = 0;
     s1_axi_wdata = 39;
     s1_axi_wstrb = 15;
     s1_axi_bready = 1;
     end
-    #200;
+    #20;
 
+     
     s1_axi_awvalid = 0;
     s1_axi_wvalid = 0;
     if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
-    s1_axi_awaddr = 4;
-    s1_axi_wdata = 40;
+    s1_axi_awaddr = 35;
+    s1_axi_wdata = 76;
     s1_axi_wstrb = 15;
     s1_axi_bready = 1;
     end
-    #200;
-    
+    #20;
     s1_axi_awvalid = 1;
     s1_axi_wvalid = 1;
     if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
@@ -115,27 +104,46 @@ module adder_tb;
     s1_axi_wstrb = 15;
     s1_axi_bready = 1;
     end
-    #200;
+    #20;
+    s1_axi_awvalid = 0;
+    s1_axi_wvalid = 0;
+    if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
+    s1_axi_awaddr = 4;
+    s1_axi_wdata = 45;
+    s1_axi_wstrb = 15;
+    s1_axi_bready = 1;
+    end
+    #20;
+    
+    s1_axi_awvalid = 1;
+    s1_axi_wvalid = 1;
+    if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
+    s1_axi_awaddr = 45;
+    s1_axi_wdata = 40;
+    s1_axi_wstrb = 15;
+    s1_axi_bready = 1;
+    end
+    #20;
     
  end
 
  // Read data
  always @(posedge s1_axi_aclk) 
  begin
-    #1020;
+    #80;
     s1_axi_arvalid = 1;
     s1_axi_rready = 1;
     s1_axi_araddr = 8;
-    #1040;
+    #20;
 
     s1_axi_arvalid = 0;
     s1_axi_rready = 0;
     
-     #1080;
+     #20;
     s1_axi_arvalid = 1;
     s1_axi_rready = 1;
     s1_axi_araddr = 12;
-    #2100;
+    #20;
  end
 
 endmodule
