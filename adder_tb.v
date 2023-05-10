@@ -66,16 +66,17 @@ module adder_tb;
     s1_axi_aresetn = 0;
     #10;
     s1_axi_aresetn = 1;
-    #8000;
+    #4000;
     $finish;
   end
 
   // Write data
  always @(posedge s1_axi_aclk) 
  begin
-    #20;
+    #200;
     s1_axi_awvalid = 0;
     s1_axi_wvalid = 0;
+    #30;
     if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
     s1_axi_awaddr = 35;
     s1_axi_wdata = 76;
@@ -83,13 +84,11 @@ module adder_tb;
     s1_axi_bready = 1;
     end
     #200;
- end
- always @(posedge s1_axi_aclk) 
- begin
-
-    #30;
+ 
     s1_axi_awvalid = 1;
     s1_axi_wvalid = 1;
+
+    #30;
     if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
     s1_axi_awaddr = 0;
     s1_axi_wdata = 39;
@@ -97,12 +96,7 @@ module adder_tb;
     s1_axi_bready = 1;
     end
     #200;
-    
- end
- always @(posedge s1_axi_aclk) 
- begin
 
-    #200;
     s1_axi_awvalid = 0;
     s1_axi_wvalid = 0;
     if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
@@ -113,10 +107,6 @@ module adder_tb;
     end
     #200;
     
- end
- always @(posedge s1_axi_aclk) 
- begin
-
     s1_axi_awvalid = 1;
     s1_axi_wvalid = 1;
     if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
@@ -135,7 +125,7 @@ module adder_tb;
     #1020;
     s1_axi_arvalid = 1;
     s1_axi_rready = 1;
-    s1_axi_araddr = 24;
+    s1_axi_araddr = 8;
     #1040;
 
     s1_axi_arvalid = 0;
@@ -144,11 +134,8 @@ module adder_tb;
      #1080;
     s1_axi_arvalid = 1;
     s1_axi_rready = 1;
-    s1_axi_araddr = 28;
+    s1_axi_araddr = 12;
     #2100;
-
-    #200;
-    $finish;
  end
 
 endmodule

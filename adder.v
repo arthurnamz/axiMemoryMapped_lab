@@ -104,30 +104,33 @@ begin
    if(~s1_axi_aresetn) begin
 	   s1_axi_rvalid <= 0;
        s1_axi_rresp <= 0;
+       s1_axi_rdata <= 'bz;
    end 
 	else if(s1_axi_rready == 1 && s1_axi_arvalid == 1)
-   begin
-      case(s1_axi_araddr)
-	     8: begin
-		    s1_axi_rdata <= result_tmp[31:0];
-            s1_axi_rvalid <= 1;
-            s1_axi_rresp <= 1;
-         end
-		 12: begin
-		    s1_axi_rdata <= overflow_adder;
-            s1_axi_rvalid <= 1;
-            s1_axi_rresp <= 1;
-         end
-	     default: begin
-            s1_axi_rdata <= 'bz;  
-            s1_axi_arready <= 1;
-         end
-      endcase
-   end
+      begin
+         case(s1_axi_araddr)
+            8: begin
+                  s1_axi_rvalid <= 1;
+                  s1_axi_rresp <= 1;
+                  s1_axi_rdata <= result_tmp[31:0];
+               end
+            12: begin
+                  s1_axi_rvalid <= 1;
+                  s1_axi_rresp <= 1;
+                  s1_axi_rdata <= overflow_adder;
+               end
+            default: begin
+                  s1_axi_rdata <= 'bz; 
+                  s1_axi_rvalid <= 0;
+                  s1_axi_rresp <= 0;
+                  s1_axi_arready <= 1;
+               end
+         endcase
+      end
    else
 	  begin
+        s1_axi_arready <= 1;
 	     s1_axi_rdata <= 'bz; 
-         s1_axi_arready <= 1;
 	  end
    
 end
