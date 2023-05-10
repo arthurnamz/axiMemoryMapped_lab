@@ -74,17 +74,17 @@ module adder_tb;
     #20;
     s1_axi_awvalid = 0;
     s1_axi_wvalid = 0;
-    if(s1_axi_wready == 1 && s1_axi_awready) begin
+    if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
     s1_axi_awaddr = 3;
     s1_axi_wdata = 39;
     s1_axi_wstrb = 15;
     s1_axi_bready = 1;
     end
 
-    #20;
+    #30;
     s1_axi_awvalid = 1;
     s1_axi_wvalid = 1;
-    if(s1_axi_wready == 1 && s1_axi_awready) begin
+    if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
     s1_axi_awaddr = 0;
     s1_axi_wdata = 39;
     s1_axi_wstrb = 15;
@@ -94,7 +94,7 @@ module adder_tb;
     #20;
     s1_axi_awvalid = 0;
     s1_axi_wvalid = 0;
-    if(s1_axi_wready == 1 && s1_axi_awready) begin
+    if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
     s1_axi_awaddr = 4;
     s1_axi_wdata = 40;
     s1_axi_wstrb = 15;
@@ -104,7 +104,7 @@ module adder_tb;
 
     s1_axi_awvalid = 1;
     s1_axi_wvalid = 1;
-    if(s1_axi_wready == 1 && s1_axi_awready) begin
+    if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
     s1_axi_awaddr = 4;
     s1_axi_wdata = 40;
     s1_axi_wstrb = 15;
