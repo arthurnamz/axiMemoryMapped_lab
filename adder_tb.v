@@ -91,7 +91,7 @@ module adder_tb;
     s1_axi_bready = 1;
     end
 
-    #20;
+    #40;
     s1_axi_awvalid = 0;
     s1_axi_wvalid = 0;
     if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
