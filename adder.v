@@ -78,6 +78,7 @@ begin
 		      begin
 			     s1_axi_awready <= 1;
               s1_axi_wready <= 1;
+              s1_axi_awaddr <= 'bz;
 			  end
 
         endcase
