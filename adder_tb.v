@@ -80,6 +80,9 @@ module adder_tb;
     s1_axi_wstrb = 15;
     s1_axi_bready = 1;
     end
+ end
+ always @(posedge s1_axi_aclk) 
+ begin
 
     #30;
     s1_axi_awvalid = 1;
@@ -90,8 +93,11 @@ module adder_tb;
     s1_axi_wstrb = 15;
     s1_axi_bready = 1;
     end
+ end
+ always @(posedge s1_axi_aclk) 
+ begin
 
-    #40;
+    #200;
     s1_axi_awvalid = 0;
     s1_axi_wvalid = 0;
     if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
@@ -100,7 +106,10 @@ module adder_tb;
     s1_axi_wstrb = 15;
     s1_axi_bready = 1;
     end
-    #20;
+    #200;
+ end
+ always @(posedge s1_axi_aclk) 
+ begin
 
     s1_axi_awvalid = 1;
     s1_axi_wvalid = 1;
