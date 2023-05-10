@@ -66,7 +66,7 @@ module adder_tb;
     s1_axi_aresetn = 0;
     #10;
     s1_axi_aresetn = 1;
-    #4000;
+    #8000;
     $finish;
   end
 
@@ -132,16 +132,20 @@ module adder_tb;
  // Read data
  always @(posedge s1_axi_aclk) 
  begin
-    #20;
+    #1020;
+    s1_axi_arvalid = 1;
+    s1_axi_rready = 1;
     s1_axi_araddr = 24;
-    s1_axi_arvalid = 1;
-    s1_axi_rready = 1;
-    #20;
+    #1040;
+
+    s1_axi_arvalid = 0;
+    s1_axi_rready = 0;
     
-    s1_axi_araddr = 28;
+     #1080;
     s1_axi_arvalid = 1;
     s1_axi_rready = 1;
-    #20;
+    s1_axi_araddr = 28;
+    #2100;
 
     #200;
     $finish;
