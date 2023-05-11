@@ -73,77 +73,71 @@ module adder_tb;
   // Write data
  always @(posedge s1_axi_aclk) 
  begin
-   
-    #20; 
-    s1_axi_awvalid = 1;
-    s1_axi_wvalid = 1;
-    #10;
+    s1_axi_awvalid <= 1;
+    s1_axi_wvalid <= 1;
     if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
-    s1_axi_awaddr = 0;
-    s1_axi_wdata = 39;
-    s1_axi_wstrb = 15;
-    s1_axi_bready = 1;
+    s1_axi_awaddr <= 0;
+    s1_axi_wdata <= 39;
+    s1_axi_wstrb <= 15;
+    s1_axi_bready <= 1;
     end
-    #20;
 
      
-    s1_axi_awvalid = 0;
-    s1_axi_wvalid = 0;
+    s1_axi_awvalid <= 0;
+    s1_axi_wvalid <= 0;
     if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
-    s1_axi_awaddr = 35;
-    s1_axi_wdata = 76;
-    s1_axi_wstrb = 15;
-    s1_axi_bready = 1;
+    s1_axi_awaddr <= 35;
+    s1_axi_wdata <= 76;
+    s1_axi_wstrb <= 15;
+    s1_axi_bready <= 1;
     end
-    #20;
-    s1_axi_awvalid = 1;
-    s1_axi_wvalid = 1;
+   
+    s1_axi_awvalid <= 1;
+    s1_axi_wvalid <= 1;
     if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
-    s1_axi_awaddr = 4;
-    s1_axi_wdata = 40;
-    s1_axi_wstrb = 15;
-    s1_axi_bready = 1;
+    s1_axi_awaddr <= 4;
+    s1_axi_wdata <= 40;
+    s1_axi_wstrb <= 15;
+    s1_axi_bready <= 1;
     end
-    #20;
-    s1_axi_awvalid = 0;
-    s1_axi_wvalid = 0;
-    if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
-    s1_axi_awaddr = 4;
-    s1_axi_wdata = 45;
-    s1_axi_wstrb = 15;
-    s1_axi_bready = 1;
-    end
-    #20;
     
-    s1_axi_awvalid = 1;
-    s1_axi_wvalid = 1;
+
+    s1_axi_awvalid <= 0;
+    s1_axi_wvalid <= 0;
     if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
-    s1_axi_awaddr = 45;
-    s1_axi_wdata = 40;
-    s1_axi_wstrb = 15;
-    s1_axi_bready = 1;
+    s1_axi_awaddr <= 4;
+    s1_axi_wdata <= 45;
+    s1_axi_wstrb <= 15;
+    s1_axi_bready <= 1;
     end
-    #20;
+    
+    
+    s1_axi_awvalid <= 1;
+    s1_axi_wvalid <= 1;
+    if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
+    s1_axi_awaddr <= 45;
+    s1_axi_wdata <= 40;
+    s1_axi_wstrb <= 15;
+    s1_axi_bready <= 1;
+    end
+   
     
  end
 
  // Read data
  always @(posedge s1_axi_aclk) 
  begin
-    #80;
     s1_axi_arvalid = 1;
     s1_axi_rready = 1;
     s1_axi_araddr = 8;
-    #20;
 
     s1_axi_arvalid = 0;
     s1_axi_rready = 0;
     
-     #20;
+   
     s1_axi_arvalid = 1;
     s1_axi_rready = 1;
     s1_axi_araddr = 12;
-    #20;
  end
 
 endmodule
