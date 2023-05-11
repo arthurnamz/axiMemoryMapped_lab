@@ -31,7 +31,15 @@ module adder_tb;
   wire s1_axi_rresp;
   wire s1_axi_rvalid;
   reg s1_axi_rready;
-
+  reg [46:0] tester [0:15];
+  
+  integer i;
+  reg k;
+  reg l;
+  reg m;
+  reg [7:0] p;
+  reg [3:0] q;
+  reg [31:0] hold;
   // Instantiate the DUT
   adder #(
     .DATA_WIDTH(DATA_WIDTH),
@@ -66,64 +74,35 @@ module adder_tb;
     s1_axi_aresetn = 0;
     #5;
     s1_axi_aresetn = 1;
+    k = 1;
+    l = 1;
+    m = 1;
+    p= 0;
+    q = 15;
+
+    
+    // Generate random numbers
+    repeat (16) begin
+      hold = $random;
+        tester[i] = tester[k] + tester[l] + tester[p] + tester[hold] + tester[q] + tester[m];
+        p = p + 1;
+    end
+    
     #200;
     $finish;
-  end
-
+end
  // Write data
- always @(posedge s1_axi_aclk) 
- begin
-    s1_axi_awvalid <= 1;
-    s1_axi_wvalid <= 1;
-    if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
-    s1_axi_awaddr <= 0;
-    s1_axi_wdata <= 39;
-    s1_axi_wstrb <= 15;
-    s1_axi_bready <= 1;
-    end
-
-     
-    s1_axi_awvalid <= 0;
-    s1_axi_wvalid <= 0;
-    if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
-    s1_axi_awaddr <= 35;
-    s1_axi_wdata <= 76;
-    s1_axi_wstrb <= 15;
-    s1_axi_bready <= 1;
-    end
-   
-    s1_axi_awvalid <= 1;
-    s1_axi_wvalid <= 1;
-    if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
-    s1_axi_awaddr <= 4;
-    s1_axi_wdata <= 40;
-    s1_axi_wstrb <= 15;
-    s1_axi_bready <= 1;
-    end
+ always @(posedge s1_axi_aclk) begin
+    s1_axi_awvalid <= tester[i][0];      // 1 bit
+    s1_axi_wvalid <= tester[i][1];       // 1 bit
     
-
-    s1_axi_awvalid <= 0;
-    s1_axi_wvalid <= 0;
-    if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
-    s1_axi_awaddr <= 4;
-    s1_axi_wdata <= 45;
-    s1_axi_wstrb <= 15;
-    s1_axi_bready <= 1;
+    if (s1_axi_wready == 1 && s1_axi_awready == 1) begin
+        s1_axi_awaddr <= tester[i][9:2];  // 8 bits
+        s1_axi_wdata <= tester[i][41:10]; // 32 bits
+        s1_axi_wstrb <= tester[i][45:42]; // 4 bits
+        s1_axi_bready <= tester[i][46];   // 1 bit
     end
-    
-    
-    s1_axi_awvalid <= 1;
-    s1_axi_wvalid <= 1;
-    if(s1_axi_wready == 1 && s1_axi_awready == 1) begin
-    s1_axi_awaddr <= 45;
-    s1_axi_wdata <= 40;
-    s1_axi_wstrb <= 15;
-    s1_axi_bready <= 1;
-    end
-   
-    
- end
-
+end
  // Read data
  always @(posedge s1_axi_aclk) 
  begin
