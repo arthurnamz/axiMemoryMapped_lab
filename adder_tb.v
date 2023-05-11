@@ -70,7 +70,7 @@ module adder_tb;
     $finish;
   end
 
-  // Write data
+ // Write data
  always @(posedge s1_axi_aclk) 
  begin
     s1_axi_awvalid <= 1;
