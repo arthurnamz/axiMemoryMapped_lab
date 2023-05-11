@@ -127,17 +127,17 @@ module adder_tb;
  // Read data
  always @(posedge s1_axi_aclk) 
  begin
-    s1_axi_arvalid = 1;
-    s1_axi_rready = 1;
-    s1_axi_araddr = 8;
+    s1_axi_arvalid <= 1;
+    s1_axi_rready <= 1;
+    s1_axi_araddr <= 8;
 
-    s1_axi_arvalid = 0;
-    s1_axi_rready = 0;
+    s1_axi_arvalid <= 0;
+    s1_axi_rready <= 0;
     
    
-    s1_axi_arvalid = 1;
-    s1_axi_rready = 1;
-    s1_axi_araddr = 12;
+    s1_axi_arvalid <= 1;
+    s1_axi_rready <= 1;
+    s1_axi_araddr <= 12;
  end
 
 endmodule
