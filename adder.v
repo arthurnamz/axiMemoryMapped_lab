@@ -67,9 +67,9 @@ begin
               end
 
               if(addingDone)
-               receiveOpA <= 0;
+               receiveOpA <= 1;
             else
-                receiveOpA <= 1;
+                receiveOpA <= 0;
 
 			 end  
 		   4: 
@@ -84,9 +84,9 @@ begin
                 s1_axi_bvalid <= 1;
               end
               if(addingDone)
-               receiveOpB <= 0;
+               receiveOpB <= 1;
             else
-                receiveOpB <= 1;
+                receiveOpB <= 0;
 			 end 
 		   default:
 		      begin
@@ -108,11 +108,11 @@ always@(operandA, operandB)
 begin
    if (receiveOpA && receiveOpB ) begin
          result_tmp <= operandA + operandB;
-         s1_axi_arready <= 0;
+         s1_axi_arready <= 1;
          addingDone = 0;
    end else begin
       result_tmp <= 'bz;
-      s1_axi_arready <= 1;
+      s1_axi_arready <= 0;
       addingDone = 1;
    end
 end
