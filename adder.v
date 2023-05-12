@@ -58,15 +58,16 @@ begin
             s1_axi_awready <= 0;
             s1_axi_wready <= 0;
 		      operandA <= s1_axi_wdata;
-            if(addingDone)
-               receiveOpA <= 0;
-            else
-                receiveOpA <= 1;
+            
               if (s1_axi_bready == 1) begin
                 s1_axi_awready <= 1;
                 s1_axi_wready <= 1;
                 s1_axi_bresp <= 1;
                 s1_axi_bvalid <= 1;
+                if(addingDone)
+               receiveOpA <= 1;
+            else
+                receiveOpA <= 0;
               end
 
 			 end  
@@ -75,15 +76,15 @@ begin
             s1_axi_awready <= 0;
             s1_axi_wready <= 0;
 		      operandB <= s1_axi_wdata;
-            if(addingDone)
-               receiveOpB <= 0;
-            else
-                receiveOpB <= 1;
               if (s1_axi_bready == 1) begin
                 s1_axi_awready <= 1;
                 s1_axi_wready <= 1;
                 s1_axi_bresp <= 1;
                 s1_axi_bvalid <= 1;
+                if(addingDone)
+               receiveOpB <= 1;
+            else
+                receiveOpB <= 0;
               end
 			 end 
 		   default:
@@ -102,16 +103,16 @@ begin
 
 end
 
-always@(operandA, operandB)
+always@(receiveOpA, receiveOpB)
 begin
    if (receiveOpA && receiveOpB) begin
          result_tmp <= operandA + operandB;
-         s1_axi_arready <= 0;
-         addingDone = 1;
+         s1_axi_arready <= 1;
+         addingDone = 0;
    end else begin
       result_tmp <= 'bz;
-      s1_axi_arready <= 1;
-      addingDone = 0;
+      s1_axi_arready <= 0;
+      addingDone = 1;
    end
 end
 
@@ -143,7 +144,7 @@ begin
                   s1_axi_rdata <= 'bz; 
                   s1_axi_rvalid <= 0;
                   s1_axi_rresp <= 0;
-                  
+                  s1_axi_arready <= 1;
                end
          endcase
       end
