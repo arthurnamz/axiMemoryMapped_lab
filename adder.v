@@ -40,7 +40,7 @@ wire [DATA_WIDTH-1:0] overflow_adder;
 
 reg receiveOpA, receiveOpB, addingDone;
 wire receiveSignal;
-assign receiveSignal = receiveOpA & receiveOpB;
+
 
 //getting data from the master
 always@(posedge s1_axi_aclk)
@@ -104,8 +104,9 @@ begin
 	  end
 
 end
+assign receiveSignal = receiveOpA & receiveOpB;
 
-always@(operandA, operandB)
+always@(receiveSignal)
 begin
    if (receiveSignal) begin
          result_tmp <= operandA + operandB;
@@ -146,7 +147,6 @@ begin
                   s1_axi_rdata <= 'bz; 
                   s1_axi_rvalid <= 0;
                   s1_axi_rresp <= 0;
-                  s1_axi_arready <= 1;
                end
          endcase
       end
