@@ -38,7 +38,8 @@ reg [DATA_WIDTH-1:0] operandA, operandB;
 reg [(2*DATA_WIDTH-1):0] result_tmp;
 wire [DATA_WIDTH-1:0] overflow_adder;
 
-reg receiveOpA, receiveOpB, addingDone, receiveSignal;
+reg receiveOpA, receiveOpB, addingDone;
+wire receiveSignal;
 assign receiveSignal = receiveOpA & receiveOpB;
 
 //getting data from the master
