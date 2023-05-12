@@ -39,9 +39,8 @@ reg [(2*DATA_WIDTH-1):0] result_tmp;
 wire [DATA_WIDTH-1:0] overflow_adder;
 
 reg receiveOpA, receiveOpB, addingDone;
-wire receiveSignal;
 
-assign receiveSignal = receiveOpA;
+
 //getting data from the master
 always@(posedge s1_axi_aclk)
 begin
@@ -68,9 +67,9 @@ begin
               end
 
               if(addingDone)
-               receiveOpA <= 1;
+               receiveOpA <= 0;
             else
-                receiveOpA <= 0;
+                receiveOpA <= 1;
 
 			 end  
 		   4: 
@@ -78,16 +77,16 @@ begin
             s1_axi_awready <= 0;
             s1_axi_wready <= 0;
 		      operandB <= s1_axi_wdata;
-              if (s1_axi_bready == 1) begin
+              if (s1_axi_bready == 1 ) begin
                 s1_axi_awready <= 1;
                 s1_axi_wready <= 1;
                 s1_axi_bresp <= 1;
                 s1_axi_bvalid <= 1;
               end
               if(addingDone)
-               receiveOpB <= 1;
+               receiveOpB <= 0;
             else
-                receiveOpB <= 0;
+                receiveOpB <= 1;
 			 end 
 		   default:
 		      begin
@@ -107,13 +106,13 @@ end
 
 always@(operandA, operandB)
 begin
-   if (receiveSignal && receiveOpB ) begin
+   if (receiveOpA && receiveOpB ) begin
          result_tmp <= operandA + operandB;
-         s1_axi_arready <= 1;
+         s1_axi_arready <= 0;
          addingDone = 0;
    end else begin
       result_tmp <= 'bz;
-      s1_axi_arready <= 0;
+      s1_axi_arready <= 1;
       addingDone = 1;
    end
 end
