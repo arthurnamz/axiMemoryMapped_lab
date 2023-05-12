@@ -38,6 +38,8 @@ reg [DATA_WIDTH-1:0] operandA, operandB;
 reg [(2*DATA_WIDTH-1):0] result_tmp;
 wire [DATA_WIDTH-1:0] overflow_adder;
 
+reg receiveOpA, receiveOpB, addingDone;
+
 //getting data from the master
 always@(posedge s1_axi_aclk)
 begin
@@ -45,6 +47,8 @@ begin
     begin
 	    s1_axi_awready <= 0;
        s1_axi_wready <= 0;
+       receiveOpA <= 0;
+       receiveOpB <= 0;
     end
 	else if(s1_axi_awvalid == 1 && s1_axi_wvalid == 1 )
 	  begin
@@ -54,6 +58,10 @@ begin
             s1_axi_awready <= 0;
             s1_axi_wready <= 0;
 		      operandA <= s1_axi_wdata;
+            if(addingDone)
+               receiveOpA <= 0;
+            else
+                receiveOpA <= 1;
               if (s1_axi_bready == 1) begin
                 s1_axi_awready <= 1;
                 s1_axi_wready <= 1;
@@ -67,6 +75,10 @@ begin
             s1_axi_awready <= 0;
             s1_axi_wready <= 0;
 		      operandB <= s1_axi_wdata;
+            if(addingDone)
+               receiveOpB <= 0;
+            else
+                receiveOpB <= 1;
               if (s1_axi_bready == 1) begin
                 s1_axi_awready <= 1;
                 s1_axi_wready <= 1;
@@ -92,7 +104,15 @@ end
 
 always@(operandA, operandB)
 begin
-  result_tmp <= operandA + operandB;
+   if (receiveOpA && receiveOpB) begin
+         result_tmp <= operandA + operandB;
+         s1_axi_arready <= 0;
+         addingDone = 1;
+   end else begin
+      result_tmp <= 'bz;
+      s1_axi_arready <= 1;
+      addingDone = 0;
+   end
 end
 
 assign overflow_adder = (result_tmp > (2**DATA_WIDTH)-1)?1:0;   //tri-state assignment
@@ -123,7 +143,7 @@ begin
                   s1_axi_rdata <= 'bz; 
                   s1_axi_rvalid <= 0;
                   s1_axi_rresp <= 0;
-                 // s1_axi_arready <= 1;
+                  
                end
          endcase
       end
