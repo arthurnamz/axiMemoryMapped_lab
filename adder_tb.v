@@ -31,15 +31,12 @@ module adder_tb;
   wire s1_axi_rresp;
   wire s1_axi_rvalid;
   reg s1_axi_rready;
-  reg [46:0] tester [0:15];
   
-  integer i;
-  reg k;
-  reg l;
-  reg m;
-  reg [7:0] p;
-  reg [3:0] q;
+ // internal register
+  reg [7:0] read_out;
+  reg [7:0] write_in;
   reg [31:0] hold;
+
   // Instantiate the DUT
   adder #(
     .DATA_WIDTH(DATA_WIDTH),
@@ -66,58 +63,49 @@ module adder_tb;
     .s1_axi_rready(s1_axi_rready)
   );
 
-  // Clock generation
-  always #5 s1_axi_aclk = ~s1_axi_aclk;
+  
 
   // Reset generation
   initial begin
     s1_axi_aresetn = 0;
-    #5;
-    s1_axi_aresetn = 1;
-    k = 1;
-    l = 1;
-    m = 1;
-    p= 0;
-    q = 15;
+    #5
+     s1_axi_aresetn = 1;
 
-    
-    // Generate random numbers
-    repeat (16) begin
-      hold = $random;
-        tester[i] = tester[k] + tester[l] + tester[p] + tester[hold] + tester[q] + tester[m];
-        p = p + 1;
-    end
-    
-    #200;
+    write_in = 0;
+    #20;
+    read_out = 0;
+    hold = 23;
+    #500;
     $finish;
 end
  // Write data
  always @(posedge s1_axi_aclk) begin
-    s1_axi_awvalid <= tester[i][0];      // 1 bit
-    s1_axi_wvalid <= tester[i][1];       // 1 bit
+    s1_axi_awvalid <= 1;      // 1 bit
+    s1_axi_wvalid <= 1;       // 1 bit
     
     if (s1_axi_wready == 1 && s1_axi_awready == 1) begin
-        s1_axi_awaddr <= tester[i][9:2];  // 8 bits
-        s1_axi_wdata <= tester[i][41:10]; // 32 bits
-        s1_axi_wstrb <= tester[i][45:42]; // 4 bits
-        s1_axi_bready <= tester[i][46];   // 1 bit
+        s1_axi_awaddr <= write_in;  // 8 bits
+        s1_axi_wdata <= hold; // 32 bits
+        s1_axi_wstrb <= 15; // 4 bits
+        s1_axi_bready <= 1;   // 1 bit
+        write_in <= write_in + 1;
+        hold <= hold + 7;
     end
+    
 end
  // Read data
  always @(posedge s1_axi_aclk) 
  begin
     s1_axi_arvalid <= 1;
     s1_axi_rready <= 1;
-    s1_axi_araddr <= 8;
-
-    s1_axi_arvalid <= 0;
-    s1_axi_rready <= 0;
-    
-   
-    s1_axi_arvalid <= 1;
-    s1_axi_rready <= 1;
-    s1_axi_araddr <= 12;
+    if(s1_axi_arready == 1 ) begin
+      s1_axi_araddr <= read_out;
+      read_out <= read_out + 1;
+    end
  end
+
+ // Clock generation
+  always #5 s1_axi_aclk = ~s1_axi_aclk;
 
 endmodule
 
