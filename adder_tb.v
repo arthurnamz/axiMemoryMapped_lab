@@ -73,8 +73,9 @@ module adder_tb;
 
     write_in = 0;
     #20;
-    read_out = 0;
+    read_out = 8;
     hold = 23;
+
     #500;
     $finish;
 end
@@ -88,9 +89,17 @@ end
         s1_axi_wdata <= hold; // 32 bits
         s1_axi_wstrb <= 15; // 4 bits
         s1_axi_bready <= 1;   // 1 bit
-        write_in <= write_in + 1;
+        
+        if (write_in == 4)begin
+         write_in <= 0;
+        end else begin
+          write_in <= 4;
+        end
+
         hold <= hold + 7;
     end
+
+    
     
 end
  // Read data
@@ -100,7 +109,11 @@ end
     s1_axi_rready <= 1;
     if(s1_axi_arready == 1 ) begin
       s1_axi_araddr <= read_out;
-      read_out <= read_out + 1;
+      if (read_out == 12)begin
+         read_out <= 8;
+        end else begin
+          read_out <= 12;
+        end
     end
  end
 
