@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module adder_tb;
+module multiplier_tb;
 
   // Parameters
   parameter DATA_WIDTH = 32;
@@ -39,7 +39,7 @@ module adder_tb;
   reg waiting;
 
   // Instantiate the DUT
-  adder #(
+  multiplier #(
     .DATA_WIDTH(DATA_WIDTH),
     .ADDR_WIDTH(ADDR_WIDTH)
   ) dut (
