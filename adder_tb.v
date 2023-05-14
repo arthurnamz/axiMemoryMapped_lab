@@ -98,6 +98,7 @@ end
          waiting <= 1;
         end else begin
           write_in <= 4;
+          waiting <= 0;
         end
 
         hold <= hold + 7;
@@ -118,6 +119,7 @@ end
          waiting <= 0;
         end else begin
           read_out <= 12;
+          waiting <= 1;
         end
     end
  end

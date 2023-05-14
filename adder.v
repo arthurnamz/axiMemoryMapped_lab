@@ -119,7 +119,7 @@ begin
      if(operandCounters == 2)
       begin
         result_tmp <= operandA + operandB;
-      end
+      end 
 end
 
 assign overflow_adder = (result_tmp > (2**DATA_WIDTH)-1)?1:0;   //tri-state assignment
