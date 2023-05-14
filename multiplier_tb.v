@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module multiplier_tb;
+module adder_tb;
 
   // Parameters
   parameter DATA_WIDTH = 32;
@@ -31,9 +31,15 @@ module multiplier_tb;
   wire s2_axi_rresp;
   wire s2_axi_rvalid;
   reg s2_axi_rready;
+  
+ // internal register
+  reg [7:0] read_out;
+  reg [7:0] write_in;
+  reg [31:0] hold;
+  reg waiting;
 
   // Instantiate the DUT
-  multiplier #(
+  adder #(
     .DATA_WIDTH(DATA_WIDTH),
     .ADDR_WIDTH(ADDR_WIDTH)
   ) dut (
@@ -58,54 +64,68 @@ module multiplier_tb;
     .s2_axi_rready(s2_axi_rready)
   );
 
-  // Clock generation
-  always #5 s2_axi_aclk = ~s2_axi_aclk;
+  
 
   // Reset generation
   initial begin
     s2_axi_aresetn = 0;
-    #10;
-    s2_axi_aresetn = 1;
-  end
+    #5
+     s2_axi_aresetn = 1;
 
-  // Write data
-  initial begin
-    #10;
-    s2_axi_awaddr = 16;
-    s2_axi_awvalid = 1;
-    s2_axi_wdata = 32'h278;
-    s2_axi_wstrb = 4'hF;
-    s2_axi_wvalid = 1;
-    s2_axi_bready = 1;
+    write_in = 0;
+    waiting = 0;
     #20;
-    
-    s2_axi_awaddr = 20;
-    s2_axi_awvalid = 1;
-    s2_axi_wdata = 32'h1468;
-    s2_axi_wstrb = 4'hF;
-    s2_axi_wvalid = 1;
-    s2_axi_bready = 1;
-    #20;
-    
-    s2_axi_awvalid = 0;
-    s2_axi_wvalid = 0;
-    #20;
-    
-    s2_axi_araddr = 24;
-    s2_axi_arvalid = 1;
-    s2_axi_rready = 1;
-    #20;
-    
-    s2_axi_araddr = 28;
-    s2_axi_arvalid = 1;
-    s2_axi_rready = 1;
-    #20;
-    
-    s2_axi_arvalid = 0;
-    #20;
-    
+    read_out = 8;
+    hold = 23;
+
+    #500;
     $finish;
-  end
+end
+ // Write data
+ always @(posedge s2_axi_aclk) begin
+    s2_axi_awvalid <= 1;      // 1 bit
+    s2_axi_wvalid <= 1;       // 1 bit
+    
+    if (s2_axi_wready == 1 && s2_axi_awready == 1 && waiting == 0) begin
+        s2_axi_awaddr <= write_in;  // 8 bits
+        s2_axi_wdata <= hold; // 32 bits
+        s2_axi_wstrb <= 15; // 4 bits
+        s2_axi_bready <= 1;   // 1 bit
+        
+        
+        if (write_in == 4)begin
+         write_in <= 0;
+         waiting <= 1;
+        end else begin
+          write_in <= 4;
+          waiting <= 0;
+        end
+
+        hold <= hold + 7;
+    end
+
+    
+    
+end
+ // Read data
+ always @(posedge s2_axi_aclk) 
+ begin
+    s2_axi_arvalid <= 1;
+    s2_axi_rready <= 1;
+    if(s2_axi_arready == 1 && waiting == 1) begin
+      s2_axi_araddr <= read_out;
+      if (read_out == 12)begin
+         read_out <= 8;
+         waiting <= 0;
+        end else begin
+          read_out <= 12;
+          waiting <= 1;
+        end
+    end
+ end
+
+ // Clock generation
+  always #5 s2_axi_aclk = ~s2_axi_aclk;
 
 endmodule
 
