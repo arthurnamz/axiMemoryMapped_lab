@@ -10,15 +10,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="400.956 ns"></ZoomEndTime>
+      <ZoomStartTime time="247.973 ns"></ZoomStartTime>
+      <ZoomEndTime time="580.406 ns"></ZoomEndTime>
       <Cursor1Time time="525.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="218"></NameColumnWidth>
+      <NameColumnWidth column_width="214"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="24" />
+   <WVObjectSize size="25" />
    <wvobject type="logic" fp_name="/adder_tb/s1_axi_aclk">
       <obj_property name="ElementShortName">s1_axi_aclk</obj_property>
       <obj_property name="ObjectShortName">s1_axi_aclk</obj_property>
@@ -71,6 +71,12 @@
    <wvobject type="logic" fp_name="/adder_tb/s1_axi_bready">
       <obj_property name="ElementShortName">s1_axi_bready</obj_property>
       <obj_property name="ObjectShortName">s1_axi_bready</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/adder_tb/waiting">
+      <obj_property name="ElementShortName">waiting</obj_property>
+      <obj_property name="ObjectShortName">waiting</obj_property>
+      <obj_property name="CustomSignalColor">#FF0080</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/adder_tb/s1_axi_araddr">
       <obj_property name="ElementShortName">s1_axi_araddr[7:0]</obj_property>
