@@ -38,11 +38,11 @@ module adder#(
 reg [DATA_WIDTH-1:0] operandA, operandB;
 reg [(2*DATA_WIDTH-1):0] result_tmp;
 wire [DATA_WIDTH-1:0] overflow_adder;
-reg [1:0] operandCounters;
+reg [1:0] operandCounters = 0;
 reg s1_axi_arready_tmp;
 
-//assign s1_axi_arready = s1_axi_arready_tmp;
-assign s1_axi_arready = 1'b1;
+assign s1_axi_arready = s1_axi_arready_tmp;
+// assign s1_axi_arready = 1'b1;
 
 //getting data from the master
 always@(posedge s1_axi_aclk)
@@ -62,12 +62,13 @@ begin
             s1_axi_wready <= 0;
             
                   operandA <= s1_axi_wdata;
-                  
-                  if(operandCounters == 2'b10)
+               
+                  if(operandCounters == 2'b10) begin
                      operandCounters <= 1;
-                  else
-                    operandCounters <= operandCounters + 1;
-                    
+                  end
+                  else begin
+                     operandCounters <= operandCounters + 1;
+                  end
                   if (s1_axi_bready == 1) begin
                     s1_axi_awready <= 1;
                     s1_axi_wready <= 1;
@@ -81,13 +82,13 @@ begin
             s1_axi_awready <= 0;
             s1_axi_wready <= 0;
             
-              operandB <= s1_axi_wdata;
-              
-              if(operandCounters == 2'b10)
+              operandB <= s1_axi_wdata;  
+              if(operandCounters == 2) begin
                     operandCounters <= 1;
-                  else
+              end
+                  else begin
                     operandCounters <= operandCounters + 1;
-                    
+                  end 
               if (s1_axi_bready == 1) begin
                 s1_axi_awready <= 1;
                 s1_axi_wready <= 1;
@@ -113,16 +114,12 @@ begin
   
 end
 
-always@(operandCounters)
-//always@(posedge s1_axi_aclk)
+ always@(operandCounters)
 begin
-     if(operandCounters == 2'b10)
-      //begin
+     if(operandCounters == 2)
+      begin
         result_tmp <= operandA + operandB;
-       /* s1_axi_arready_tmp <= 1'b1;
       end
-     else
-       s1_axi_arready_tmp <= 1'b0;*/
 end
 
 assign overflow_adder = (result_tmp > (2**DATA_WIDTH)-1)?1:0;   //tri-state assignment
@@ -143,20 +140,17 @@ begin
             8: begin
                   s1_axi_rvalid <= 1;
                   s1_axi_rresp <= 1;
-                  //if(s1_axi_arready_tmp)
-                     s1_axi_rdata <= result_tmp[31:0];
+                  s1_axi_rdata <= result_tmp[31:0];
                end
             12: begin
                   s1_axi_rvalid <= 1;
                   s1_axi_rresp <= 1;
-                  //if(s1_axi_arready_tmp)
-                    s1_axi_rdata <= overflow_adder;
+                  s1_axi_rdata <= overflow_adder;
                end
             default: begin
                   s1_axi_rdata <= 'bz; 
                   s1_axi_rvalid <= 0;
                   s1_axi_rresp <= 0;
-                  //s1_axi_arready <= 1;
                end
          endcase
       end
@@ -182,7 +176,6 @@ begin
       s1_axi_arready_tmp <= 1'b1;    
    else
       s1_axi_arready_tmp <= 1'b0; 
- 
 end
 
 

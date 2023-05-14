@@ -36,6 +36,7 @@ module adder_tb;
   reg [7:0] read_out;
   reg [7:0] write_in;
   reg [31:0] hold;
+  reg waiting;
 
   // Instantiate the DUT
   adder #(
@@ -72,6 +73,7 @@ module adder_tb;
      s1_axi_aresetn = 1;
 
     write_in = 0;
+    waiting = 0;
     #20;
     read_out = 8;
     hold = 23;
@@ -84,11 +86,12 @@ end
     s1_axi_awvalid <= 1;      // 1 bit
     s1_axi_wvalid <= 1;       // 1 bit
     
-    if (s1_axi_wready == 1 && s1_axi_awready == 1) begin
+    if (s1_axi_wready == 1 && s1_axi_awready == 1 && waiting == 0) begin
         s1_axi_awaddr <= write_in;  // 8 bits
         s1_axi_wdata <= hold; // 32 bits
         s1_axi_wstrb <= 15; // 4 bits
         s1_axi_bready <= 1;   // 1 bit
+        waiting <= 1;
         
         if (write_in == 4)begin
          write_in <= 0;
@@ -107,8 +110,9 @@ end
  begin
     s1_axi_arvalid <= 1;
     s1_axi_rready <= 1;
-    if(s1_axi_arready == 1 ) begin
+    if(s1_axi_arready == 1 && waiting == 1) begin
       s1_axi_araddr <= read_out;
+      waiting <= 0;
       if (read_out == 12)begin
          read_out <= 8;
         end else begin
