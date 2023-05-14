@@ -91,10 +91,11 @@ end
         s1_axi_wdata <= hold; // 32 bits
         s1_axi_wstrb <= 15; // 4 bits
         s1_axi_bready <= 1;   // 1 bit
-        waiting <= 1;
+        
         
         if (write_in == 4)begin
          write_in <= 0;
+         waiting <= 1;
         end else begin
           write_in <= 4;
         end
@@ -112,9 +113,9 @@ end
     s1_axi_rready <= 1;
     if(s1_axi_arready == 1 && waiting == 1) begin
       s1_axi_araddr <= read_out;
-      waiting <= 0;
       if (read_out == 12)begin
          read_out <= 8;
+         waiting <= 0;
         end else begin
           read_out <= 12;
         end
