@@ -118,7 +118,7 @@ end
 begin
      if(operandCounters == 2)
       begin
-        result_tmp <= operandA + operandB;
+        result_tmp <= operandA * operandB;
       end 
 end
 
