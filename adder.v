@@ -41,8 +41,8 @@ wire [DATA_WIDTH-1:0] overflow_adder;
 reg [1:0] operandCounters = 0;
 reg s1_axi_arready_tmp;
 
-assign s1_axi_arready = s1_axi_arready_tmp;
-// assign s1_axi_arready = 1'b1;
+//assign s1_axi_arready = s1_axi_arready_tmp;
+ assign s1_axi_arready = 1'b1;
 
 //getting data from the master
 always@(posedge s1_axi_aclk)
