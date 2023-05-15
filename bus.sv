@@ -71,14 +71,62 @@ module bus#(
 // Internal registers
 
 
+// finite state machines
+  typedef enum {IDLE_WRITE,VALID_WRITE_ADDR,VALID_WRITE_DATA, WRITE_TO_SLAVE, NOTIFY_MASTER } writing_states;
+  typedef enum {IDLE_READ, VALID_READ_ADDR, READ_FROM_SLAVE, CACHE_DATA, WRITE_TO_MASTER } reading_states;
+  writing_states write_state;
+  reading_states read_state;
 
 // Writing to the slave
-
-
-
-
-
+always @(posedge s0_axi_aclk) begin
+    if (s0_axi_aresetn == 0) begin
+      
+    end else begin
+      case (write_state)
+        IDLE_WRITE: begin
+          
+        end
+        VALID_WRITE_ADDR: begin
+          
+        end
+        VALID_WRITE_DATA: begin
+          
+        end
+        WRITE_TO_SLAVE: begin
+          
+        end
+        NOTIFY_MASTER: begin
+          
+        end
+        
+      endcase
+    end
+  end
 
 // Reading from the slave
+always @(posedge m1_axi_aclk) begin
+    if (m1_axi_aresetn == 0) begin
+      
+    end else begin
+      case (read_state)
+        IDLE_READ: begin
+          
+        end
+        VALID_READ_ADDR: begin
+          
+        end
+        READ_FROM_SLAVE: begin
+          
+        end
+        CACHE_DATA: begin
+          
+        end
+        WRITE_TO_MASTER: begin
+          
+        end
+        
+      endcase
+    end
+  end
 
 endmodule
