@@ -68,5 +68,17 @@ module bus#(
     input reg m1_axi_rvalid,
     output  m1_axi_rready
 );
+// Internal registers
+
+
+
+// Writing to the slave
+
+
+
+
+
+
+// Reading from the slave
 
 endmodule
