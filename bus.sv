@@ -69,7 +69,10 @@ module bus#(
     output reg m1_axi_rready
 );
 // Internal registers
-reg [DATA_WIDTH-1:0] cached_results;
+reg [DATA_WIDTH-1:0] cached_read_data;
+reg [ADDR_WIDTH-1:0] cached_read_address;
+reg [DATA_WIDTH-1:0] cached_write_data;
+reg [ADDR_WIDTH-1:0] cached_write_address;
 
 // finite state machines
   typedef enum {IDLE_WRITE,VALID_WRITE_ADDR,VALID_WRITE_DATA, WRITE_TO_SLAVE, NOTIFY_MASTER } writing_states;
