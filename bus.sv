@@ -90,10 +90,13 @@ always @(posedge s0_axi_aclk) begin
           
         end
         VALID_WRITE_ADDR: begin
+            if (s0_axi_awvalid)
+                cached_write_address <= s0_axi_awaddr;
           
         end
         VALID_WRITE_DATA: begin
-          
+            if (s0_axi_wvalid)
+                cached_write_data <= s0_axi_wdata;
         end
         WRITE_TO_SLAVE: begin
           
