@@ -138,19 +138,37 @@ always @(posedge m1_axi_aclk) begin
     end else begin
       case (read_state)
         IDLE_READ: begin
-          
+          m1_axi_arvalid <= 1;
+          s0_axi_arvalid <= 1;
         end
         VALID_READ_ADDR: begin
-          
+          if(s0_axi_arvalid ) begin
+            cached_read_address <= s0_axi_araddr;
+            s0_axi_arready <= 1;
+          end
         end
         READ_FROM_SLAVE: begin
-          
+          if(m1_axi_arready) begin
+            m1_axi_araddr <= cached_read_address;
+            m1_axi_arvalid <= 1;
+          end
         end
         CACHE_DATA: begin
+          m1_axi_rready <= 0;
+          if(m1_axi_rvalid && m1_axi_rresp) begin
+            cached_read_data <= m1_axi_rdata;
+            m1_axi_rready <= 1;
+          end
           
         end
         WRITE_TO_MASTER: begin
-          
+          s0_axi_rresp <= 0;
+          s0_axi_rvalid <= 0;
+          if(s0_axi_rready) begin
+            s0_axi_rdata <= cached_read_data;
+            s0_axi_rresp <= 1;
+            s0_axi_rvalid <= 1;
+          end
         end
         
       endcase
