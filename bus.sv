@@ -85,13 +85,16 @@ reg [DATA_WIDTH/8:0] cached_wstrb;
 // Writing to the slave
 always @(posedge s0_axi_aclk) begin
     if (s0_axi_aresetn == 0) begin
-      
+      s0_axi_awready <= 0;
+      s0_axi_wready <= 0;
     end else begin
       case (write_state)
         IDLE_WRITE: begin
-          
+          s0_axi_awready <= 1;
+          s0_axi_wready <= 1;
         end
         VALID_WRITE_ADDR: begin
+          s0_axi_awready <= 0;
             if (s0_axi_awvalid) begin
                 cached_write_address <= s0_axi_awaddr;
                 s0_axi_awready <= 1;
@@ -117,6 +120,7 @@ always @(posedge s0_axi_aclk) begin
           end
         end
         NOTIFY_MASTER: begin
+          m1_axi_bready <= 0;
           if(m1_axi_bresp && m1_axi_bvalid) begin
             m1_axi_bready <= 1;
           end   
@@ -129,7 +133,8 @@ always @(posedge s0_axi_aclk) begin
 // Reading from the slave
 always @(posedge m1_axi_aclk) begin
     if (m1_axi_aresetn == 0) begin
-      
+      m1_axi_arvalid <= 0;
+      s0_axi_arvalid <= 0;
     end else begin
       case (read_state)
         IDLE_READ: begin
