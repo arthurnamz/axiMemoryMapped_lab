@@ -70,7 +70,7 @@ parameter ADDR_WIDTH = 8;
     .DATA_WIDTH(DATA_WIDTH),
     .ADDR_WIDTH(ADDR_WIDTH)
   ) dut (
-// SLAVE INTERFACE
+// SLAVE     INTERFACE
     .s0_axi_aclk(s0_axi_aclk),
     .s0_axi_aresetn(s0_axi_aresetn),
     .s0_axi_awaddr(s0_axi_awaddr),
@@ -111,5 +111,27 @@ parameter ADDR_WIDTH = 8;
     .m1_axi_rvalid(m1_axi_rvalid),
     .m1_axi_rready(m1_axi_rready)
   );
+
+// Clock generation
+  always #5 s0_axi_aclk = ~s0_axi_aclk;
+  always #5 m1_axi_aclk = ~m1_axi_aclk;
+  // Reset generation
+  initial begin
+    s0_axi_aresetn = 0;
+    m1_axi_aresetn = 0;
+    #5;
+    s0_axi_aresetn = 1;
+    m1_axi_aresetn = 1;
+
+    write_in = 0;
+    waiting = 0;
+    waiting2 = 0;
+    #20;
+    read_out = 8;
+    hold = 23;
+
+    #500;
+    $finish;
+end
 
 endmodule
