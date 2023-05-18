@@ -70,7 +70,46 @@ parameter ADDR_WIDTH = 8;
     .DATA_WIDTH(DATA_WIDTH),
     .ADDR_WIDTH(ADDR_WIDTH)
   ) dut (
-
+// SLAVE INTERFACE
+    .s0_axi_aclk(s0_axi_aclk),
+    .s0_axi_aresetn(s0_axi_aresetn),
+    .s0_axi_awaddr(s0_axi_awaddr),
+    .s0_axi_awvalid(s0_axi_awvalid),
+    .s0_axi_awready(s0_axi_awready),
+    .s0_axi_wdata(s0_axi_wdata),
+    .s0_axi_wstrb(s0_axi_wstrb),
+    .s0_axi_wvalid(s0_axi_wvalid),
+    .s0_axi_wready(s0_axi_wready),
+    .s0_axi_bresp(s0_axi_bresp),
+    .s0_axi_bvalid(s0_axi_bvalid),
+    .s0_axi_bready(s0_axi_bready),
+    .s0_axi_araddr(s0_axi_araddr),
+    .s0_axi_arvalid(s0_axi_arvalid),
+    .s0_axi_arready(s0_axi_arready),
+    .s0_axi_rdata(s0_axi_rdata),
+    .s0_axi_rresp(s0_axi_rresp),
+    .s0_axi_rvalid(s0_axi_rvalid),
+    .s0_axi_rready(s0_axi_rready),
+// MASTER INTERFACE
+    .m1_axi_aclk(m1_axi_aclk),
+    .m1_axi_aresetn(m1_axi_aresetn),
+    .m1_axi_awaddr(m1_axi_awaddr),
+    .m1_axi_awvalid(m1_axi_awvalid),
+    .m1_axi_awready(m1_axi_awready),
+    .m1_axi_wdata(m1_axi_wdata),
+    .m1_axi_wstrb(m1_axi_wstrb),
+    .m1_axi_wvalid(m1_axi_wvalid),
+    .m1_axi_wready(m1_axi_wready),
+    .m1_axi_bresp(m1_axi_bresp),
+    .m1_axi_bvalid(m1_axi_bvalid),
+    .m1_axi_bready(m1_axi_bready),
+    .m1_axi_araddr(m1_axi_araddr),
+    .m1_axi_arvalid(m1_axi_arvalid),
+    .m1_axi_arready(m1_axi_arready),
+    .m1_axi_rdata(m1_axi_rdata),
+    .m1_axi_rresp(m1_axi_rresp),
+    .m1_axi_rvalid(m1_axi_rvalid),
+    .m1_axi_rready(m1_axi_rready)
   );
 
 endmodule
