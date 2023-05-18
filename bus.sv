@@ -73,6 +73,8 @@ reg [DATA_WIDTH-1:0] cached_read_data;
 reg [ADDR_WIDTH-1:0] cached_read_address;
 reg [DATA_WIDTH-1:0] cached_write_data;
 reg [ADDR_WIDTH-1:0] cached_write_address;
+reg [DATA_WIDTH/8:0] cached_wstrb;
+
 
 // finite state machines
   typedef enum {IDLE_WRITE,VALID_WRITE_ADDR,VALID_WRITE_DATA, WRITE_TO_SLAVE, NOTIFY_MASTER } writing_states;
@@ -90,16 +92,25 @@ always @(posedge s0_axi_aclk) begin
           
         end
         VALID_WRITE_ADDR: begin
-            if (s0_axi_awvalid)
+            if (s0_axi_awvalid) begin
                 cached_write_address <= s0_axi_awaddr;
-          
+                s0_axi_awready <= 1;
+            end 
         end
         VALID_WRITE_DATA: begin
-            if (s0_axi_wvalid)
+          s0_axi_wready <= 0;
+            if (s0_axi_wvalid && s0_axi_bready) begin
                 cached_write_data <= s0_axi_wdata;
+                cached_wstrb <= s0_axi_wstrb;
+                s0_axi_wready <= 1;
+                s0_axi_bresp <= 1;
+                s0_axi_bvalid <= 1;
+            end
         end
         WRITE_TO_SLAVE: begin
-          
+          m1_axi_awaddr <= cached_write_address;
+          m1_axi_wdata <= cached_write_data;
+          m1_axi_wstrb <= cached_wstrb;
         end
         NOTIFY_MASTER: begin
           

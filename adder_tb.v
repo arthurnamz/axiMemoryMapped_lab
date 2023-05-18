@@ -37,6 +37,7 @@ module adder_tb;
   reg [7:0] write_in;
   reg [31:0] hold;
   reg waiting;
+  reg waiting2;
 
   // Instantiate the DUT
   adder #(
@@ -74,6 +75,7 @@ module adder_tb;
 
     write_in = 0;
     waiting = 0;
+    waiting2 = 0;
     #20;
     read_out = 8;
     hold = 23;
@@ -86,7 +88,7 @@ end
     s1_axi_awvalid <= 1;      // 1 bit
     s1_axi_wvalid <= 1;       // 1 bit
     
-    if (s1_axi_wready == 1 && s1_axi_awready == 1 && waiting == 0) begin
+    if (s1_axi_wready == 1 && s1_axi_awready == 1 && waiting2 == 1) begin
         s1_axi_awaddr <= write_in;  // 8 bits
         s1_axi_wdata <= hold; // 32 bits
         s1_axi_wstrb <= 15; // 4 bits
@@ -95,14 +97,18 @@ end
         
         if (write_in == 4)begin
          write_in <= 0;
-         waiting <= 1;
         end else begin
           write_in <= 4;
-          waiting <= 0;
         end
+        
 
         hold <= hold + 7;
     end
+    if (waiting2 == 0)begin
+         waiting <= 1;
+        end else begin
+          waiting <= 0;
+        end
 
     
     
@@ -116,12 +122,19 @@ end
       s1_axi_araddr <= read_out;
       if (read_out == 12)begin
          read_out <= 8;
-         waiting <= 0;
+         waiting2 <= 1;
         end else begin
           read_out <= 12;
-          waiting <= 1;
+          waiting2 <= 0;
         end
+
+        
     end
+    if (waiting == 0)begin
+         waiting2 <= 1;
+        end else begin
+          waiting2 <= 0;
+        end
  end
 
  // Clock generation
