@@ -42,14 +42,14 @@ module bus#(
     input m1_axi_aresetn,
 
     // Write address channel
-    output reg [ADDR_WIDTH-1:0] m1_axi_awaddr,
-    output reg m1_axi_awvalid,
+    output  [ADDR_WIDTH-1:0] m1_axi_awaddr,
+    output  m1_axi_awvalid,
     input  m1_axi_awready,
 
     // Write data channel
-    output reg [DATA_WIDTH-1:0] m1_axi_wdata,
-    output reg [DATA_WIDTH/8:0] m1_axi_wstrb,
-    output reg m1_axi_wvalid,
+    output  [DATA_WIDTH-1:0] m1_axi_wdata,
+    output  [DATA_WIDTH/8:0] m1_axi_wstrb,
+    output  m1_axi_wvalid,
     input  m1_axi_wready,
 
     // Write response channel
@@ -108,12 +108,18 @@ always @(posedge s0_axi_aclk) begin
             end
         end
         WRITE_TO_SLAVE: begin
-          m1_axi_awaddr <= cached_write_address;
-          m1_axi_wdata <= cached_write_data;
-          m1_axi_wstrb <= cached_wstrb;
+          if (m1_axi_awready && m1_axi_wready) begin
+            m1_axi_awaddr <= cached_write_address;
+            m1_axi_wdata <= cached_write_data;
+            m1_axi_wstrb <= cached_wstrb;
+            m1_axi_awvalid <= 1;
+            m1_axi_wvalid <= 1;
+          end
         end
         NOTIFY_MASTER: begin
-          
+          if(m1_axi_bresp && m1_axi_bvalid) begin
+            m1_axi_bready <= 1;
+          end   
         end
         
       endcase
