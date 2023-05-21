@@ -1,4 +1,4 @@
-module bus#(
+module bus #(
     parameter DATA_WIDTH = 32,
     parameter ADDR_WIDTH = 8
 )
@@ -34,7 +34,7 @@ module bus#(
     output reg [DATA_WIDTH-1:0] s0_axi_rdata,
     output reg s0_axi_rresp,
     output reg s0_axi_rvalid,
-    input s0_axi_rready
+    input s0_axi_rready,
 
 /* master interface */
    // Global signals
@@ -42,14 +42,14 @@ module bus#(
     input m1_axi_aresetn,
 
     // Write address channel
-    output  [ADDR_WIDTH-1:0] m1_axi_awaddr,
-    output  m1_axi_awvalid,
+    output  reg [ADDR_WIDTH-1:0] m1_axi_awaddr,
+    output  reg m1_axi_awvalid,
     input  m1_axi_awready,
 
     // Write data channel
-    output  [DATA_WIDTH-1:0] m1_axi_wdata,
-    output  [DATA_WIDTH/8:0] m1_axi_wstrb,
-    output  m1_axi_wvalid,
+    output  reg [DATA_WIDTH-1:0] m1_axi_wdata,
+    output  reg [DATA_WIDTH/8:0] m1_axi_wstrb,
+    output  reg m1_axi_wvalid,
     input  m1_axi_wready,
 
     // Write response channel
@@ -76,9 +76,10 @@ reg [ADDR_WIDTH-1:0] cached_write_address;
 reg [DATA_WIDTH/8:0] cached_wstrb;
 
 
+
 // finite state machines
-  typedef enum {IDLE_WRITE,VALID_WRITE_ADDR,VALID_WRITE_DATA, WRITE_TO_SLAVE, NOTIFY_MASTER } writing_states;
-  typedef enum {IDLE_READ, VALID_READ_ADDR, READ_FROM_SLAVE, CACHE_DATA, WRITE_TO_MASTER } reading_states;
+  typedef enum {IDLE_WRITE,VALID_WRITE_ADDR,VALID_WRITE_DATA, WRITE_TO_SLAVE1, WRITE_TO_SLAVE2, NOTIFY_MASTER } writing_states;
+  typedef enum {IDLE_READ, VALID_READ_ADDR, READ_FROM_SLAVE1, READ_FROM_SLAVE1, CACHE_DATA, WRITE_TO_MASTER } reading_states;
   writing_states write_state;
   reading_states read_state;
 
@@ -92,37 +93,59 @@ always @(posedge s0_axi_aclk) begin
         IDLE_WRITE: begin
           s0_axi_awready <= 1;
           s0_axi_wready <= 1;
+          if (s0_axi_awvalid) begin
+              write_state = VALID_WRITE_ADDR;
+          end
         end
         VALID_WRITE_ADDR: begin
-          s0_axi_awready <= 0;
-            if (s0_axi_awvalid) begin
-                cached_write_address <= s0_axi_awaddr;
-                s0_axi_awready <= 1;
-            end 
+          cached_write_address <= s0_axi_awaddr;
+          s0_axi_awready <= 1;
+          if (s0_axi_wvalid && s0_axi_bready) begin
+              write_state = VALID_WRITE_DATA;
+          end
         end
         VALID_WRITE_DATA: begin
-          s0_axi_wready <= 0;
-            if (s0_axi_wvalid && s0_axi_bready) begin
-                cached_write_data <= s0_axi_wdata;
-                cached_wstrb <= s0_axi_wstrb;
-                s0_axi_wready <= 1;
-                s0_axi_bresp <= 1;
-                s0_axi_bvalid <= 1;
-            end
+            cached_write_data <= s0_axi_wdata;
+            cached_wstrb <= s0_axi_wstrb;
+            s0_axi_wready <= 1;
+            s0_axi_bresp <= 1;
+            s0_axi_bvalid <= 1;
+
+            if(cached_write_address == 0 || cached_write_address == 4)begin
+                write_state = WRITE_TO_SLAVE1;
+              end else begin
+                write_state = WRITE_TO_SLAVE2;
+              end
         end
-        WRITE_TO_SLAVE: begin
+        WRITE_TO_SLAVE1: begin
+          m1_axi_awvalid <= 0;
+          m1_axi_wvalid <= 0;
           if (m1_axi_awready && m1_axi_wready) begin
             m1_axi_awaddr <= cached_write_address;
             m1_axi_wdata <= cached_write_data;
             m1_axi_wstrb <= cached_wstrb;
             m1_axi_awvalid <= 1;
             m1_axi_wvalid <= 1;
+            write_state = NOTIFY_MASTER;
+          end
+        end
+        WRITE_TO_SLAVE2: begin
+          m1_axi_awvalid <= 0;
+          m1_axi_wvalid <= 0;
+          if (m1_axi_awready && m1_axi_wready) begin
+            m1_axi_awaddr <= cached_write_address;
+            m1_axi_wdata <= cached_write_data;
+            m1_axi_wstrb <= cached_wstrb;
+            m1_axi_awvalid <= 1;
+            m1_axi_wvalid <= 1;
+            write_state = NOTIFY_MASTER;
           end
         end
         NOTIFY_MASTER: begin
           m1_axi_bready <= 0;
           if(m1_axi_bresp && m1_axi_bvalid) begin
             m1_axi_bready <= 1;
+            write_state = IDLE_WRITE;
           end   
         end
         
@@ -134,12 +157,10 @@ always @(posedge s0_axi_aclk) begin
 always @(posedge m1_axi_aclk) begin
     if (m1_axi_aresetn == 0) begin
       m1_axi_arvalid <= 0;
-      s0_axi_arvalid <= 0;
     end else begin
       case (read_state)
         IDLE_READ: begin
           m1_axi_arvalid <= 1;
-          s0_axi_arvalid <= 1;
         end
         VALID_READ_ADDR: begin
           if(s0_axi_arvalid ) begin
