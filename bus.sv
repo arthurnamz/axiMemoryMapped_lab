@@ -79,7 +79,7 @@ reg [DATA_WIDTH/8:0] cached_wstrb;
 
 // finite state machines
   typedef enum {IDLE_WRITE,VALID_WRITE_ADDR,VALID_WRITE_DATA, WRITE_TO_SLAVE1, WRITE_TO_SLAVE2, NOTIFY_MASTER } writing_states;
-  typedef enum {IDLE_READ, VALID_READ_ADDR, READ_FROM_SLAVE1, READ_FROM_SLAVE1, CACHE_DATA, WRITE_TO_MASTER } reading_states;
+  typedef enum {IDLE_READ, VALID_READ_ADDR, READ_FROM_SLAVE1, READ_FROM_SLAVE2, CACHE_DATA, WRITE_TO_MASTER } reading_states;
   writing_states write_state;
   reading_states read_state;
 
