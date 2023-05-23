@@ -144,6 +144,8 @@ end
     s0_axi_wdata <= hold; // 32 bits
     s0_axi_wstrb <= 15; // 4 bits
     s0_axi_bready <= 1;   // 1 bit
+    m1_axi_awready <= 1;
+    m1_axi_wready <= 1;
     
     
     if (write_in == 20)begin
