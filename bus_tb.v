@@ -146,18 +146,26 @@ end
     s0_axi_bready <= 1;   // 1 bit
     m1_axi_awready <= 1;
     m1_axi_wready <= 1;
-    m1_axi_bresp <= 1;
-    m1_axi_bvalid <= 1;
+    m1_axi_bresp <= 0;
+    m1_axi_bvalid <= 0;
     
     
     if (write_in == 20)begin
       write_in <= 0;
+      m1_axi_bresp <= 1;
+      m1_axi_bvalid <= 1;
     end else if(write_in == 0) begin
       write_in <= 4;
+      m1_axi_bresp <= 1;
+      m1_axi_bvalid <= 1;
     end else if(write_in == 4) begin
       write_in <= 16;
+      m1_axi_bresp <= 1;
+      m1_axi_bvalid <= 1;
     end else begin
-      write_in <= 16;
+      write_in <= 20;
+      m1_axi_bresp <= 1;
+      m1_axi_bvalid <= 1;
     end
         
 
