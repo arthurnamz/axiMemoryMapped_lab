@@ -146,10 +146,14 @@ end
     s0_axi_bready <= 1;   // 1 bit
     
     
-    if (write_in == 4)begin
+    if (write_in == 20)begin
       write_in <= 0;
-    end else begin
+    end else if(write_in == 0) begin
       write_in <= 4;
+    end else if(write_in == 4) begin
+      write_in <= 16;
+    end else begin
+      write_in <= 16;
     end
         
 

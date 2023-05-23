@@ -10,12 +10,12 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0 ps"></ZoomStartTime>
-      <ZoomEndTime time="10 ps"></ZoomEndTime>
-      <Cursor1Time time="0 ps"></Cursor1Time>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="525.001 ns"></ZoomEndTime>
+      <Cursor1Time time="525.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="210"></NameColumnWidth>
+      <NameColumnWidth column_width="206"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="4" />
@@ -45,6 +45,7 @@
       <wvobject type="array" fp_name="/bus_tb/s0_axi_wdata">
          <obj_property name="ElementShortName">s0_axi_wdata[31:0]</obj_property>
          <obj_property name="ObjectShortName">s0_axi_wdata[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/bus_tb/s0_axi_wstrb">
          <obj_property name="ElementShortName">s0_axi_wstrb[4:0]</obj_property>

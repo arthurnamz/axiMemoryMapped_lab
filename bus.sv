@@ -113,7 +113,7 @@ always @(posedge s0_axi_aclk) begin
 
             if(cached_write_address == 0 || cached_write_address == 4)begin
                 write_state = WRITE_TO_SLAVE1;
-              end elseif(cached_write_address == 16 || cached_write_address == 20) begin
+              end else if(cached_write_address == 16 || cached_write_address == 20) begin
                 write_state = WRITE_TO_SLAVE2;
               end else begin
                 write_state = IDLE_WRITE;
@@ -171,7 +171,7 @@ always @(posedge m1_axi_aclk) begin
             s0_axi_arready <= 1;
              if(cached_read_address == 8 || cached_read_address == 12)begin
                 read_state = READ_FROM_SLAVE1;
-              end elseif(cached_read_address == 24 || cached_read_address == 28) begin
+              end else if(cached_read_address == 24 || cached_read_address == 28) begin
                 read_state = READ_FROM_SLAVE2;
               end else begin
                 read_state = IDLE_READ;
