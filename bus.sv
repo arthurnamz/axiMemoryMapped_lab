@@ -113,8 +113,10 @@ always @(posedge s0_axi_aclk) begin
 
             if(cached_write_address == 0 || cached_write_address == 4)begin
                 write_state = WRITE_TO_SLAVE1;
-              end else begin
+              end elseif(cached_write_address == 16 || cached_write_address == 20) begin
                 write_state = WRITE_TO_SLAVE2;
+              end else begin
+                write_state = IDLE_WRITE;
               end
         end
         WRITE_TO_SLAVE1: begin
@@ -161,17 +163,33 @@ always @(posedge m1_axi_aclk) begin
       case (read_state)
         IDLE_READ: begin
           m1_axi_arvalid <= 1;
+          read_state<=VALID_READ_ADDR;
         end
         VALID_READ_ADDR: begin
           if(s0_axi_arvalid ) begin
             cached_read_address <= s0_axi_araddr;
             s0_axi_arready <= 1;
+             if(cached_read_address == 8 || cached_read_address == 12)begin
+                read_state = READ_FROM_SLAVE1;
+              end elseif(cached_read_address == 24 || cached_read_address == 28) begin
+                read_state = READ_FROM_SLAVE2;
+              end else begin
+                read_state = IDLE_READ;
+              end
           end
         end
-        READ_FROM_SLAVE: begin
+        READ_FROM_SLAVE1: begin
           if(m1_axi_arready) begin
             m1_axi_araddr <= cached_read_address;
             m1_axi_arvalid <= 1;
+            read_state = CACHE_DATA;
+          end
+        end
+        READ_FROM_SLAVE2: begin
+          if(m1_axi_arready) begin
+            m1_axi_araddr <= cached_read_address;
+            m1_axi_arvalid <= 1;
+            read_state = CACHE_DATA;
           end
         end
         CACHE_DATA: begin
@@ -179,6 +197,7 @@ always @(posedge m1_axi_aclk) begin
           if(m1_axi_rvalid && m1_axi_rresp) begin
             cached_read_data <= m1_axi_rdata;
             m1_axi_rready <= 1;
+            read_state = WRITE_TO_MASTER;
           end
           
         end
@@ -189,6 +208,7 @@ always @(posedge m1_axi_aclk) begin
             s0_axi_rdata <= cached_read_data;
             s0_axi_rresp <= 1;
             s0_axi_rvalid <= 1;
+            read_state = IDLE_READ;
           end
         end
         
