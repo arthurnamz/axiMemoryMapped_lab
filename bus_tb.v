@@ -146,6 +146,8 @@ end
     s0_axi_bready <= 1;   // 1 bit
     m1_axi_awready <= 1;
     m1_axi_wready <= 1;
+    m1_axi_bresp <= 1;
+    m1_axi_bvalid <= 1;
     
     
     if (write_in == 20)begin
