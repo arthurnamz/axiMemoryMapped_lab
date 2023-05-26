@@ -91,15 +91,16 @@ always @(posedge s0_axi_aclk) begin
     end else begin
       case (write_state)
         IDLE_WRITE: begin
-          s0_axi_awready <= 1;
           s0_axi_wready <= 1;
+          s0_axi_awready <= 1;
           if (s0_axi_awvalid) begin
+            s0_axi_awready <= 0;
+            s0_axi_wready <= 0;
               write_state = VALID_WRITE_ADDR;
           end
         end
         VALID_WRITE_ADDR: begin
           cached_write_address <= s0_axi_awaddr;
-          s0_axi_awready <= 1;
           if (s0_axi_wvalid && s0_axi_bready) begin
               write_state = VALID_WRITE_DATA;
           end
@@ -107,7 +108,6 @@ always @(posedge s0_axi_aclk) begin
         VALID_WRITE_DATA: begin
             cached_write_data <= s0_axi_wdata;
             cached_wstrb <= s0_axi_wstrb;
-            s0_axi_wready <= 1;
             s0_axi_bresp <= 1;
             s0_axi_bvalid <= 1;
 
@@ -128,8 +128,6 @@ always @(posedge s0_axi_aclk) begin
             m1_axi_wstrb <= cached_wstrb;
             m1_axi_awvalid <= 1;
             m1_axi_wvalid <= 1;
-            s0_axi_wready <= 0;
-            s0_axi_awready <= 0;
             write_state = NOTIFY_MASTER;
           end
         end
@@ -142,17 +140,15 @@ always @(posedge s0_axi_aclk) begin
             m1_axi_wstrb <= cached_wstrb;
             m1_axi_awvalid <= 1;
             m1_axi_wvalid <= 1;
-            s0_axi_wready <= 0;
-            s0_axi_awready <= 0;
             write_state = NOTIFY_MASTER;
           end
         end
         NOTIFY_MASTER: begin
           m1_axi_bready <= 0;
-          s0_axi_wready <= 1;
-            s0_axi_awready <= 1;
           if(m1_axi_bresp && m1_axi_bvalid) begin
             m1_axi_bready <= 1;
+            s0_axi_wready <= 1;
+          s0_axi_awready <= 1;
             write_state = IDLE_WRITE;
           end   
         end
