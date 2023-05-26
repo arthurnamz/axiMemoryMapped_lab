@@ -165,20 +165,21 @@ always @(posedge m1_axi_aclk) begin
       case (read_state)
         IDLE_READ: begin
           m1_axi_arvalid <= 1;
-          read_state<=VALID_READ_ADDR;
-        end
-        VALID_READ_ADDR: begin
           if(s0_axi_arvalid ) begin
             cached_read_address <= s0_axi_araddr;
             s0_axi_arready <= 1;
-             if(cached_read_address == 8 || cached_read_address == 12)begin
+            read_state<=VALID_READ_ADDR;
+          end
+        end
+        VALID_READ_ADDR: begin
+            if(cached_read_address == 8 || cached_read_address == 12)begin
                 read_state = READ_FROM_SLAVE1;
-              // end else if(cached_read_address == 24 || cached_read_address == 28) begin
-              //   read_state = READ_FROM_SLAVE2;
+               end else if(cached_read_address == 24 || cached_read_address == 28) begin
+                 read_state = READ_FROM_SLAVE2;
               end else begin
                 read_state = READ_FROM_SLAVE2;;
               end
-          end
+
         end
         READ_FROM_SLAVE1: begin
           if(m1_axi_arready) begin
