@@ -128,6 +128,8 @@ always @(posedge s0_axi_aclk) begin
             m1_axi_wstrb <= cached_wstrb;
             m1_axi_awvalid <= 1;
             m1_axi_wvalid <= 1;
+            s0_axi_wready <= 0;
+            s0_axi_awready <= 0;
             write_state = NOTIFY_MASTER;
           end
         end
@@ -140,11 +142,15 @@ always @(posedge s0_axi_aclk) begin
             m1_axi_wstrb <= cached_wstrb;
             m1_axi_awvalid <= 1;
             m1_axi_wvalid <= 1;
+            s0_axi_wready <= 0;
+            s0_axi_awready <= 0;
             write_state = NOTIFY_MASTER;
           end
         end
         NOTIFY_MASTER: begin
           m1_axi_bready <= 0;
+          s0_axi_wready <= 1;
+            s0_axi_awready <= 1;
           if(m1_axi_bresp && m1_axi_bvalid) begin
             m1_axi_bready <= 1;
             write_state = IDLE_WRITE;
