@@ -167,6 +167,38 @@ end
  end
 end
 
+/* Read data */
+  always @(posedge s0_axi_aclk) begin
+    if (s0_axi_arvalid && s0_axi_rvalid) begin
+      s0_axi_arvalid <= 1;
+      s0_axi_rready <= 1;
+      m1_axi_arready <= 1;
+      m1_axi_rvalid <= 1;
+      m1_axi_rresp <= 1;
+      s0_axi_araddr <= read_out;
+
+      if (read_out == 12) begin
+        read_out <= 8;
+      end else begin
+        read_out <= 12;
+      end
+    end
+  end
+
+  /* Assign slave read data to internal register */
+  always @(posedge s0_axi_aclk) begin
+    if (s0_axi_rvalid && s0_axi_rready) begin
+      read_out <= s0_axi_rdata[7:0];
+    end
+  end
+
+  /* Assign master read data to internal register */
+  always @(posedge m1_axi_aclk) begin
+    if (m1_axi_rvalid && m1_axi_rready) begin
+      read_out <= m1_axi_rdata[7:0];
+    end
+  end
+
 //  // Read data
 //  always @(posedge s0_axi_aclk) 
 //  begin
