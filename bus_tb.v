@@ -138,6 +138,7 @@ end
 
 // Write data
  always @(posedge s0_axi_aclk) begin
+  if (s0_axi_wready && s0_axi_awready)begin
     s0_axi_awvalid <= 1;      // 1 bit
     s0_axi_wvalid <= 1;       // 1 bit
     s0_axi_awaddr <= write_in;  // 8 bits
@@ -162,6 +163,7 @@ end
         
 
         hold <= hold + 7;  
+ end
 end
 
 //  // Read data
