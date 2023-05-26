@@ -173,10 +173,10 @@ always @(posedge m1_axi_aclk) begin
             s0_axi_arready <= 1;
              if(cached_read_address == 8 || cached_read_address == 12)begin
                 read_state = READ_FROM_SLAVE1;
-              end else if(cached_read_address == 24 || cached_read_address == 28) begin
-                read_state = READ_FROM_SLAVE2;
+              // end else if(cached_read_address == 24 || cached_read_address == 28) begin
+              //   read_state = READ_FROM_SLAVE2;
               end else begin
-                read_state = IDLE_READ;
+                read_state = READ_FROM_SLAVE2;;
               end
           end
         end
