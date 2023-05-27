@@ -67,7 +67,7 @@ module bus #(
     input  [DATA_WIDTH-1:0] m1_axi_rdata,
     input  [RESP_WIDTH - 1:0] m1_axi_rresp,
     input  m1_axi_rvalid,
-    output reg m1_axi_rready
+    output reg m1_axi_rready,
 
     
 /* master interface 2*/
@@ -118,7 +118,7 @@ reg [DATA_WIDTH/8:0] cached_slave2_wstrb;
 
 // finite state machines
   typedef enum {IDLE_WRITE,VALID_WRITE_ADDR,VALID_WRITE_DATA, WRITE_TO_SLAVE1, WRITE_TO_SLAVE2, NOTIFY_MASTER } writing_states;
-  typedef enum {IDLE_READ, VALID_READ_ADDR, READ_FROM_SLAVE1, READ_FROM_SLAVE2, CACHE_DATA, WRITE_TO_MASTER } reading_states;
+  typedef enum {IDLE_READ, VALID_READ_ADDR, READ_FROM_SLAVE1, READ_FROM_SLAVE2, CACHE_DATA_FROM_SLAVE1,CACHE_DATA_FROM_SLAVE2, WRITE_TO_MASTER } reading_states;
   writing_states write_state;
   reading_states read_state;
 
@@ -157,11 +157,11 @@ always @(posedge s0_axi_aclk) begin
         VALID_WRITE_DATA: begin
             s0_axi_bresp <= 1;
             s0_axi_bvalid <= 1;
-            if(cached_write_address == 0 || cached_write_address == 4)begin
+            if(cached_slave1_write_address == 0 || cached_slave1_write_address == 4)begin
                 cached_slave1_write_data <= s0_axi_wdata;
                 cached_slave1_wstrb <= s0_axi_wstrb;
                 write_state = WRITE_TO_SLAVE1;
-              end else if(cached_write_address == 16 || cached_write_address == 20) begin
+              end else if(cached_slave2_write_address == 16 || cached_slave2_write_address == 20) begin
                 cached_slave2_write_data <= s0_axi_wdata;
                 cached_slave2_wstrb <= s0_axi_wstrb;
                 write_state = WRITE_TO_SLAVE2;
@@ -173,9 +173,9 @@ always @(posedge s0_axi_aclk) begin
           m1_axi_awvalid <= 0;
           m1_axi_wvalid <= 0;
           if (m1_axi_awready && m1_axi_wready) begin
-            m1_axi_awaddr <= cached_write_address;
-            m1_axi_wdata <= cached_write_data;
-            m1_axi_wstrb <= cached_wstrb;
+            m1_axi_awaddr <= cached_slave1_write_address;
+            m1_axi_wdata <= cached_slave1_write_data;
+            m1_axi_wstrb <= cached_slave1_wstrb;
             m1_axi_awvalid <= 1;
             m1_axi_wvalid <= 1;
             write_state = NOTIFY_MASTER;
@@ -185,9 +185,9 @@ always @(posedge s0_axi_aclk) begin
           m1_axi_awvalid <= 0;
           m1_axi_wvalid <= 0;
           if (m1_axi_awready && m1_axi_wready) begin
-            m1_axi_awaddr <= cached_write_address;
-            m1_axi_wdata <= cached_write_data;
-            m1_axi_wstrb <= cached_wstrb;
+            m1_axi_awaddr <= cached_slave2_write_address;
+            m1_axi_wdata <= cached_slave2_write_data;
+            m1_axi_wstrb <= cached_slave2_wstrb;
             m1_axi_awvalid <= 1;
             m1_axi_wvalid <= 1;
             write_state = NOTIFY_MASTER;
@@ -217,15 +217,16 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
         IDLE_READ: begin
           m1_axi_arvalid <= 1;
           if(s0_axi_arvalid ) begin
-            cached_read_address <= s0_axi_araddr;
             s0_axi_arready <= 1;
             read_state<=VALID_READ_ADDR;
           end
         end
         VALID_READ_ADDR: begin
-            if(cached_read_address == 8 || cached_read_address == 12)begin
+            if(s0_axi_araddr == 8 || s0_axi_araddr == 12)begin
+              cached_slave1_read_address <= s0_axi_araddr;
                 read_state = READ_FROM_SLAVE1;
-               end else if(cached_read_address == 24 || cached_read_address == 28) begin
+               end else if(s0_axi_araddr == 24 || s0_axi_araddr == 28) begin
+                 cached_slave2_read_address <= s0_axi_araddr;
                  read_state = READ_FROM_SLAVE2;
               end else begin
                 read_state = READ_FROM_SLAVE2;;
@@ -234,23 +235,32 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
         end
         READ_FROM_SLAVE1: begin
           if(m1_axi_arready) begin
-            m1_axi_araddr <= cached_read_address;
+            m1_axi_araddr <= cached_slave1_read_address;
             m1_axi_arvalid <= 1;
-            read_state = CACHE_DATA;
+            read_state = CACHE_DATA_FROM_SLAVE1;
           end
         end
         READ_FROM_SLAVE2: begin
-          if(m1_axi_arready) begin
-            m1_axi_araddr <= cached_read_address;
-            m1_axi_arvalid <= 1;
-            read_state = CACHE_DATA;
+          if(m2_axi_arready) begin
+            m2_axi_araddr <= cached_slave2_read_address;
+            m2_axi_arvalid <= 1;
+            read_state = CACHE_DATA_FROM_SLAVE2;
           end
         end
-        CACHE_DATA: begin
+        CACHE_DATA_FROM_SLAVE1: begin
           m1_axi_rready <= 0;
-          if(m1_axi_rvalid && m1_axi_rresp) begin
-            cached_read_data <= m1_axi_rdata;
+          if(m1_axi_rvalid) begin
+            cached_slave1_read_data <= m1_axi_rdata;
             m1_axi_rready <= 1;
+            read_state = WRITE_TO_MASTER;
+          end
+          
+        end
+        CACHE_DATA_FROM_SLAVE2: begin
+          m2_axi_rready <= 0;
+          if(m2_axi_rvalid) begin
+            cached_slave2_read_data <= m2_axi_rdata;
+            m2_axi_rready <= 1;
             read_state = WRITE_TO_MASTER;
           end
           
@@ -259,7 +269,11 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
           s0_axi_rresp <= 0;
           s0_axi_rvalid <= 0;
           if(s0_axi_rready) begin
-            s0_axi_rdata <= cached_read_data;
+            if(m1_axi_rresp) begin
+              s0_axi_rdata <= cached_slave1_read_data;
+            end else begin
+              s0_axi_rdata <= cached_slave2_read_data;
+            end
             s0_axi_rresp <= 1;
             s0_axi_rvalid <= 1;
             read_state = IDLE_READ;
