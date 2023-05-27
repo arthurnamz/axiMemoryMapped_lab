@@ -1,6 +1,7 @@
 module bus #(
     parameter DATA_WIDTH = 32,
-    parameter ADDR_WIDTH = 8
+    parameter ADDR_WIDTH = 8,
+    parameter RESP_WIDTH = 3
 )
 (
 
@@ -21,7 +22,7 @@ module bus #(
     output reg s0_axi_wready,
 
     // Write response channel
-    output reg s0_axi_bresp,
+    output reg [RESP_WIDTH - 1:0] s0_axi_bresp,
     output reg s0_axi_bvalid,
     input s0_axi_bready,
 
@@ -32,11 +33,11 @@ module bus #(
 
     // Read data channel
     output reg [DATA_WIDTH-1:0] s0_axi_rdata,
-    output reg s0_axi_rresp,
+    output reg [RESP_WIDTH - 1:0] s0_axi_rresp,
     output reg s0_axi_rvalid,
     input s0_axi_rready,
 
-/* master interface */
+/* master interface 1*/
    // Global signals
     input m1_axi_aclk,
     input m1_axi_aresetn,
@@ -53,7 +54,7 @@ module bus #(
     input  m1_axi_wready,
 
     // Write response channel
-    input  m1_axi_bresp,
+    input  [RESP_WIDTH - 1:0] m1_axi_bresp,
     input  m1_axi_bvalid,
     output reg m1_axi_bready,
 
@@ -64,18 +65,56 @@ module bus #(
 
     // Read data channel
     input  [DATA_WIDTH-1:0] m1_axi_rdata,
-    input  m1_axi_rresp,
+    input  [RESP_WIDTH - 1:0] m1_axi_rresp,
     input  m1_axi_rvalid,
     output reg m1_axi_rready
+
+    
+/* master interface 2*/
+   // Global signals
+    input m2_axi_aclk,
+    input m2_axi_aresetn,
+
+    // Write address channel
+    output  reg [ADDR_WIDTH-1:0] m2_axi_awaddr,
+    output  reg m2_axi_awvalid,
+    input  m2_axi_awready,
+
+    // Write data channel
+    output  reg [DATA_WIDTH-1:0] m2_axi_wdata,
+    output  reg [DATA_WIDTH/8:0] m2_axi_wstrb,
+    output  reg m2_axi_wvalid,
+    input  m2_axi_wready,
+
+    // Write response channel
+    input  [RESP_WIDTH - 1:0] m2_axi_bresp,
+    input  m2_axi_bvalid,
+    output reg m2_axi_bready,
+
+    // Read address channel
+    output reg [ADDR_WIDTH-1:0] m2_axi_araddr,
+    output reg m2_axi_arvalid,
+    input  m2_axi_arready,
+
+    // Read data channel
+    input  [DATA_WIDTH-1:0] m2_axi_rdata,
+    input  [RESP_WIDTH - 1:0] m2_axi_rresp,
+    input  m2_axi_rvalid,
+    output reg m2_axi_rready
 );
-// Internal registers
-reg [DATA_WIDTH-1:0] cached_read_data;
-reg [ADDR_WIDTH-1:0] cached_read_address;
-reg [DATA_WIDTH-1:0] cached_write_data;
-reg [ADDR_WIDTH-1:0] cached_write_address;
-reg [DATA_WIDTH/8:0] cached_wstrb;
+// Internal registers for slave 1
+reg [DATA_WIDTH-1:0] cached_slave1_read_data;
+reg [ADDR_WIDTH-1:0] cached_slave1_read_address;
+reg [DATA_WIDTH-1:0] cached_slave1_write_data;
+reg [ADDR_WIDTH-1:0] cached_slave1_write_address;
+reg [DATA_WIDTH/8:0] cached_slave1_wstrb;
 
-
+// Internal registers for slave 2
+reg [DATA_WIDTH-1:0] cached_slave2_read_data;
+reg [ADDR_WIDTH-1:0] cached_slave2_read_address;
+reg [DATA_WIDTH-1:0] cached_slave2_write_data;
+reg [ADDR_WIDTH-1:0] cached_slave2_write_address;
+reg [DATA_WIDTH/8:0] cached_slave2_wstrb;
 
 // finite state machines
   typedef enum {IDLE_WRITE,VALID_WRITE_ADDR,VALID_WRITE_DATA, WRITE_TO_SLAVE1, WRITE_TO_SLAVE2, NOTIFY_MASTER } writing_states;
@@ -86,6 +125,7 @@ reg [DATA_WIDTH/8:0] cached_wstrb;
 // Writing to the slave
 always @(posedge s0_axi_aclk) begin
     if (s0_axi_aresetn == 0) begin
+      write_state = IDLE_WRITE;
       s0_axi_awready <= 0;
       s0_axi_wready <= 0;
     end else begin
@@ -100,20 +140,30 @@ always @(posedge s0_axi_aclk) begin
           end
         end
         VALID_WRITE_ADDR: begin
-          cached_write_address <= s0_axi_awaddr;
+
+          if(s0_axi_awaddr == 0 || s0_axi_awaddr == 4)begin
+                cached_slave1_write_address <= s0_axi_awaddr;
+                write_state = VALID_WRITE_DATA;
+              end else if(s0_axi_awaddr == 16 || s0_axi_awaddr == 20) begin
+                cached_slave2_write_address <= s0_axi_awaddr;
+                write_state = VALID_WRITE_DATA;
+              end else begin
+                write_state = IDLE_WRITE;
+              end
           if (s0_axi_wvalid && s0_axi_bready) begin
               write_state = VALID_WRITE_DATA;
           end
         end
         VALID_WRITE_DATA: begin
-            cached_write_data <= s0_axi_wdata;
-            cached_wstrb <= s0_axi_wstrb;
             s0_axi_bresp <= 1;
             s0_axi_bvalid <= 1;
-
             if(cached_write_address == 0 || cached_write_address == 4)begin
+                cached_slave1_write_data <= s0_axi_wdata;
+                cached_slave1_wstrb <= s0_axi_wstrb;
                 write_state = WRITE_TO_SLAVE1;
               end else if(cached_write_address == 16 || cached_write_address == 20) begin
+                cached_slave2_write_data <= s0_axi_wdata;
+                cached_slave2_wstrb <= s0_axi_wstrb;
                 write_state = WRITE_TO_SLAVE2;
               end else begin
                 write_state = IDLE_WRITE;
@@ -158,9 +208,10 @@ always @(posedge s0_axi_aclk) begin
   end
 
 // Reading from the slave
-always @(posedge m1_axi_aclk) begin
+always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
     if (m1_axi_aresetn == 0) begin
-      m1_axi_arvalid <= 0;
+       m1_axi_arvalid <= 0;
+       read_state<=IDLE_READ;
     end else begin
       case (read_state)
         IDLE_READ: begin
