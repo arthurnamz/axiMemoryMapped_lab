@@ -193,36 +193,36 @@ parameter RESP_WIDTH = 3;
     $finish;
 end
 
-// Write data
- always @(posedge s0_axi_aclk) begin 
-  m1_axi_bresp <= 1;
-    m1_axi_bvalid <= 1;
-  if (s0_axi_wready && s0_axi_awready)begin
-    s0_axi_awvalid <= 1;      // 1 bit
-    s0_axi_wvalid <= 1;       // 1 bit
-    s0_axi_awaddr <= write_in;  // 8 bits
-    s0_axi_wdata <= hold; // 32 bits
-    s0_axi_wstrb <= 15; // 4 bits
-    s0_axi_bready <= 1;   // 1 bit
-    m1_axi_awready <= 1;
-    m1_axi_wready <= 1;
+// // Write data
+//  always @(posedge s0_axi_aclk) begin 
+//   m1_axi_bresp <= 1;
+//     m1_axi_bvalid <= 1;
+//   if (s0_axi_wready && s0_axi_awready)begin
+//     s0_axi_awvalid <= 1;      // 1 bit
+//     s0_axi_wvalid <= 1;       // 1 bit
+//     s0_axi_awaddr <= write_in;  // 8 bits
+//     s0_axi_wdata <= hold; // 32 bits
+//     s0_axi_wstrb <= 15; // 4 bits
+//     s0_axi_bready <= 1;   // 1 bit
+//     m1_axi_awready <= 1;
+//     m1_axi_wready <= 1;
     
     
     
-    if (write_in == 20)begin
-      write_in <= 0;
-    end else if(write_in == 0) begin
-      write_in <= 4;
-    end else if(write_in == 4) begin
-      write_in <= 16;
-    end else begin
-      write_in <= 20;
-    end
+//     if (write_in == 20)begin
+//       write_in <= 0;
+//     end else if(write_in == 0) begin
+//       write_in <= 4;
+//     end else if(write_in == 4) begin
+//       write_in <= 16;
+//     end else begin
+//       write_in <= 20;
+//     end
         
 
-        hold <= hold + 7;  
- end
-end
+//         hold <= hold + 7;  
+//  end
+// end
 
 // /* Read data */
 //   always @(posedge s0_axi_aclk) begin
