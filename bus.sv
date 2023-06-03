@@ -200,8 +200,10 @@ always @(posedge s0_axi_aclk) begin
         NOTIFY_MASTER: begin
           m1_axi_bready <= 0;
           m2_axi_bready <= 0;
-          s0_axi_wready <= 1;
-          s0_axi_awready <= 1;
+          // s0_axi_wready <= 1;
+          // s0_axi_awready <= 1;
+          m2_axi_awvalid <= 0;
+          m2_axi_wvalid <= 0;
           if(m1_axi_bresp && m1_axi_bvalid) begin
             m1_axi_bready <= 1;
             m2_axi_bready <= 1;
