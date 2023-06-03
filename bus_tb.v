@@ -174,6 +174,7 @@ parameter RESP_WIDTH = 3;
 // Clock generation
   always #5 s0_axi_aclk = ~s0_axi_aclk;
   always #5 m1_axi_aclk = ~m1_axi_aclk;
+  always #5 m2_axi_aclk = ~m2_axi_aclk;
   // Reset generation
   initial begin
     s0_axi_aresetn = 0;
@@ -201,6 +202,7 @@ parameter RESP_WIDTH = 3;
     s0_axi_awaddr <= 0;  
     s0_axi_wdata <= 34; 
     s0_axi_wstrb <= 15;  
+    s0_axi_bready <= 1;
     m1_axi_awready <= 1;
     m1_axi_wready <= 1;
     m1_axi_bvalid <= 1;
@@ -214,29 +216,27 @@ parameter RESP_WIDTH = 3;
     #20;
 
     // write to slave 2
-    s0_axi_awvalid <= 0;      
-    s0_axi_wvalid <= 0;
-    s0_axi_bready <= 0;
-    m2_axi_bvalid <= 0;
-    m2_axi_bresp <= 0;
-    #20;
-    s0_axi_awvalid <= 1;      
-    s0_axi_wvalid <= 1;       
-    s0_axi_awaddr <= 16;  
-    s0_axi_wdata <= 37; 
-    s0_axi_wstrb <= 15;  
-    // m1_axi_awready <= 1;
-    // m1_axi_wready <= 1;
-    m2_axi_awready <= 1;
-    m2_axi_wready <= 1;
-    m2_axi_bvalid <= 1;
-    m2_axi_bresp <= 1;
-    #20;
-    s0_axi_awvalid <= 0;      
-    s0_axi_wvalid <= 0;
-    s0_axi_bready <= 0;
-    m2_axi_bvalid <= 0;
-    m2_axi_bresp <= 0;
+    // s0_axi_awvalid <= 0;      
+    // s0_axi_wvalid <= 0;
+    // s0_axi_bready <= 0;
+    // m2_axi_bvalid <= 0;
+    // m2_axi_bresp <= 0;
+    // #20;
+    // s0_axi_awvalid <= 1;      
+    // s0_axi_wvalid <= 1;       
+    // s0_axi_awaddr <= 16;  
+    // s0_axi_wdata <= 37; 
+    // s0_axi_wstrb <= 15;  
+    // m2_axi_awready <= 1;
+    // m2_axi_wready <= 1;
+    // m2_axi_bvalid <= 1;
+    // m2_axi_bresp <= 1;
+    // #20;
+    // s0_axi_awvalid <= 0;      
+    // s0_axi_wvalid <= 0;
+    // s0_axi_bready <= 0;
+    // m2_axi_bvalid <= 0;
+    // m2_axi_bresp <= 0;
     #500;
     $finish;
 end
