@@ -11,24 +11,61 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="525.001 ns"></ZoomEndTime>
-      <Cursor1Time time="16.220 ns"></Cursor1Time>
+      <ZoomEndTime time="565.001 ns"></ZoomEndTime>
+      <Cursor1Time time="85.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="168"></NameColumnWidth>
-      <ValueColumnWidth column_width="80"></ValueColumnWidth>
+      <NameColumnWidth column_width="166"></NameColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="3" />
+   <WVObjectSize size="5" />
    <wvobject type="protoinst" fp_name="/bus_tb/BUS_SLAVE1_INTERFACE">
       <obj_property name="ElementShortName">BUS_SLAVE1_INTERFACE</obj_property>
       <obj_property name="ObjectShortName">BUS_SLAVE1_INTERFACE</obj_property>
+      <obj_property name="children_use_element_short_name">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+      <obj_property name="EnumTransactionColorTable">0=blank 1=#D399FF 2=pink</obj_property>
+      <obj_property name="EnumTransactionValueTable">0=blank;1=Read;2=Write;3=Read/Write</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">turquoise</obj_property>
+      <obj_property name="Render_Data">/bus_tb/BUS_SLAVE1_INTERFACE.readWriteSummary</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="CellHeight">36</obj_property>
    </wvobject>
    <wvobject type="protoinst" fp_name="/bus_tb/BUS_MASTER1_INTERFACE">
       <obj_property name="ElementShortName">BUS_MASTER1_INTERFACE</obj_property>
       <obj_property name="ObjectShortName">BUS_MASTER1_INTERFACE</obj_property>
+      <obj_property name="children_use_element_short_name">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+      <obj_property name="EnumTransactionColorTable">0=blank 1=#D399FF 2=pink</obj_property>
+      <obj_property name="EnumTransactionValueTable">0=blank;1=Read;2=Write;3=Read/Write</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">turquoise</obj_property>
+      <obj_property name="Render_Data">/bus_tb/BUS_MASTER1_INTERFACE.readWriteSummary</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="CellHeight">36</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="protoinst" fp_name="/bus_tb/BUS_MASTER2_INTERFACE">
       <obj_property name="ElementShortName">BUS_MASTER2_INTERFACE</obj_property>
       <obj_property name="ObjectShortName">BUS_MASTER2_INTERFACE</obj_property>
+      <obj_property name="children_use_element_short_name">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
+      <obj_property name="EnumTransactionColorTable">0=blank 1=#D399FF 2=pink</obj_property>
+      <obj_property name="EnumTransactionValueTable">0=blank;1=Read;2=Write;3=Read/Write</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">turquoise</obj_property>
+      <obj_property name="Render_Data">/bus_tb/BUS_MASTER2_INTERFACE.readWriteSummary</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="CellHeight">36</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/bus_tb/dut/write_state">
+      <obj_property name="ElementShortName">write_state[31:0]</obj_property>
+      <obj_property name="ObjectShortName">write_state[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/bus_tb/dut/read_state">
+      <obj_property name="ElementShortName">read_state[31:0]</obj_property>
+      <obj_property name="ObjectShortName">read_state[31:0]</obj_property>
    </wvobject>
 </wave_config>
