@@ -198,11 +198,14 @@ always @(posedge s0_axi_aclk) begin
           m2_axi_wvalid <= 0;
           m1_axi_awvalid <= 0;
           m1_axi_wvalid <= 0;
-          if(m1_axi_bresp && m1_axi_bvalid) begin
-            m2_axi_awvalid <= 1;
-            m2_axi_wvalid <= 1;
+          if(m1_axi_bresp == 0 && m1_axi_bvalid == 0) begin
             m1_axi_awvalid <= 1;
             m1_axi_wvalid <= 1;
+            write_state = IDLE_WRITE;
+          end 
+          if(m2_axi_bresp && m2_axi_bvalid) begin
+            m2_axi_awvalid <= 1;
+            m2_axi_wvalid <= 1;
             write_state = IDLE_WRITE;
           end   
         end
