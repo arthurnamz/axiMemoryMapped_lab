@@ -247,6 +247,10 @@ end
 // Write data
 // Write data
 always @(posedge s0_axi_aclk) begin 
+   m1_axi_awready <= 1;
+    m1_axi_wready <= 1;
+     m2_axi_awready <= 1;
+    m2_axi_wready <= 1;
   if (s0_axi_awready && s0_axi_wready) begin
     m1_axi_awready <= 1;
     m1_axi_wready <= 1;
