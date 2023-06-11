@@ -141,9 +141,11 @@ always @(posedge s0_axi_aclk) begin
 
           if(s0_axi_awaddr == 0 || s0_axi_awaddr == 4)begin
                 cached_slave1_write_address <= s0_axi_awaddr;
+                m1_axi_awvalid <= 1;
                 write_state = VALID_WRITE_DATA;
               end else if(s0_axi_awaddr == 16 || s0_axi_awaddr == 20) begin
                 cached_slave2_write_address <= s0_axi_awaddr;
+                m2_axi_awvalid <= 1;
                 write_state = VALID_WRITE_DATA;
               end else begin
                 write_state = IDLE_WRITE;
@@ -158,54 +160,51 @@ always @(posedge s0_axi_aclk) begin
             if(cached_slave1_write_address == 0 || cached_slave1_write_address == 4)begin
                 cached_slave1_write_data <= s0_axi_wdata;
                 cached_slave1_wstrb <= s0_axi_wstrb;
+                m1_axi_wvalid <= 1;
                 write_state = WRITE_TO_SLAVE1;
               end else if(cached_slave2_write_address == 16 || cached_slave2_write_address == 20) begin
                 cached_slave2_write_data <= s0_axi_wdata;
                 cached_slave2_wstrb <= s0_axi_wstrb;
+                m2_axi_wvalid <= 1;
                 write_state = WRITE_TO_SLAVE2;
               end else begin
                 write_state = IDLE_WRITE;
               end
         end
         WRITE_TO_SLAVE1: begin
-          m1_axi_awvalid <= 0;
-          m1_axi_wvalid <= 0;
           if (m1_axi_awready && m1_axi_wready) begin
             m1_axi_awaddr <= cached_slave1_write_address;
             m1_axi_wdata <= cached_slave1_write_data;
             m1_axi_wstrb <= cached_slave1_wstrb;
             s0_axi_wready <= 0;
              s0_axi_awready <= 0;
+             m1_axi_awvalid <= 0;
+             m1_axi_wvalid <= 0;
             write_state = NOTIFY_MASTER;
           end
         end
         WRITE_TO_SLAVE2: begin
-          // m2_axi_awvalid <= 0;
-          // m2_axi_wvalid <= 0;
+          
           // m2_axi_bvalid <= 0;
           // m2_axi_bresp <= 0;
           if (m2_axi_awready && m2_axi_wready) begin
             m2_axi_awaddr <= cached_slave2_write_address;
             m2_axi_wdata <= cached_slave2_write_data;
             m2_axi_wstrb <= cached_slave2_wstrb;
+            s0_axi_wready <= 0;
+             s0_axi_awready <= 0;
+             m2_axi_awvalid <= 0;
+             m2_axi_wvalid <= 0;
             write_state = NOTIFY_MASTER;
           end
         end
         NOTIFY_MASTER: begin
-          m1_axi_bready <= 1;
-          m2_axi_bready <= 1;
-          m2_axi_awvalid <= 0;
-          m2_axi_wvalid <= 0;
-          m1_axi_awvalid <= 0;
-          m1_axi_wvalid <= 0;
-          if(m1_axi_bresp == 0 && m1_axi_bvalid == 0) begin
-            m1_axi_awvalid <= 1;
-            m1_axi_wvalid <= 1;
+          if(m1_axi_bresp == 0 && m1_axi_bvalid== 0) begin
+            m1_axi_bready <= 1;
             write_state = IDLE_WRITE;
           end 
-          if(m2_axi_bresp && m2_axi_bvalid) begin
-            m2_axi_awvalid <= 1;
-            m2_axi_wvalid <= 1;
+          if(m2_axi_bresp== 0 && m2_axi_bvalid== 0) begin
+            m2_axi_bready <= 1;
             write_state = IDLE_WRITE;
           end   
         end
