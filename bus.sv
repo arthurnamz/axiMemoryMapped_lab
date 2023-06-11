@@ -190,19 +190,18 @@ always @(posedge s0_axi_aclk) begin
           m1_axi_wvalid <= 0;
         end
         WRITE_TO_SLAVE2: begin
-          
-          // m2_axi_bvalid <= 0;
-          // m2_axi_bresp <= 0;
           if (m2_axi_awready && m2_axi_wready) begin
             m2_axi_awaddr <= cached_slave2_write_address;
             m2_axi_wdata <= cached_slave2_write_data;
             m2_axi_wstrb <= cached_slave2_wstrb;
             s0_axi_wready <= 0;
-             s0_axi_awready <= 0;
-             m2_axi_awvalid <= cached_slave2_write_valid_address;
-             m2_axi_wvalid <= cached_slave2_write_valid_data;
+            s0_axi_awready <= 0;
+            m2_axi_awvalid <= cached_slave2_write_valid_address;
+            m2_axi_wvalid <= cached_slave2_write_valid_data;
             write_state = NOTIFY_MASTER;
           end
+          m2_axi_awvalid <= 0;
+          m2_axi_wvalid <= 0;
         end
         NOTIFY_MASTER: begin
           if(m1_axi_bresp == 0 && m1_axi_bvalid== 0) begin

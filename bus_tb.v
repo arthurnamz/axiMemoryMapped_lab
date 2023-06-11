@@ -185,16 +185,12 @@ parameter RESP_WIDTH = 3;
     m1_axi_aresetn = 1;
     m2_axi_aresetn = 1;
 
-    write_in = 0;
-    read_out = 8;
-    hold = 23;
-
+    #20;
     // write to slave 1
     s0_axi_awvalid = 0;      
     s0_axi_wvalid = 0;
-    s0_axi_bready = 0;
-    m1_axi_wready = 1;
     m1_axi_awready = 1;
+    m1_axi_wready = 1;
     #20;
     s0_axi_awvalid = 1;   
     s0_axi_awaddr = 0;     
@@ -208,210 +204,31 @@ parameter RESP_WIDTH = 3;
     #20;
     s0_axi_awvalid = 0;      
     s0_axi_wvalid = 0;
-    s0_axi_bready = 0;
-    m1_axi_bvalid = 0;
     m1_axi_awready = 1;
     m1_axi_wready = 1;
-    #80;
+    #120;
 
-  // //  write to slave 2
-  //   s0_axi_awvalid = 0;      
-  //   s0_axi_wvalid = 0;
-  //   s0_axi_bready = 0;
-  //   m2_axi_bvalid = 0;
-  //   m2_axi_bresp = 0;
-  //   m2_axi_wready = 1;
-  //   m2_axi_awready = 1;
-  //   #80;
-  //   s0_axi_awvalid = 1;      
-  //   s0_axi_wvalid = 1;       
-  //   s0_axi_awaddr = 20;  
-  //   s0_axi_wdata = 37; 
-  //   s0_axi_wstrb = 15;  
-  //   m2_axi_awready = 0;
-  //   m2_axi_wready = 0;
-  //   m2_axi_bresp = 0;
-  //   #80;
-  //   s0_axi_awvalid = 0;      
-  //   s0_axi_wvalid = 0;
-  //   s0_axi_bready = 0;
-  //   m2_axi_bvalid = 0;
-  //   m2_axi_awready = 1;
-  //   m2_axi_wready = 1;
-    #500;
+  //  write to slave 2
+    s0_axi_awvalid = 0;      
+    s0_axi_wvalid = 0;
+    m2_axi_awready = 1;
+    m2_axi_wready = 1;
+    #120;
+    s0_axi_awvalid = 1;   
+    s0_axi_awaddr = 0;     
+    s0_axi_wvalid = 1;       
+    s0_axi_wdata = 56; 
+    s0_axi_wstrb = 15; 
+    s0_axi_bready = 0; 
+    m2_axi_awready = 0;
+    m2_axi_wready = 0;
+    m2_axi_bresp = 0;
+    #120;
+    s0_axi_awvalid = 0;      
+    s0_axi_wvalid = 0;
+    m2_axi_awready = 1;
+    m2_axi_wready = 1;
+    #800;
     $finish;
 end
-
-// Write data
-// // Write data
-// always @(posedge s0_axi_aclk) begin 
-   
-//   if (s0_axi_awready && s0_axi_wready) begin
-//     m1_axi_awready <= 1;
-//     m1_axi_wready <= 1;
-//    s0_axi_awvalid <= 0;      
-//       s0_axi_wvalid <= 0;
-//     if ((write_in == 0 || write_in == 4) ) begin
-//       s0_axi_awvalid <= 1;      
-//       s0_axi_wvalid <= 1;       
-//       s0_axi_awaddr <= write_in;  
-//       s0_axi_wdata <= hold; 
-//       s0_axi_wstrb <= 15;  
-//       m1_axi_awready <= 0;
-//       m1_axi_wready <= 0;
-//       m1_axi_bresp <= 0;
-//       m1_axi_bvalid <= 0;
-
-//       // if (write_in == 4) begin
-//       //   write_in <= 0;
-//       // end else begin
-//       //   write_in <= 4;
-//       // end
-
-//        if (write_in == 20) begin
-//         write_in <= 0;
-//         hold <= hold + 7; 
-//       end else if (write_in == 0) begin
-//         write_in <= 4;
-//         hold <= hold + 7; 
-//       end else if (write_in == 4) begin
-//         write_in <= 16;
-//         hold <= hold + 7; 
-//       end else begin
-//         write_in <= 20;
-//         hold <= hold + 7; 
-//       end
-//     end
-//   end
-
-//   if (s0_axi_awready && s0_axi_wready) begin
-//     m2_axi_awready <= 1;
-//     m2_axi_wready <= 1;
-//     s0_axi_awvalid <= 0;      
-//       s0_axi_wvalid <= 0;
-//     if ((write_in == 16 || write_in == 20) ) begin
-//       s0_axi_awvalid <= 1;      
-//       s0_axi_wvalid <= 1;       
-//       s0_axi_awaddr <= write_in;  
-//       s0_axi_wdata <= hold; 
-//       s0_axi_wstrb <= 15;  
-//       m2_axi_awready <= 0;
-//       m2_axi_wready <= 0;
-//       m2_axi_bresp <= 0;
-//       m2_axi_bvalid <= 0;
-
-//       if (write_in == 20) begin
-//         write_in <= 0;
-//         hold <= hold + 7; 
-//       end else if (write_in == 0) begin
-//         write_in <= 4;
-//         hold <= hold + 7; 
-//       end else if (write_in == 4) begin
-//         write_in <= 16;
-//         hold <= hold + 7; 
-//       end else begin
-//         write_in <= 20;
-//         hold <= hold + 7; 
-//       end
-//     end
-//   end
-
-  
-
-// end
-
-
-
-
-
-
-
-
-
-
-
-//  always @(posedge s0_axi_aclk) begin 
-//   m1_axi_wready <= 1;
-//     m1_axi_awready <= 1;
-// if ( s0_axi_awready && s0_axi_awready)begin
-    
-//  if(write_in == 0 || write_in == 4) begin
-//     s0_axi_awvalid <= 1;      
-//     s0_axi_wvalid <= 1;       
-//     s0_axi_awaddr <= write_in;  
-//     s0_axi_wdata <= hold; 
-//     s0_axi_wstrb <= 15;  
-//     m1_axi_awready <= 0;
-//     m1_axi_wready <= 0;
-//     m1_axi_bresp <= 0;
-//     m1_axi_bvalid <= 0;
-    
-    
-    
-//     if (write_in == 4)begin
-//       write_in <= 0;
-//     end else  begin
-//       write_in <= 4;
-//     end
-        
-
-//         hold <= hold + 7;  
-//   // end
-//   end 
-// end
-//  end 
-
-// always @(posedge s0_axi_aclk) begin 
-//   m2_axi_wready <= 1;
-//     m2_axi_awready <= 1;
-  
-//  if(write_in == 16 || write_in == 20) begin
-//     // if(m2_axi_awvalid && m2_axi_wvalid) begin
-//     s0_axi_awvalid <= 1;      
-//     s0_axi_wvalid <= 1;       
-//     s0_axi_awaddr <= write_in;  
-//     s0_axi_wdata <= hold; 
-//     s0_axi_wstrb <= 15;  
-//     m2_axi_awready <= 0;
-//     m2_axi_wready <= 0;
-//     m2_axi_bresp <= 0;
-//     m2_axi_bvalid <= 0;
-    
-    
-    
-//     if (write_in == 16)begin
-//       write_in <= 20;
-//     end else if(write_in == 20) begin
-//       write_in <= 0;
-//     end else begin
-//       write_in <= 0;
-//     end
-        
-
-//         hold <= hold + 7;  
-//      end
-//   end
-
-// /* Read data */
-//   always @(posedge s0_axi_aclk) begin
-//     s0_axi_arvalid <= 1;
-//     if(s0_axi_arready ) begin
-//       s0_axi_rready <= 1;
-//       m1_axi_arready <= 1;
-//       m1_axi_rvalid <= 1;
-//       m1_axi_rresp <= 1;
-//       s0_axi_araddr <= read_out;
-//       m1_axi_rdata <= hold;
-//         if (read_out == 28)begin
-//         read_out <= 8;
-//       end else if(read_out == 8) begin
-//         read_out <= 12;
-//       end else if(read_out == 12) begin
-//         read_out <= 24;
-//       end else begin
-//         read_out <= 28;
-//       end
-//       hold <= hold + 7;  
-//   end
-//   end
 endmodule
