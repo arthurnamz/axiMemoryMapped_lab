@@ -269,31 +269,7 @@ always @(posedge s0_axi_aclk) begin
       //   write_in <= 4;
       // end
 
-       
-    end
-  end
-
-  if (s0_axi_awready && s0_axi_wready) begin
-    m2_axi_awready <= 1;
-    m2_axi_wready <= 1;
-
-    if ((write_in == 16 || write_in == 20) ) begin
-      s0_axi_awvalid <= 1;      
-      s0_axi_wvalid <= 1;       
-      s0_axi_awaddr <= write_in;  
-      s0_axi_wdata <= hold; 
-      s0_axi_wstrb <= 15;  
-      m2_axi_awready <= 0;
-      m2_axi_wready <= 0;
-      m2_axi_bresp <= 0;
-      m2_axi_bvalid <= 0;
-
-      
-      // hold <= hold + 7;
-    end
-  end
-
-  if (write_in == 20) begin
+       if (write_in == 20) begin
         write_in <= 0;
         hold <= hold + 7; 
       end else if (write_in == 0) begin
@@ -306,6 +282,42 @@ always @(posedge s0_axi_aclk) begin
         write_in <= 20;
         hold <= hold + 7; 
       end
+    end
+  end
+
+  if (s0_axi_awready && s0_axi_wready) begin
+    m2_axi_awready <= 1;
+    m2_axi_wready <= 1;
+    s0_axi_awvalid <= 0;      
+      s0_axi_wvalid <= 0;
+    if ((write_in == 16 || write_in == 20) ) begin
+      s0_axi_awvalid <= 1;      
+      s0_axi_wvalid <= 1;       
+      s0_axi_awaddr <= write_in;  
+      s0_axi_wdata <= hold; 
+      s0_axi_wstrb <= 15;  
+      m2_axi_awready <= 0;
+      m2_axi_wready <= 0;
+      m2_axi_bresp <= 0;
+      m2_axi_bvalid <= 0;
+
+      if (write_in == 20) begin
+        write_in <= 0;
+        hold <= hold + 7; 
+      end else if (write_in == 0) begin
+        write_in <= 4;
+        hold <= hold + 7; 
+      end else if (write_in == 4) begin
+        write_in <= 16;
+        hold <= hold + 7; 
+      end else begin
+        write_in <= 20;
+        hold <= hold + 7; 
+      end
+    end
+  end
+
+  
 
 end
 
