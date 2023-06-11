@@ -106,8 +106,11 @@ module bus #(
 reg [DATA_WIDTH-1:0] cached_slave1_read_data;
 reg [ADDR_WIDTH-1:0] cached_slave1_read_address;
 reg [DATA_WIDTH-1:0] cached_slave1_write_data;
+reg  cached_slave1_write_valid_data;
 reg [ADDR_WIDTH-1:0] cached_slave1_write_address;
 reg [DATA_WIDTH/8:0] cached_slave1_wstrb;
+reg  cached_slave1_write_valid_address;
+
 
 // Internal registers for slave 2
 reg [DATA_WIDTH-1:0] cached_slave2_read_data;
@@ -115,6 +118,8 @@ reg [ADDR_WIDTH-1:0] cached_slave2_read_address;
 reg [DATA_WIDTH-1:0] cached_slave2_write_data;
 reg [ADDR_WIDTH-1:0] cached_slave2_write_address;
 reg [DATA_WIDTH/8:0] cached_slave2_wstrb;
+reg  cached_slave2_write_valid_data;
+reg  cached_slave2_write_valid_address;
 
 // finite state machines
   typedef enum {IDLE_WRITE,VALID_WRITE_ADDR,VALID_WRITE_DATA, WRITE_TO_SLAVE1, WRITE_TO_SLAVE2, NOTIFY_MASTER } writing_states;
@@ -138,14 +143,15 @@ always @(posedge s0_axi_aclk) begin
           end
         end
         VALID_WRITE_ADDR: begin
-
+          s0_axi_wready <= 0;
+          s0_axi_awready <= 0;
           if(s0_axi_awaddr == 0 || s0_axi_awaddr == 4)begin
                 cached_slave1_write_address <= s0_axi_awaddr;
-                m1_axi_awvalid <= 1;
+                cached_slave1_write_valid_address <= s0_axi_awvalid;
                 write_state = VALID_WRITE_DATA;
               end else if(s0_axi_awaddr == 16 || s0_axi_awaddr == 20) begin
                 cached_slave2_write_address <= s0_axi_awaddr;
-                m2_axi_awvalid <= 1;
+                cached_slave2_write_valid_address <= s0_axi_awvalid;
                 write_state = VALID_WRITE_DATA;
               end else begin
                 write_state = IDLE_WRITE;
@@ -160,12 +166,12 @@ always @(posedge s0_axi_aclk) begin
             if(cached_slave1_write_address == 0 || cached_slave1_write_address == 4)begin
                 cached_slave1_write_data <= s0_axi_wdata;
                 cached_slave1_wstrb <= s0_axi_wstrb;
-                m1_axi_wvalid <= 1;
+                cached_slave1_write_valid_data <= s0_axi_wvalid;
                 write_state = WRITE_TO_SLAVE1;
               end else if(cached_slave2_write_address == 16 || cached_slave2_write_address == 20) begin
                 cached_slave2_write_data <= s0_axi_wdata;
                 cached_slave2_wstrb <= s0_axi_wstrb;
-                m2_axi_wvalid <= 1;
+                cached_slave2_write_valid_data <= s0_axi_wvalid;
                 write_state = WRITE_TO_SLAVE2;
               end else begin
                 write_state = IDLE_WRITE;
@@ -178,8 +184,8 @@ always @(posedge s0_axi_aclk) begin
             m1_axi_wstrb <= cached_slave1_wstrb;
             s0_axi_wready <= 0;
              s0_axi_awready <= 0;
-             m1_axi_awvalid <= 0;
-             m1_axi_wvalid <= 0;
+             m1_axi_awvalid <= cached_slave1_write_valid_address;
+             m1_axi_wvalid <= cached_slave1_write_valid_data;
             write_state = NOTIFY_MASTER;
           end
         end
@@ -193,18 +199,22 @@ always @(posedge s0_axi_aclk) begin
             m2_axi_wstrb <= cached_slave2_wstrb;
             s0_axi_wready <= 0;
              s0_axi_awready <= 0;
-             m2_axi_awvalid <= 0;
-             m2_axi_wvalid <= 0;
+             m2_axi_awvalid <= cached_slave2_write_valid_address;
+             m2_axi_wvalid <= cached_slave2_write_valid_data;
             write_state = NOTIFY_MASTER;
           end
         end
         NOTIFY_MASTER: begin
           if(m1_axi_bresp == 0 && m1_axi_bvalid== 0) begin
             m1_axi_bready <= 1;
+            s0_axi_wready <= 1;
+             s0_axi_awready <= 1;
             write_state = IDLE_WRITE;
           end 
           if(m2_axi_bresp== 0 && m2_axi_bvalid== 0) begin
             m2_axi_bready <= 1;
+            s0_axi_wready <= 1;
+            s0_axi_awready <= 1;
             write_state = IDLE_WRITE;
           end   
         end
