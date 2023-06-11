@@ -215,7 +215,7 @@ parameter RESP_WIDTH = 3;
     m2_axi_wready = 1;
     #120;
     s0_axi_awvalid = 1;   
-    s0_axi_awaddr = 0;     
+    s0_axi_awaddr = 16;     
     s0_axi_wvalid = 1;       
     s0_axi_wdata = 56; 
     s0_axi_wstrb = 15; 
