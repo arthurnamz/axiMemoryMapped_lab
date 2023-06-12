@@ -229,6 +229,7 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
       case (read_state)
         IDLE_READ: begin 
           s0_axi_arready <= 1;
+          m1_axi_rready <= 1;
           if(s0_axi_arvalid ) begin
             read_state<=VALID_READ_ADDR;
           end
@@ -237,6 +238,7 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
             if(s0_axi_araddr == 8 || s0_axi_araddr == 12)begin
               cached_slave1_read_address <= s0_axi_araddr;
               s0_axi_arready <= 0;
+              m1_axi_rready <= 0;
               s0_axi_rvalid <= 1;
                 read_state = READ_FROM_SLAVE1;
                end else if(s0_axi_araddr == 24 || s0_axi_araddr == 28) begin
@@ -249,6 +251,7 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
               end
               s0_axi_rvalid <= 0;
               s0_axi_arready <= 1;
+              m1_axi_rready <= 1;
 
         end
         READ_FROM_SLAVE1: begin
