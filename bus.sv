@@ -277,11 +277,11 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
         end
         CACHE_DATA_FROM_SLAVE1: begin
           
-          // if(m1_axi_rvalid) begin
+          if(m1_axi_rvalid) begin
             cached_slave1_read_data <= m1_axi_rdata;
-            // m1_axi_rready <= 0;
+            m1_axi_rready <= 0;
             read_state = WRITE_TO_MASTER;
-          // end
+          end
           m1_axi_rready <= 1;
           
         end

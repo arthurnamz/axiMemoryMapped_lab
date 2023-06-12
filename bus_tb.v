@@ -235,25 +235,22 @@ parameter RESP_WIDTH = 3;
   #120;
    // read from slave 1
     s0_axi_arvalid = 0;      
-    s0_axi_rready = 0;
-    m1_axi_arready = 0;
+    s0_axi_rready = 1;
+    m1_axi_arready = 1;
     m1_axi_rvalid = 0;
     #20;
-    s0_axi_rready = 1;
+    s0_axi_rready = 0;
     s0_axi_arvalid = 1;   
     s0_axi_araddr = 8;  
-    #20; 
     m1_axi_rvalid = 1;   
     m1_axi_rdata = 49;
     m1_axi_rresp = 0;
+    m1_axi_arready = 0;
+    #20;
     m1_axi_arready = 1;
     m1_axi_rvalid = 0;
-    
-    #20;
-    m1_axi_arready = 0;
-    m1_axi_rvalid = 0;
     s0_axi_arvalid = 0;      
-    s0_axi_rready = 0;
+    s0_axi_rready = 1;
     
 
     #1500;
