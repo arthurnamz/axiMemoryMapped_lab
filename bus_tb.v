@@ -187,8 +187,8 @@ parameter RESP_WIDTH = 3;
 
     #20;
     // write to slave 1
-    s0_axi_awvalid = 0;      
-    s0_axi_wvalid = 0;
+    s0_axi_awvalid = 1;      
+    s0_axi_wvalid = 1;
     m1_axi_awready = 1;
     m1_axi_wready = 1;
     #20;
@@ -197,7 +197,7 @@ parameter RESP_WIDTH = 3;
     s0_axi_wvalid = 1;       
     s0_axi_wdata = 56; 
     s0_axi_wstrb = 15; 
-    s0_axi_bready = 0; 
+    s0_axi_bready = 1; 
     m1_axi_awready = 0;
     m1_axi_wready = 0;
     m1_axi_bresp = 0;
@@ -206,6 +206,7 @@ parameter RESP_WIDTH = 3;
     s0_axi_wvalid = 0;
     m1_axi_awready = 1;
     m1_axi_wready = 1;
+    s0_axi_bready = 0; 
     #20;
     m1_axi_awready = 0;
     m1_axi_wready = 0;

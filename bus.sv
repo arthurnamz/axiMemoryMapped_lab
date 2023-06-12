@@ -202,18 +202,23 @@ always @(posedge s0_axi_aclk) begin
           m2_axi_wvalid <= 0;
         end
         NOTIFY_MASTER: begin
-          if(m1_axi_bresp == 0 && m1_axi_bvalid== 0) begin
+          if((m1_axi_bresp == 0 && m1_axi_bvalid== 0) && s0_axi_bready) begin
             m1_axi_bready <= 1;
             s0_axi_wready <= 1;
             s0_axi_awready <= 1;
+            s0_axi_bvalid <= 1;
+            s0_axi_bresp <= 0;
             write_state = IDLE_WRITE;
           end 
-          if(m2_axi_bresp== 0 && m2_axi_bvalid== 0) begin
+          if((m2_axi_bresp== 0 && m2_axi_bvalid== 0) && s0_axi_bready) begin
             m2_axi_bready <= 1;
             s0_axi_wready <= 1;
             s0_axi_awready <= 1;
+            s0_axi_bvalid <= 1;
+            s0_axi_bresp <= 0;
             write_state = IDLE_WRITE;
-          end   
+          end 
+          s0_axi_bvalid <= 0;  
         end
         
       endcase
