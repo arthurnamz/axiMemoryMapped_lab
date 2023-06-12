@@ -10,15 +10,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,685.000 ns"></ZoomEndTime>
-      <Cursor1Time time="145.000 ns"></Cursor1Time>
+      <ZoomStartTime time="151.573 ns"></ZoomStartTime>
+      <ZoomEndTime time="233.674 ns"></ZoomEndTime>
+      <Cursor1Time time="170.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="130"></NameColumnWidth>
+      <NameColumnWidth column_width="126"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="5" />
+   <WVObjectSize size="6" />
    <wvobject type="protoinst" fp_name="/bus_tb/BUS_SLAVE1_INTERFACE">
       <obj_property name="ElementShortName">BUS_SLAVE1_INTERFACE</obj_property>
       <obj_property name="ObjectShortName">BUS_SLAVE1_INTERFACE</obj_property>
@@ -66,5 +66,9 @@
    <wvobject type="array" fp_name="/bus_tb/dut/read_state">
       <obj_property name="ElementShortName">read_state[31:0]</obj_property>
       <obj_property name="ObjectShortName">read_state[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/bus_tb/dut/cached_slave1_read_data">
+      <obj_property name="ElementShortName">cached_slave1_read_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">cached_slave1_read_data[31:0]</obj_property>
    </wvobject>
 </wave_config>

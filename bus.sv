@@ -221,8 +221,8 @@ always @(posedge s0_axi_aclk) begin
   end
 
 // Reading from the slave
-always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
-    if (m1_axi_aresetn == 0) begin
+always @(posedge s0_axi_aclk) begin
+    if (s0_axi_aresetn == 0) begin
        s0_axi_arready <= 0;
        read_state<=IDLE_READ;
     end else begin
@@ -230,6 +230,7 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
         IDLE_READ: begin 
           s0_axi_arready <= 1;
           m1_axi_rready <= 0;
+          s0_axi_rvalid <= 0;
           if(s0_axi_arvalid ) begin
             read_state<=VALID_READ_ADDR;
           end
@@ -290,20 +291,18 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
           
         end
         WRITE_TO_MASTER: begin
-          s0_axi_rresp <= 0;
-          if(s0_axi_rready) begin
-            if(m1_axi_rresp == 0) begin
+            if(m1_axi_rresp == 0 && s0_axi_rready) begin
               s0_axi_rdata <= cached_slave1_read_data;
               s0_axi_rvalid <= 1;
               s0_axi_rresp <= 0;
               read_state = IDLE_READ;
             end 
-            if(m2_axi_rresp == 0) begin
+            if(m2_axi_rresp == 0 && s0_axi_rready) begin
               s0_axi_rdata <= cached_slave2_read_data;
+              s0_axi_rvalid <= 1;
               s0_axi_rresp <= 0;
               read_state = IDLE_READ;
             end
-          end
         end
         
       endcase
