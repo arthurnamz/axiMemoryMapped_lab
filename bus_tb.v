@@ -186,49 +186,73 @@ parameter RESP_WIDTH = 3;
     m2_axi_aresetn = 1;
 
     #20;
-    // write to slave 1
-    s0_axi_awvalid = 0;      
-    s0_axi_wvalid = 0;
-    m1_axi_awready = 1;
-    m1_axi_wready = 1;
-    #20;
-    s0_axi_awvalid = 1;   
-    s0_axi_awaddr = 0;     
-    s0_axi_wvalid = 1;       
-    s0_axi_wdata = 56; 
-    s0_axi_wstrb = 15; 
-    s0_axi_bready = 0; 
-    m1_axi_awready = 0;
-    m1_axi_wready = 0;
-    m1_axi_bresp = 0;
-    #20;
-    s0_axi_awvalid = 0;      
-    s0_axi_wvalid = 0;
-    m1_axi_awready = 1;
-    m1_axi_wready = 1;
-    #120;
+    // // write to slave 1
+    // s0_axi_awvalid = 0;      
+    // s0_axi_wvalid = 0;
+    // m1_axi_awready = 1;
+    // m1_axi_wready = 1;
+    // #20;
+    // s0_axi_awvalid = 1;   
+    // s0_axi_awaddr = 0;     
+    // s0_axi_wvalid = 1;       
+    // s0_axi_wdata = 56; 
+    // s0_axi_wstrb = 15; 
+    // s0_axi_bready = 0; 
+    // m1_axi_awready = 0;
+    // m1_axi_wready = 0;
+    // m1_axi_bresp = 0;
+    // #20;
+    // s0_axi_awvalid = 0;      
+    // s0_axi_wvalid = 0;
+    // m1_axi_awready = 1;
+    // m1_axi_wready = 1;
+    // #20;
+    // m1_axi_awready = 0;
+    // m1_axi_wready = 0;
 
-  //  write to slave 2
-    s0_axi_awvalid = 0;      
-    s0_axi_wvalid = 0;
-    m2_axi_awready = 1;
-    m2_axi_wready = 1;
-    #120;
-    s0_axi_awvalid = 1;   
-    s0_axi_awaddr = 16;     
-    s0_axi_wvalid = 1;       
-    s0_axi_wdata = 56; 
-    s0_axi_wstrb = 15; 
-    s0_axi_bready = 0; 
-    m2_axi_awready = 0;
-    m2_axi_wready = 0;
-    m2_axi_bresp = 0;
-    #120;
-    s0_axi_awvalid = 0;      
-    s0_axi_wvalid = 0;
-    m2_axi_awready = 1;
-    m2_axi_wready = 1;
-    #800;
+    // #120;
+  // //  write to slave 2
+  //   s0_axi_awvalid = 0;      
+  //   s0_axi_wvalid = 0;
+  //   m2_axi_awready = 1;
+  //   m2_axi_wready = 1;
+  //   #120;
+  //   s0_axi_awvalid = 1;   
+  //   s0_axi_awaddr = 16;     
+  //   s0_axi_wvalid = 1;       
+  //   s0_axi_wdata = 56; 
+  //   s0_axi_wstrb = 15; 
+  //   s0_axi_bready = 0; 
+  //   m2_axi_awready = 0;
+  //   m2_axi_wready = 0;
+  //   m2_axi_bresp = 0;
+  //   #120;
+  //   s0_axi_awvalid = 0;      
+  //   s0_axi_wvalid = 0;
+  //   m2_axi_awready = 1;
+  //   m2_axi_wready = 1;
+
+  #120;
+   // read from slave 1
+    s0_axi_arready = 0;      
+    s0_axi_rready = 0;
+    m1_axi_arready = 1;
+    m1_axi_rvalid = 1;
+    #20;
+    s0_axi_arready = 1;   
+    s0_axi_araddr = 0;     
+    s0_axi_arvalid = 1;       
+    m1_axi_rdata = 49;
+    m1_axi_rresp = 0;
+    m1_axi_arready = 0;
+    m1_axi_rvalid = 0;
+    #20;
+    s0_axi_arready = 0;      
+    s0_axi_rready = 0;
+    m1_axi_arready = 1;
+    m1_axi_rvalid = 1;
+
+    #1500;
     $finish;
 end
 endmodule
