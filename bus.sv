@@ -229,29 +229,26 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
       case (read_state)
         IDLE_READ: begin 
           s0_axi_arready <= 1;
-          m1_axi_rready <= 1;
+          m1_axi_rready <= 0;
           if(s0_axi_arvalid ) begin
             read_state<=VALID_READ_ADDR;
           end
         end
         VALID_READ_ADDR: begin
             if(s0_axi_araddr == 8 || s0_axi_araddr == 12)begin
-              cached_slave1_read_address <= s0_axi_araddr;
-              s0_axi_arready <= 0;
-              m1_axi_rready <= 0;
-              s0_axi_rvalid <= 1;
+                cached_slave1_read_address <= s0_axi_araddr;
+                s0_axi_arready <= 0;
+                s0_axi_rvalid <= 1;
                 read_state = READ_FROM_SLAVE1;
-               end else if(s0_axi_araddr == 24 || s0_axi_araddr == 28) begin
+               end 
+           if(s0_axi_araddr == 24 || s0_axi_araddr == 28) begin
                  cached_slave2_read_address <= s0_axi_araddr;
                  s0_axi_rvalid <= 1;
                  s0_axi_arready <= 0;
                  read_state = READ_FROM_SLAVE2;
-              end else begin
-                read_state = IDLE_READ;
-              end
+              end 
               s0_axi_rvalid <= 0;
               s0_axi_arready <= 1;
-              m1_axi_rready <= 1;
 
         end
         READ_FROM_SLAVE1: begin
@@ -259,11 +256,9 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
           if(m1_axi_arready) begin
             m1_axi_araddr <= cached_slave1_read_address;
             m1_axi_arvalid <= 1;
-            m1_axi_rready <= 0;
             read_state = CACHE_DATA_FROM_SLAVE1;
           end
           m1_axi_arvalid <= 0;
-          m1_axi_rready <= 1;
         end
         READ_FROM_SLAVE2: begin
           if(m2_axi_arready) begin
@@ -299,6 +294,7 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
           if(s0_axi_rready) begin
             if(m1_axi_rresp == 0) begin
               s0_axi_rdata <= cached_slave1_read_data;
+              s0_axi_rvalid <= 1;
               s0_axi_rresp <= 0;
               read_state = IDLE_READ;
             end 
