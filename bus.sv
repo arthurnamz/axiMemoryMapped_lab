@@ -195,7 +195,7 @@ always @(posedge s0_axi_aclk) begin
           m2_axi_wvalid <= 0;
         end
         NOTIFY_MASTER: begin
-          if((m1_axi_bresp == 0 && m1_axi_bvalid== 0) && s0_axi_bready) begin
+          if(m1_axi_bresp == 0 && m1_axi_bvalid) begin
             m1_axi_bready <= 1;
             s0_axi_wready <= 1;
             s0_axi_awready <= 1;
@@ -203,7 +203,7 @@ always @(posedge s0_axi_aclk) begin
             s0_axi_bresp <= 0;
             write_state = IDLE_WRITE;
           end 
-          if((m2_axi_bresp== 0 && m2_axi_bvalid== 0) && s0_axi_bready) begin
+          if(m2_axi_bresp== 0 && m2_axi_bvalid) begin
             m2_axi_bready <= 1;
             s0_axi_wready <= 1;
             s0_axi_awready <= 1;

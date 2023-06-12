@@ -201,15 +201,15 @@ parameter RESP_WIDTH = 3;
     m1_axi_awready = 1;
     m1_axi_wready = 1;
     m1_axi_bresp = 0;
+    m1_axi_bvalid = 1;
     #10;
     s0_axi_awvalid = 0;      
     s0_axi_wvalid = 0;
     m1_axi_awready = 1;
     m1_axi_wready = 1;
+    m1_axi_bvalid = 0;
     s0_axi_bready = 0; 
-    #20;
-    m1_axi_awready = 0;
-    m1_axi_wready = 0;
+   
 
     // #120;
   // //  write to slave 2
