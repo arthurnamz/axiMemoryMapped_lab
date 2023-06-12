@@ -241,7 +241,7 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
                  cached_slave2_read_address <= s0_axi_araddr;
                  read_state = READ_FROM_SLAVE2;
               end else begin
-                read_state = READ_FROM_SLAVE2;;
+                read_state = IDLE_READ;
               end
 
         end
@@ -249,15 +249,21 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
           if(m1_axi_arready) begin
             m1_axi_araddr <= cached_slave1_read_address;
             m1_axi_arvalid <= 1;
+            m1_axi_rvalid <= 1;
             read_state = CACHE_DATA_FROM_SLAVE1;
           end
+          m1_axi_arvalid <= 0;
+          m1_axi_rvalid <= 0;
         end
         READ_FROM_SLAVE2: begin
           if(m2_axi_arready) begin
             m2_axi_araddr <= cached_slave2_read_address;
             m2_axi_arvalid <= 1;
+            m2_axi_rvalid <= 1;
             read_state = CACHE_DATA_FROM_SLAVE2;
           end
+          m2_axi_arvalid <= 0;
+          m2_axi_rvalid <= 0;
         end
         CACHE_DATA_FROM_SLAVE1: begin
           m1_axi_rready <= 0;
@@ -283,7 +289,7 @@ always @(posedge m1_axi_aclk ,m2_axi_aclk) begin
           if(s0_axi_rready) begin
             if(m1_axi_rresp) begin
               s0_axi_rdata <= cached_slave1_read_data;
-              s0_axi_rresp <= 1;
+              s0_axi_rresp <= 0;
               s0_axi_rvalid <= 1;
             end else begin
               s0_axi_rdata <= cached_slave2_read_data;
