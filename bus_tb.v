@@ -186,52 +186,54 @@ parameter RESP_WIDTH = 3;
     m2_axi_aresetn = 1;
 
     #10;
-    // write to slave 1
+    // // write to slave 1
+    // s0_axi_awvalid = 0;      
+    // s0_axi_wvalid = 0;
+    // m1_axi_awready = 1;
+    // m1_axi_wready = 1;
+    // #20;
+    // s0_axi_awvalid = 0;   
+    // s0_axi_awaddr = 0;     
+    // s0_axi_wvalid = 0;       
+    // s0_axi_wdata = 56; 
+    // s0_axi_wstrb = 15; 
+    // s0_axi_bready = 1; 
+    // m1_axi_awready = 1;
+    // m1_axi_wready = 1;
+    // m1_axi_bresp = 0;
+    // m1_axi_bvalid = 0;
+    // #20;
+    // s0_axi_awvalid = 0;      
+    // s0_axi_wvalid = 0;
+    // m1_axi_awready = 1;
+    // m1_axi_wready = 1;
+    // s0_axi_bready = 0; 
+   
+
+     #20;
+  //  write to slave 2
     s0_axi_awvalid = 0;      
     s0_axi_wvalid = 0;
-    m1_axi_awready = 1;
-    m1_axi_wready = 1;
+    m2_axi_awready = 1;
+    m2_axi_wready = 1;
     #20;
     s0_axi_awvalid = 0;   
     s0_axi_awaddr = 0;     
-    s0_axi_wvalid = 0;       
+    s0_axi_wvalid = 16;       
     s0_axi_wdata = 56; 
     s0_axi_wstrb = 15; 
     s0_axi_bready = 1; 
-    m1_axi_awready = 1;
-    m1_axi_wready = 1;
-    m1_axi_bresp = 0;
-    m1_axi_bvalid = 0;
+    m2_axi_awready = 1;
+    m2_axi_wready = 1;
+    m2_axi_bresp = 0;
+    m2_axi_bvalid = 0;
     #20;
     s0_axi_awvalid = 0;      
     s0_axi_wvalid = 0;
-    m1_axi_awready = 1;
-    m1_axi_wready = 1;
-    // m1_axi_bvalid = 0;
+    m2_axi_awready = 1;
+    m2_axi_wready = 1;
     s0_axi_bready = 0; 
    
-
-    // #120;
-  // //  write to slave 2
-  //   s0_axi_awvalid = 0;      
-  //   s0_axi_wvalid = 0;
-  //   m2_axi_awready = 1;
-  //   m2_axi_wready = 1;
-  //   #120;
-  //   s0_axi_awvalid = 1;   
-  //   s0_axi_awaddr = 16;     
-  //   s0_axi_wvalid = 1;       
-  //   s0_axi_wdata = 56; 
-  //   s0_axi_wstrb = 15; 
-  //   s0_axi_bready = 0; 
-  //   m2_axi_awready = 0;
-  //   m2_axi_wready = 0;
-  //   m2_axi_bresp = 0;
-  //   #120;
-  //   s0_axi_awvalid = 0;      
-  //   s0_axi_wvalid = 0;
-  //   m2_axi_awready = 1;
-  //   m2_axi_wready = 1;
 
   // #120;
   //  // read from slave 1
