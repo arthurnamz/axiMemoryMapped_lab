@@ -145,12 +145,12 @@ always @(posedge s0_axi_aclk) begin
         VALID_WRITE_ADDR: begin
           s0_axi_wready <= 0;
           s0_axi_awready <= 0;
-          if(s0_axi_awaddr == 0 || s0_axi_awaddr == 4)begin
+          if((s0_axi_awaddr == 0 || s0_axi_awaddr == 4) && s0_axi_awvalid)begin
                 cached_slave1_write_address <= s0_axi_awaddr;
                 cached_slave1_write_valid_address <= s0_axi_awvalid;
                 write_state = VALID_WRITE_DATA;
               end 
-          if(s0_axi_awaddr == 16 || s0_axi_awaddr == 20) begin
+          if((s0_axi_awaddr == 16 || s0_axi_awaddr == 20) && s0_axi_awvalid) begin
                 cached_slave2_write_address <= s0_axi_awaddr;
                 cached_slave2_write_valid_address <= s0_axi_awvalid;
                 write_state = VALID_WRITE_DATA;
@@ -160,13 +160,13 @@ always @(posedge s0_axi_aclk) begin
           // end
         end
         VALID_WRITE_DATA: begin
-            if(cached_slave1_write_address == 0 || cached_slave1_write_address == 4)begin
+            if((cached_slave1_write_address == 0 || cached_slave1_write_address == 4) && s0_axi_wvalid)begin
                 cached_slave1_write_data <= s0_axi_wdata;
                 cached_slave1_wstrb <= s0_axi_wstrb;
                 cached_slave1_write_valid_data <= s0_axi_wvalid;
                 write_state = WRITE_TO_SLAVE1;
               end 
-            if(cached_slave2_write_address == 16 || cached_slave2_write_address == 20) begin
+            if((cached_slave2_write_address == 16 || cached_slave2_write_address == 20) && s0_axi_wvalid) begin
                 cached_slave2_write_data <= s0_axi_wdata;
                 cached_slave2_wstrb <= s0_axi_wstrb;
                 cached_slave2_write_valid_data <= s0_axi_wvalid;

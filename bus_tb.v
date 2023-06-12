@@ -201,7 +201,7 @@ parameter RESP_WIDTH = 3;
     m1_axi_awready = 0;
     m1_axi_wready = 0;
     m1_axi_bresp = 0;
-    #5;
+    #10;
     s0_axi_awvalid = 0;      
     s0_axi_wvalid = 0;
     m1_axi_awready = 1;
