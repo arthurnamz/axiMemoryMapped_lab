@@ -246,7 +246,7 @@ parameter RESP_WIDTH = 3;
     m1_axi_rvalid = 1; 
     m1_axi_rresp = 0;
     m1_axi_arready = 0;
-    #10;
+    #5;
     m1_axi_arready = 1;
     m1_axi_rvalid = 0;
     s0_axi_arvalid = 0;      
