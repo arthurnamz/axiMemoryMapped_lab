@@ -132,6 +132,11 @@ always @(posedge s0_axi_aclk) begin
     if (s0_axi_aresetn == 0) begin
       s0_axi_awready <= 0;
       s0_axi_wready <= 0;
+      s0_axi_bvalid <= 0;
+      m1_axi_awvalid <=0;
+      m1_axi_wvalid <=0;
+      m2_axi_awvalid <=0;
+      m2_axi_wvalid <=0;
       write_state = IDLE_WRITE;
     end else begin
       case (write_state)
@@ -212,6 +217,8 @@ always @(posedge s0_axi_aclk) begin
             write_state = IDLE_WRITE;
           end 
           s0_axi_bvalid <= 0;  
+          m1_axi_bready <= 0;
+          m2_axi_bready <= 0;
         end
         
       endcase
