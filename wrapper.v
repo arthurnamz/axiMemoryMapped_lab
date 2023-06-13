@@ -102,7 +102,12 @@ module wrapper #(
     input  m4_axi_rvalid,
     output reg m4_axi_rready
 );
+//wires
 
+
+
+
+// bus instiation
 bus#(
     .DATA_WIDTH(DATA_WIDTH),
     .ADDR_WIDTH(ADDR_WIDTH),
@@ -174,8 +179,9 @@ bus#(
   // adder
   adder #(
     .DATA_WIDTH(DATA_WIDTH),
-    .ADDR_WIDTH(ADDR_WIDTH)
-  ) dut (
+    .ADDR_WIDTH(ADDR_WIDTH),
+    .RESP_WIDTH(RESP_WIDTH)
+  ) adder_instiate (
     .s1_axi_aclk(s1_axi_aclk),
     .s1_axi_aresetn(s1_axi_aresetn),
     .s1_axi_awaddr(s1_axi_awaddr),
@@ -200,8 +206,9 @@ bus#(
   // multiplier
    multiplier #(
     .DATA_WIDTH(DATA_WIDTH),
-    .ADDR_WIDTH(ADDR_WIDTH)
-  ) dut (
+    .ADDR_WIDTH(ADDR_WIDTH),
+    .RESP_WIDTH(RESP_WIDTH)
+   ) multiplier_instiate (
     .s2_axi_aclk(s2_axi_aclk),
     .s2_axi_aresetn(s2_axi_aresetn),
     .s2_axi_awaddr(s2_axi_awaddr),
