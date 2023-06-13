@@ -5,6 +5,7 @@ module multiplier_tb;
   // Parameters
   parameter DATA_WIDTH = 32;
   parameter ADDR_WIDTH = 8;
+  parameter RESP_WIDTH = 3;
 
   // Signals
   reg s2_axi_aclk = 0;
@@ -19,7 +20,7 @@ module multiplier_tb;
   reg s2_axi_wvalid;
   wire s2_axi_wready;
 
-  wire s2_axi_bresp;
+  wire [RESP_WIDTH - 1:0] s2_axi_bresp;
   wire s2_axi_bvalid;
   reg s2_axi_bready;
 
@@ -28,7 +29,7 @@ module multiplier_tb;
   wire s2_axi_arready;
 
   wire [DATA_WIDTH-1:0] s2_axi_rdata;
-  wire s2_axi_rresp;
+  wire [RESP_WIDTH - 1:0] s2_axi_rresp;
   wire s2_axi_rvalid;
   reg s2_axi_rready;
   
