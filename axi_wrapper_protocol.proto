@@ -1,0 +1,71 @@
+{
+	"version": "1.0",
+	"modules": {
+		"wrapper_tb": {
+			"proto_instances": {
+				"ALL_WRAPPER_PORTS": {
+					"interface": "xilinx.com:interface:aximm:1.0",
+					"ports": {
+						"ACLK": {
+							"actual": "s3_axi_aclk"
+						},
+						"ARESETN": {
+							"actual": "s3_axi_aresetn"
+						},
+						"AWADDR": {
+							"actual": "s3_axi_awaddr"
+						},
+						"AWVALID": {
+							"actual": "s3_axi_awvalid"
+						},
+						"AWREADY": {
+							"actual": "s3_axi_awready"
+						},
+						"WDATA": {
+							"actual": "s3_axi_wdata"
+						},
+						"WSTRB": {
+							"actual": "s3_axi_wstrb"
+						},
+						"WVALID": {
+							"actual": "s3_axi_wvalid"
+						},
+						"WREADY": {
+							"actual": "s3_axi_wready"
+						},
+						"BRESP": {
+							"actual": "s3_axi_bresp"
+						},
+						"BVALID": {
+							"actual": "s3_axi_bvalid"
+						},
+						"BREADY": {
+							"actual": "s3_axi_bready"
+						},
+						"ARADDR": {
+							"actual": "s3_axi_araddr"
+						},
+						"ARVALID": {
+							"actual": "s3_axi_arvalid"
+						},
+						"ARREADY": {
+							"actual": "s3_axi_arready"
+						},
+						"RDATA": {
+							"actual": "s3_axi_rdata"
+						},
+						"RRESP": {
+							"actual": "s3_axi_rresp"
+						},
+						"RVALID": {
+							"actual": "s3_axi_rvalid"
+						},
+						"RREADY": {
+							"actual": "s3_axi_rready"
+						}
+					}
+				}
+			}
+		}
+	}
+}
