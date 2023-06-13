@@ -67,6 +67,7 @@ module wrapper_tb;
 
     // Clock generation
   always #5 s3_axi_aclk = ~s3_axi_aclk;
+  
   // Reset generation
   initial begin
     s3_axi_aresetn = 0;

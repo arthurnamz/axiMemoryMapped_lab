@@ -13,95 +13,31 @@ module wrapper #(
     // Write address channel
     input [ADDR_WIDTH-1:0] s3_axi_awaddr,
     input s3_axi_awvalid,
-    output reg s3_axi_awready,
+    output wire s3_axi_awready,
 
     // Write data channel
     input [DATA_WIDTH-1:0] s3_axi_wdata,
     input [DATA_WIDTH/8:0] s3_axi_wstrb,
     input s3_axi_wvalid,
-    output reg s3_axi_wready,
+    output wire s3_axi_wready,
 
     // Write response channel
-    output reg [RESP_WIDTH - 1:0] s3_axi_bresp,
-    output reg s3_axi_bvalid,
+    output wire [RESP_WIDTH - 1:0] s3_axi_bresp,
+    output wire s3_axi_bvalid,
     input s3_axi_bready,
 
     // Read address channel
     input [ADDR_WIDTH-1:0] s3_axi_araddr,
     input s3_axi_arvalid,
-    output reg s3_axi_arready,
+    output wire s3_axi_arready,
 
     // Read data channel
-    output reg [DATA_WIDTH-1:0] s3_axi_rdata,
-    output reg [RESP_WIDTH - 1:0] s3_axi_rresp,
-    output reg s3_axi_rvalid,
-    input s3_axi_rready,
-
-// /* master interface 1*/
-//    // Global signals
-//     input m3_axi_aclk,
-//     input m3_axi_aresetn,
-
-//     // Write address channel
-//     output  reg [ADDR_WIDTH-1:0] m3_axi_awaddr,
-//     output  reg m3_axi_awvalid,
-//     input  m3_axi_awready,
-
-//     // Write data channel
-//     output  reg [DATA_WIDTH-1:0] m3_axi_wdata,
-//     output  reg [DATA_WIDTH/8:0] m3_axi_wstrb,
-//     output  reg m3_axi_wvalid,
-//     input  m3_axi_wready,
-
-//     // Write response channel
-//     input  [RESP_WIDTH - 1:0] m3_axi_bresp,
-//     input  m3_axi_bvalid,
-//     output reg m3_axi_bready,
-
-//     // Read address channel
-//     output reg [ADDR_WIDTH-1:0] m3_axi_araddr,
-//     output reg m3_axi_arvalid,
-//     input  m3_axi_arready,
-
-//     // Read data channel
-//     input  [DATA_WIDTH-1:0] m3_axi_rdata,
-//     input  [RESP_WIDTH - 1:0] m3_axi_rresp,
-//     input  m3_axi_rvalid,
-//     output reg m3_axi_rready,
-
-    
-// /* master interface 2*/
-//    // Global signals
-//     input m4_axi_aclk,
-//     input m4_axi_aresetn,
-
-//     // Write address channel
-//     output  reg [ADDR_WIDTH-1:0] m4_axi_awaddr,
-//     output  reg m4_axi_awvalid,
-//     input  m4_axi_awready,
-
-//     // Write data channel
-//     output  reg [DATA_WIDTH-1:0] m4_axi_wdata,
-//     output  reg [DATA_WIDTH/8:0] m4_axi_wstrb,
-//     output  reg m4_axi_wvalid,
-//     input  m4_axi_wready,
-
-//     // Write response channel
-//     input  [RESP_WIDTH - 1:0] m4_axi_bresp,
-//     input  m4_axi_bvalid,
-//     output reg m4_axi_bready,
-
-//     // Read address channel
-//     output reg [ADDR_WIDTH-1:0] m4_axi_araddr,
-//     output reg m4_axi_arvalid,
-//     input  m4_axi_arready,
-
-//     // Read data channel
-//     input  [DATA_WIDTH-1:0] m4_axi_rdata,
-//     input  [RESP_WIDTH - 1:0] m4_axi_rresp,
-//     input  m4_axi_rvalid,
-//     output reg m4_axi_rready
+    output wire [DATA_WIDTH-1:0] s3_axi_rdata,
+    output wire [RESP_WIDTH - 1:0] s3_axi_rresp,
+    output wire s3_axi_rvalid,
+    input s3_axi_rready
 );
+
 //Slave 1 wires
 wire [ADDR_WIDTH-1:0] connect_slave1_awaddr;
 wire connect_slave1_awvalid;
@@ -114,7 +50,7 @@ wire [RESP_WIDTH - 1:0] connect_slave1_bresp;
 wire connect_slave1_bvalid;
 wire connect_slave1_bready;
 wire [ADDR_WIDTH-1:0] connect_slave1_araddr;
-wire connect_slave1_rvalid;
+wire connect_slave1_arvalid;
 wire connect_slave1_arready;
 wire [DATA_WIDTH-1:0] connect_slave1_rdata;
 wire [RESP_WIDTH - 1:0] connect_slave1_rresp;
@@ -133,7 +69,7 @@ wire [RESP_WIDTH - 1:0] connect_slave2_bresp;
 wire connect_slave2_bvalid;
 wire connect_slave2_bready;
 wire [ADDR_WIDTH-1:0] connect_slave2_araddr;
-wire connect_slave2_rvalid;
+wire connect_slave2_arvalid;
 wire connect_slave2_arready;
 wire [DATA_WIDTH-1:0] connect_slave2_rdata;
 wire [RESP_WIDTH - 1:0] connect_slave2_rresp;
