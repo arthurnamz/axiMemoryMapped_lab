@@ -100,8 +100,9 @@ parameter RESP_WIDTH = 3;
     wire m2_axi_rready;
 // internal register
   reg [7:0] read_out;
-  reg [7:0] write_in;
-  reg [31:0] hold;
+  reg [31:0] write_in = 56;
+  reg [ADDR_WIDTH-1:0] hold = 0;
+  integer m;
 
     bus#(
     .DATA_WIDTH(DATA_WIDTH),
@@ -184,55 +185,57 @@ parameter RESP_WIDTH = 3;
     s0_axi_aresetn = 1;
     m1_axi_aresetn = 1;
     m2_axi_aresetn = 1;
-
-    #10;
-    // // write to slave 1
-    // s0_axi_awvalid = 0;      
-    // s0_axi_wvalid = 0;
-    // m1_axi_awready = 1;
-    // m1_axi_wready = 1;
-    // #20;
-    // s0_axi_awvalid = 0;   
-    // s0_axi_awaddr = 0;     
-    // s0_axi_wvalid = 0;       
-    // s0_axi_wdata = 56; 
-    // s0_axi_wstrb = 15; 
-    // s0_axi_bready = 1; 
-    // m1_axi_awready = 1;
-    // m1_axi_wready = 1;
-    // m1_axi_bresp = 0;
-    // m1_axi_bvalid = 0;
-    // #20;
-    // s0_axi_awvalid = 0;      
-    // s0_axi_wvalid = 0;
-    // m1_axi_awready = 1;
-    // m1_axi_wready = 1;
-    // s0_axi_bready = 0; 
-   
-
-     #20;
-  //  write to slave 2
+ #10;
+for(m=0; m<2; m=m+1) begin
     s0_axi_awvalid = 0;      
     s0_axi_wvalid = 0;
-    m2_axi_awready = 1;
-    m2_axi_wready = 1;
+    m1_axi_awready = 1;
+    m1_axi_wready = 1;
     #20;
     s0_axi_awvalid = 0;   
-    s0_axi_awaddr = 16;     
+    s0_axi_awaddr = hold;     
     s0_axi_wvalid = 0;       
-    s0_axi_wdata = 56; 
+    s0_axi_wdata = write_in; 
     s0_axi_wstrb = 15; 
     s0_axi_bready = 1; 
-    m2_axi_awready = 1;
-    m2_axi_wready = 1;
-    m2_axi_bresp = 0;
-    m2_axi_bvalid = 0;
+    m1_axi_awready = 1;
+    m1_axi_wready = 1;
+    m1_axi_bresp = 0;
+    m1_axi_bvalid = 0;
     #20;
     s0_axi_awvalid = 0;      
     s0_axi_wvalid = 0;
-    m2_axi_awready = 1;
-    m2_axi_wready = 1;
+    m1_axi_awready = 1;
+    m1_axi_wready = 1;
     s0_axi_bready = 0; 
+
+    hold = hold + 4;
+    write_in = write_in + 8;
+end
+
+  //    #20;
+  // //  write to slave 2
+  //   s0_axi_awvalid = 0;      
+  //   s0_axi_wvalid = 0;
+  //   m2_axi_awready = 1;
+  //   m2_axi_wready = 1;
+  //   #20;
+  //   s0_axi_awvalid = 0;   
+  //   s0_axi_awaddr = 16;     
+  //   s0_axi_wvalid = 0;       
+  //   s0_axi_wdata = 56; 
+  //   s0_axi_wstrb = 15; 
+  //   s0_axi_bready = 1; 
+  //   m2_axi_awready = 1;
+  //   m2_axi_wready = 1;
+  //   m2_axi_bresp = 0;
+  //   m2_axi_bvalid = 0;
+  //   #20;
+  //   s0_axi_awvalid = 0;      
+  //   s0_axi_wvalid = 0;
+  //   m2_axi_awready = 1;
+  //   m2_axi_wready = 1;
+  //   s0_axi_bready = 0; 
    
 
   // #120;
@@ -254,24 +257,24 @@ parameter RESP_WIDTH = 3;
   //   s0_axi_arvalid = 0;      
   //   s0_axi_rready = 0;
 
-    #20;
-     // read from slave 2
-    s0_axi_arvalid = 0;      
-    s0_axi_rready = 1;
-    m2_axi_arready = 1;
-    m2_axi_rvalid = 0;
-    #20;
-    s0_axi_rready = 0;
-    s0_axi_arvalid = 1;   
-    s0_axi_araddr = 24;    
-    m2_axi_rdata = 76;
-    m2_axi_rresp = 0;
-    m2_axi_arready = 0;
-    #5;
-    m2_axi_arready = 1;
-    m2_axi_rvalid = 0;
-    s0_axi_arvalid = 0;      
-    s0_axi_rready = 0;
+    // #20;
+    //  // read from slave 2
+    // s0_axi_arvalid = 0;      
+    // s0_axi_rready = 1;
+    // m2_axi_arready = 1;
+    // m2_axi_rvalid = 0;
+    // #20;
+    // s0_axi_rready = 0;
+    // s0_axi_arvalid = 1;   
+    // s0_axi_araddr = 24;    
+    // m2_axi_rdata = 76;
+    // m2_axi_rresp = 0;
+    // m2_axi_arready = 0;
+    // #5;
+    // m2_axi_arready = 1;
+    // m2_axi_rvalid = 0;
+    // s0_axi_arvalid = 0;      
+    // s0_axi_rready = 0;
     
 
     #1500;
