@@ -1,7 +1,8 @@
 
 module adder#(
     parameter DATA_WIDTH = 32,
-    parameter ADDR_WIDTH = 8
+    parameter ADDR_WIDTH = 8,
+    parameter RESP_WIDTH = 3
 )
 (
     // Global signals
@@ -20,7 +21,7 @@ module adder#(
     output reg s1_axi_wready,
 
     // Write response channel
-    output reg s1_axi_bresp,
+    output reg [RESP_WIDTH - 1:0] s1_axi_bresp,
     output reg s1_axi_bvalid,
     input s1_axi_bready,
 
@@ -31,7 +32,7 @@ module adder#(
 
     // Read data channel
     output reg [DATA_WIDTH-1:0] s1_axi_rdata,
-    output reg s1_axi_rresp,
+    output reg [RESP_WIDTH - 1:0] s1_axi_rresp,
     output reg s1_axi_rvalid,
     input  s1_axi_rready
 );
@@ -72,7 +73,7 @@ begin
                   if (s1_axi_bready == 1) begin
                     s1_axi_awready <= 1;
                     s1_axi_wready <= 1;
-                    s1_axi_bresp <= 1;
+                    s1_axi_bresp <= 0;
                     s1_axi_bvalid <= 1;  
                   end
               
@@ -92,7 +93,7 @@ begin
               if (s1_axi_bready == 1) begin
                 s1_axi_awready <= 1;
                 s1_axi_wready <= 1;
-                s1_axi_bresp <= 1;
+                s1_axi_bresp <= 0;
                 s1_axi_bvalid <= 1;
               end
              
@@ -139,12 +140,12 @@ begin
          case(s1_axi_araddr)
             8: begin
                   s1_axi_rvalid <= 1;
-                  s1_axi_rresp <= 1;
+                  s1_axi_rresp <= 0;
                   s1_axi_rdata <= result_tmp[31:0];
                end
             12: begin
                   s1_axi_rvalid <= 1;
-                  s1_axi_rresp <= 1;
+                  s1_axi_rresp <= 0;
                   s1_axi_rdata <= overflow_adder;
                end
             default: begin
