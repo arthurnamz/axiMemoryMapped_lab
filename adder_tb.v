@@ -5,6 +5,7 @@ module adder_tb;
   // Parameters
   parameter DATA_WIDTH = 32;
   parameter ADDR_WIDTH = 8;
+  parameter RESP_WIDTH = 3;
 
   // Signals
   reg s1_axi_aclk = 0;
@@ -19,7 +20,7 @@ module adder_tb;
   reg s1_axi_wvalid;
   wire s1_axi_wready;
 
-  wire s1_axi_bresp;
+  wire [RESP_WIDTH - 1:0] s1_axi_bresp;
   wire s1_axi_bvalid;
   reg s1_axi_bready;
 
@@ -28,7 +29,7 @@ module adder_tb;
   wire s1_axi_arready;
 
   wire [DATA_WIDTH-1:0] s1_axi_rdata;
-  wire s1_axi_rresp;
+  wire [RESP_WIDTH - 1:0] s1_axi_rresp;
   wire s1_axi_rvalid;
   reg s1_axi_rready;
   
