@@ -33,6 +33,11 @@ module wrapper_tb;
     wire [RESP_WIDTH - 1:0] s3_axi_rresp;
     wire s3_axi_rvalid;
     reg s3_axi_rready;
+
+ //internal registers
+  reg [7:0] write_in;
+  reg [31:0] hold;
+
     // DuT
      wrapper#(
         .DATA_WIDTH(DATA_WIDTH),
@@ -67,8 +72,36 @@ module wrapper_tb;
     s3_axi_aresetn = 0;
     #5;
     s3_axi_aresetn = 1;
-    #10;
 
+    write_in = 0;
+    #20;
+    hold = 23;
+
+    #500;
+    $finish;
+
+    end
+
+    always @(posedge s3_axi_aclk) begin
+    s3_axi_awvalid <= 1;      // 1 bit
+    s3_axi_wvalid <= 1;       // 1 bit
+    
+    if (s3_axi_wready && s3_axi_awready ) begin
+        s3_axi_awaddr <= write_in;  // 8 bits
+        s3_axi_wdata <= hold; // 32 bits
+        s3_axi_wstrb <= 15; // 4 bits
+        s3_axi_bready <= 1;   // 1 bit
+        
+        
+        if (write_in == 4)begin
+         write_in <= 0;
+        end else begin
+          write_in <= 4;
+        end
+        
+
+        hold <= hold + 7;
+    end
     end
 
     endmodule
