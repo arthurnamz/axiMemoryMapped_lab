@@ -11,14 +11,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,575.001 ns"></ZoomEndTime>
-      <Cursor1Time time="75.000 ns"></Cursor1Time>
+      <ZoomEndTime time="1,197.132 ns"></ZoomEndTime>
+      <Cursor1Time time="0.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="214"></NameColumnWidth>
+      <NameColumnWidth column_width="206"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="1" />
+   <WVObjectSize size="7" />
    <wvobject type="protoinst" fp_name="/wrapper_tb/ALL_WRAPPER_PORTS">
       <obj_property name="children_use_element_short_name">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
@@ -31,6 +31,266 @@
       <obj_property name="CellHeight">36</obj_property>
       <obj_property name="ElementShortName">ALL_WRAPPER_PORTS</obj_property>
       <obj_property name="ObjectShortName">ALL_WRAPPER_PORTS</obj_property>
-      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject fp_name="divider31" type="divider">
+      <obj_property name="label">Bus</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group135">
+      <obj_property name="label">BUS ports</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="group" fp_name="group224">
+         <obj_property name="label">slave interface</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_aclk">
+            <obj_property name="ElementShortName">s0_axi_aclk</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_aclk</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_aresetn">
+            <obj_property name="ElementShortName">s0_axi_aresetn</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_aresetn</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_awaddr">
+            <obj_property name="ElementShortName">s0_axi_awaddr[7:0]</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_awaddr[7:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_awvalid">
+            <obj_property name="ElementShortName">s0_axi_awvalid</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_awvalid</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_awready">
+            <obj_property name="ElementShortName">s0_axi_awready</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_awready</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_wdata">
+            <obj_property name="ElementShortName">s0_axi_wdata[31:0]</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_wdata[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_wstrb">
+            <obj_property name="ElementShortName">s0_axi_wstrb[4:0]</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_wstrb[4:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_wvalid">
+            <obj_property name="ElementShortName">s0_axi_wvalid</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_wvalid</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_wready">
+            <obj_property name="ElementShortName">s0_axi_wready</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_wready</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_bresp">
+            <obj_property name="ElementShortName">s0_axi_bresp[2:0]</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_bresp[2:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_bvalid">
+            <obj_property name="ElementShortName">s0_axi_bvalid</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_bvalid</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_bready">
+            <obj_property name="ElementShortName">s0_axi_bready</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_bready</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_araddr">
+            <obj_property name="ElementShortName">s0_axi_araddr[7:0]</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_araddr[7:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_arvalid">
+            <obj_property name="ElementShortName">s0_axi_arvalid</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_arvalid</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_arready">
+            <obj_property name="ElementShortName">s0_axi_arready</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_arready</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_rdata">
+            <obj_property name="ElementShortName">s0_axi_rdata[31:0]</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_rdata[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_rresp">
+            <obj_property name="ElementShortName">s0_axi_rresp[2:0]</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_rresp[2:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_rvalid">
+            <obj_property name="ElementShortName">s0_axi_rvalid</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_rvalid</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_rready">
+            <obj_property name="ElementShortName">s0_axi_rready</obj_property>
+            <obj_property name="ObjectShortName">s0_axi_rready</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group225">
+         <obj_property name="label">master interface</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_aclk">
+            <obj_property name="ElementShortName">m1_axi_aclk</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_aclk</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_aresetn">
+            <obj_property name="ElementShortName">m1_axi_aresetn</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_aresetn</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_awaddr">
+            <obj_property name="ElementShortName">m1_axi_awaddr[7:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_awaddr[7:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_awvalid">
+            <obj_property name="ElementShortName">m1_axi_awvalid</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_awvalid</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_awready">
+            <obj_property name="ElementShortName">m1_axi_awready</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_awready</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_wdata">
+            <obj_property name="ElementShortName">m1_axi_wdata[31:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_wdata[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_wstrb">
+            <obj_property name="ElementShortName">m1_axi_wstrb[4:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_wstrb[4:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_wvalid">
+            <obj_property name="ElementShortName">m1_axi_wvalid</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_wvalid</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_wready">
+            <obj_property name="ElementShortName">m1_axi_wready</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_wready</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_bresp">
+            <obj_property name="ElementShortName">m1_axi_bresp[2:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_bresp[2:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_bvalid">
+            <obj_property name="ElementShortName">m1_axi_bvalid</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_bvalid</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_bready">
+            <obj_property name="ElementShortName">m1_axi_bready</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_bready</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_araddr">
+            <obj_property name="ElementShortName">m1_axi_araddr[7:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_araddr[7:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_arvalid">
+            <obj_property name="ElementShortName">m1_axi_arvalid</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_arvalid</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_arready">
+            <obj_property name="ElementShortName">m1_axi_arready</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_arready</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_rdata">
+            <obj_property name="ElementShortName">m1_axi_rdata[31:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_rdata[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_rresp">
+            <obj_property name="ElementShortName">m1_axi_rresp[2:0]</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_rresp[2:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_rvalid">
+            <obj_property name="ElementShortName">m1_axi_rvalid</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_rvalid</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/m1_axi_rready">
+            <obj_property name="ElementShortName">m1_axi_rready</obj_property>
+            <obj_property name="ObjectShortName">m1_axi_rready</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/write_state">
+      <obj_property name="ElementShortName">write_state[31:0]</obj_property>
+      <obj_property name="ObjectShortName">write_state[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/read_state">
+      <obj_property name="ElementShortName">read_state[31:0]</obj_property>
+      <obj_property name="ObjectShortName">read_state[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider40" type="divider">
+      <obj_property name="label">Slave 1</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">#FF00FF</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group62">
+      <obj_property name="label">slave1ports</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_aclk">
+         <obj_property name="ElementShortName">s1_axi_aclk</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_aclk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_aresetn">
+         <obj_property name="ElementShortName">s1_axi_aresetn</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_aresetn</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_awaddr">
+         <obj_property name="ElementShortName">s1_axi_awaddr[7:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_awaddr[7:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_awvalid">
+         <obj_property name="ElementShortName">s1_axi_awvalid</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_awvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_awready">
+         <obj_property name="ElementShortName">s1_axi_awready</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_awready</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_wdata">
+         <obj_property name="ElementShortName">s1_axi_wdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_wdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_wstrb">
+         <obj_property name="ElementShortName">s1_axi_wstrb[4:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_wstrb[4:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_wvalid">
+         <obj_property name="ElementShortName">s1_axi_wvalid</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_wvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_wready">
+         <obj_property name="ElementShortName">s1_axi_wready</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_wready</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_bresp">
+         <obj_property name="ElementShortName">s1_axi_bresp[2:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_bresp[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_bvalid">
+         <obj_property name="ElementShortName">s1_axi_bvalid</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_bvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_bready">
+         <obj_property name="ElementShortName">s1_axi_bready</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_bready</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_araddr">
+         <obj_property name="ElementShortName">s1_axi_araddr[7:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_araddr[7:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_arvalid">
+         <obj_property name="ElementShortName">s1_axi_arvalid</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_arvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_arready">
+         <obj_property name="ElementShortName">s1_axi_arready</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_arready</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_rdata">
+         <obj_property name="ElementShortName">s1_axi_rdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_rdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_rresp">
+         <obj_property name="ElementShortName">s1_axi_rresp[2:0]</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_rresp[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_rvalid">
+         <obj_property name="ElementShortName">s1_axi_rvalid</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_rvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_rready">
+         <obj_property name="ElementShortName">s1_axi_rready</obj_property>
+         <obj_property name="ObjectShortName">s1_axi_rready</obj_property>
+      </wvobject>
    </wvobject>
 </wave_config>
