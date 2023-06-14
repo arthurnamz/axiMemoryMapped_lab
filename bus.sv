@@ -183,41 +183,32 @@ always @(posedge s0_axi_aclk) begin
             m1_axi_wvalid <= cached_slave1_write_valid_data;
             m1_axi_bready <= s0_axi_bready;
             write_state = NOTIFY_MASTER_FROM_SLAVE1;
-          // end
         end
+
         WRITE_TO_SLAVE2: begin
-          if (m2_axi_awready && m2_axi_wready) begin
             m2_axi_awaddr <= cached_slave2_write_address;
             m2_axi_awvalid <= cached_slave1_write_valid_address;
             m2_axi_wdata <= cached_slave2_write_data;
             m2_axi_wstrb <= cached_slave2_wstrb;
             m2_axi_wvalid <= cached_slave2_write_valid_data;
+            m2_axi_bready <= s0_axi_bready;
             write_state = NOTIFY_MASTER_FROM_SLAVE2;
           end
-          m2_axi_awvalid <= 0;
-          m2_axi_wvalid <= 0;
-        end
+
         NOTIFY_MASTER_FROM_SLAVE1: begin
-            //  if (m1_axi_awready && m1_axi_wready) begin
-                s0_axi_wready <= m1_axi_wready;
-                s0_axi_awready <= m1_axi_awready;
-                s0_axi_bvalid <= m1_axi_bvalid;
-                s0_axi_bresp <= m1_axi_bresp;
-                write_state = IDLE_WRITE;
-            //  end
+            s0_axi_wready <= m1_axi_wready;
+            s0_axi_awready <= m1_axi_awready;
+            s0_axi_bvalid <= m1_axi_bvalid;
+            s0_axi_bresp <= m1_axi_bresp;
+            write_state = IDLE_WRITE;
         end
 
         NOTIFY_MASTER_FROM_SLAVE2: begin
-          s0_axi_bvalid <= 0;  
-          m2_axi_bready <= 0;
-          if(m2_axi_bresp== 0 && m2_axi_bvalid) begin
-            m2_axi_bready <= 1;
-            s0_axi_wready <= 1;
-            s0_axi_awready <= 1;
-            s0_axi_bvalid <= 1;
-            s0_axi_bresp <= 0;
+            s0_axi_wready <= m2_axi_wready;
+            s0_axi_awready <= m2_axi_awready;
+            s0_axi_bvalid <= m2_axi_bvalid;
+            s0_axi_bresp <= m2_axi_bresp;
             write_state = IDLE_WRITE;
-          end 
         end
         
         
@@ -242,13 +233,13 @@ always @(posedge s0_axi_aclk) begin
            end
         end
         VALID_READ_ADDR: begin
-            if((s0_axi_araddr == 8 || s0_axi_araddr == 12) && s0_axi_arvalid)begin
+            if(s0_axi_araddr == 8 || s0_axi_araddr == 12)begin
                 cached_slave1_read_address <= s0_axi_araddr;
                 s0_axi_arready <= 0;
                 s0_axi_rvalid <= 1;
                 read_state = READ_FROM_SLAVE1;
                end 
-           if((s0_axi_araddr == 24 || s0_axi_araddr == 28) && s0_axi_arvalid) begin
+           if(s0_axi_araddr == 24 || s0_axi_araddr == 28) begin
                  cached_slave2_read_address <= s0_axi_araddr;
                  s0_axi_rvalid <= 1;
                  s0_axi_arready <= 0;

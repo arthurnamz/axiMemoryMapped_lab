@@ -101,19 +101,21 @@ module wrapper_tb;
     s3_axi_wvalid = 0; 
     s3_axi_bready = 0; 
      #30;
-    // s3_axi_rready = 0;
-    // #50;
-    // s3_axi_rready = 1;
-    // s3_axi_araddr = 8;
-    // s3_axi_arvalid = 0;
-    // #60;
-    // s3_axi_rready = 0;
-    // #80;
-    // s3_axi_rready = 1;
-    // s3_axi_araddr = 12;
-    // s3_axi_arvalid = 0;
-    // #90;
-    // s3_axi_rready = 0;
+
+    #230;
+     s3_axi_rready = 0;
+    #250;
+    s3_axi_rready = 1;
+    s3_axi_araddr = 8;
+    s3_axi_arvalid = 0;
+    #260;
+    s3_axi_rready = 0;
+    #280;
+    s3_axi_rready = 1;
+    s3_axi_araddr = 12;
+    s3_axi_arvalid = 0;
+    #290;
+    s3_axi_rready = 0;
     
     
 
