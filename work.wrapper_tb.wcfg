@@ -11,12 +11,12 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,197.132 ns"></ZoomEndTime>
+      <ZoomEndTime time="1,885.001 ns"></ZoomEndTime>
       <Cursor1Time time="0.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="206"></NameColumnWidth>
-      <ValueColumnWidth column_width="66"></ValueColumnWidth>
+      <NameColumnWidth column_width="181"></NameColumnWidth>
+      <ValueColumnWidth column_width="87"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="7" />
    <wvobject type="protoinst" fp_name="/wrapper_tb/ALL_WRAPPER_PORTS">
@@ -65,6 +65,7 @@
          <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_wdata">
             <obj_property name="ElementShortName">s0_axi_wdata[31:0]</obj_property>
             <obj_property name="ObjectShortName">s0_axi_wdata[31:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
          </wvobject>
          <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_wstrb">
             <obj_property name="ElementShortName">s0_axi_wstrb[4:0]</obj_property>
@@ -227,6 +228,7 @@
       <wvobject type="array" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_awaddr">
          <obj_property name="ElementShortName">s1_axi_awaddr[7:0]</obj_property>
          <obj_property name="ObjectShortName">s1_axi_awaddr[7:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
       <wvobject type="logic" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_awvalid">
          <obj_property name="ElementShortName">s1_axi_awvalid</obj_property>
@@ -239,6 +241,7 @@
       <wvobject type="array" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_wdata">
          <obj_property name="ElementShortName">s1_axi_wdata[31:0]</obj_property>
          <obj_property name="ObjectShortName">s1_axi_wdata[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
       <wvobject type="array" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_wstrb">
          <obj_property name="ElementShortName">s1_axi_wstrb[4:0]</obj_property>

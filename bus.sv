@@ -122,7 +122,7 @@ reg  cached_slave2_write_valid_data;
 reg  cached_slave2_write_valid_address;
 
 // finite state machines
-  typedef enum {IDLE_WRITE,VALID_WRITE_ADDR,VALID_WRITE_DATA, WRITE_TO_SLAVE1, WRITE_TO_SLAVE2, NOTIFY_MASTER } writing_states;
+  typedef enum {IDLE_WRITE,VALID_WRITE_ADDR,VALID_WRITE_DATA, WRITE_TO_SLAVE1, WRITE_TO_SLAVE2, NOTIFY_MASTER_FROM_SLAVE1, NOTIFY_MASTER_FROM_SLAVE2 } writing_states;
   typedef enum {IDLE_READ, VALID_READ_ADDR, READ_FROM_SLAVE1, READ_FROM_SLAVE2, CACHE_DATA_FROM_SLAVE1,CACHE_DATA_FROM_SLAVE2, WRITE_TO_MASTER } reading_states;
   writing_states write_state;
   reading_states read_state;
@@ -176,16 +176,14 @@ always @(posedge s0_axi_aclk) begin
               end 
         end
         WRITE_TO_SLAVE1: begin
-          // if (m1_axi_awready && m1_axi_wready) begin
             m1_axi_awaddr <= cached_slave1_write_address;
             m1_axi_awvalid <= cached_slave1_write_valid_address;
             m1_axi_wdata <= cached_slave1_write_data;
             m1_axi_wstrb <= cached_slave1_wstrb;
             m1_axi_wvalid <= cached_slave1_write_valid_data;
-            write_state = NOTIFY_MASTER;
+            m1_axi_bready <= s0_axi_bready;
+            write_state = NOTIFY_MASTER_FROM_SLAVE1;
           // end
-          m1_axi_awvalid <= 0;
-          m1_axi_wvalid <= 0;
         end
         WRITE_TO_SLAVE2: begin
           if (m2_axi_awready && m2_axi_wready) begin
@@ -194,23 +192,24 @@ always @(posedge s0_axi_aclk) begin
             m2_axi_wdata <= cached_slave2_write_data;
             m2_axi_wstrb <= cached_slave2_wstrb;
             m2_axi_wvalid <= cached_slave2_write_valid_data;
-            write_state = NOTIFY_MASTER;
+            write_state = NOTIFY_MASTER_FROM_SLAVE2;
           end
           m2_axi_awvalid <= 0;
           m2_axi_wvalid <= 0;
         end
-        NOTIFY_MASTER: begin
+        NOTIFY_MASTER_FROM_SLAVE1: begin
+            //  if (m1_axi_awready && m1_axi_wready) begin
+                s0_axi_wready <= m1_axi_wready;
+                s0_axi_awready <= m1_axi_awready;
+                s0_axi_bvalid <= m1_axi_bvalid;
+                s0_axi_bresp <= m1_axi_bresp;
+                write_state = IDLE_WRITE;
+            //  end
+        end
+
+        NOTIFY_MASTER_FROM_SLAVE2: begin
           s0_axi_bvalid <= 0;  
-          m1_axi_bready <= 0;
           m2_axi_bready <= 0;
-          if(m1_axi_bresp == 0 && m1_axi_bvalid) begin
-            m1_axi_bready <= 1;
-            s0_axi_wready <= 1;
-            s0_axi_awready <= 1;
-            s0_axi_bvalid <= 1;
-            s0_axi_bresp <= 0;
-            write_state = IDLE_WRITE;
-          end 
           if(m2_axi_bresp== 0 && m2_axi_bvalid) begin
             m2_axi_bready <= 1;
             s0_axi_wready <= 1;
@@ -220,6 +219,7 @@ always @(posedge s0_axi_aclk) begin
             write_state = IDLE_WRITE;
           end 
         end
+        
         
       endcase
     end
