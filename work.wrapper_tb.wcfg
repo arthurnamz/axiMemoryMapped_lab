@@ -11,12 +11,12 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="504.001 ns"></ZoomEndTime>
-      <Cursor1Time time="35.000 ns"></Cursor1Time>
+      <ZoomEndTime time="2,977.788 ns"></ZoomEndTime>
+      <Cursor1Time time="305.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="181"></NameColumnWidth>
-      <ValueColumnWidth column_width="75"></ValueColumnWidth>
+      <ValueColumnWidth column_width="71"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="13" />
    <wvobject type="protoinst" fp_name="/wrapper_tb/ALL_WRAPPER_PORTS">
@@ -299,7 +299,6 @@
    <wvobject type="group" fp_name="group62">
       <obj_property name="label">slave1ports</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject type="logic" fp_name="/wrapper_tb/dut/adder_instiate/s1_axi_aclk">
          <obj_property name="ElementShortName">s1_axi_aclk</obj_property>
          <obj_property name="ObjectShortName">s1_axi_aclk</obj_property>

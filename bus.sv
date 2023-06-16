@@ -143,8 +143,8 @@ always @(posedge s0_axi_aclk) begin
         IDLE_WRITE: begin
           s0_axi_wready <= 1;
           s0_axi_awready <= 1;
+          s0_axi_bvalid <= 0;
           if (s0_axi_bready) begin
-            s0_axi_bvalid <= 0;
             s0_axi_wready <= 0;
             s0_axi_awready <= 0;
             write_state = VALID_WRITE_ADDR;
