@@ -139,14 +139,20 @@ begin
       begin
          case(s1_axi_araddr)
             8: begin
+               if(s1_axi_arready_tmp) begin
                   s1_axi_rvalid <= 1;
                   s1_axi_rresp <= 0;
                   s1_axi_rdata <= result_tmp[31:0];
                end
+               s1_axi_rvalid <= 0;
+               end
             12: begin
+               if(s1_axi_arready_tmp) begin
                   s1_axi_rvalid <= 1;
                   s1_axi_rresp <= 0;
                   s1_axi_rdata <= overflow_adder;
+               end
+               s1_axi_rvalid <= 0;
                end
             default: begin
                   // s1_axi_rdata <= 'bz; 
@@ -157,7 +163,8 @@ begin
       end
    else
 	  begin
-        //s1_axi_arready <= 1;
+        // s1_axi_arready <= 1;
+        s1_axi_rvalid <= 0;
 	     s1_axi_rdata <= 'bz; 
 	     
 	     
@@ -166,17 +173,17 @@ begin
 end
 
 
-// always@(posedge s1_axi_aclk)
-// begin
-//  if(s1_axi_aresetn == 1'b0) 
-//   begin
-//    s1_axi_arready_tmp <= 0;
-//   end 
-//  else
-//    if(s1_axi_arvalid && ~s1_axi_arready_tmp )
-//       s1_axi_arready_tmp <= 1'b1;    
-//    else
-//       s1_axi_arready_tmp <= 1'b0; 
-// end
+always@(posedge s1_axi_aclk)
+begin
+ if(s1_axi_aresetn == 1'b0) 
+  begin
+   s1_axi_arready_tmp <= 0;
+  end 
+ else
+   if(s1_axi_arvalid && ~s1_axi_arready_tmp )
+      s1_axi_arready_tmp <= 1'b1;    
+   else
+      s1_axi_arready_tmp <= 1'b0; 
+end
 
 endmodule
