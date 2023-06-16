@@ -10,15 +10,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="2,977.788 ns"></ZoomEndTime>
-      <Cursor1Time time="305.000 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
+      <ZoomEndTime time="5.741355 us"></ZoomEndTime>
+      <Cursor1Time time="0.855000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="181"></NameColumnWidth>
-      <ValueColumnWidth column_width="71"></ValueColumnWidth>
+      <NameColumnWidth column_width="178"></NameColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="13" />
+   <WVObjectSize size="14" />
    <wvobject type="protoinst" fp_name="/wrapper_tb/ALL_WRAPPER_PORTS">
       <obj_property name="children_use_element_short_name">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
@@ -31,7 +31,6 @@
       <obj_property name="CellHeight">36</obj_property>
       <obj_property name="ElementShortName">ALL_WRAPPER_PORTS</obj_property>
       <obj_property name="ObjectShortName">ALL_WRAPPER_PORTS</obj_property>
-      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject fp_name="divider31" type="divider">
       <obj_property name="label">Bus</obj_property>
@@ -282,6 +281,10 @@
             <obj_property name="ObjectShortName">m2_axi_rready</obj_property>
          </wvobject>
       </wvobject>
+   </wvobject>
+   <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/cached_slave1_read_data">
+      <obj_property name="ElementShortName">cached_slave1_read_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">cached_slave1_read_data[31:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/write_state">
       <obj_property name="ElementShortName">write_state[31:0]</obj_property>
