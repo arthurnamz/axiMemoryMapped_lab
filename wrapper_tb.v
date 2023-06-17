@@ -108,17 +108,17 @@ module wrapper_tb;
 /////// read
     #230;
      s3_axi_rready = 0;
-    #250;
+    #240;
     s3_axi_rready = 1;
     s3_axi_araddr = 8;
     s3_axi_arvalid = 0;
-    #20;
+    #250;
     s3_axi_rready = 0;
-    #20;
+    #270;
     s3_axi_rready = 1;
     s3_axi_araddr = 12;
     s3_axi_arvalid = 0;
-    #20;
+    #290;
     s3_axi_rready = 0;
     
     

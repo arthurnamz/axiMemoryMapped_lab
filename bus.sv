@@ -287,7 +287,9 @@ always @(posedge s0_axi_aclk) begin
               s0_axi_rdata <= cached_slave1_read_data;
               s0_axi_rvalid <= m1_axi_rvalid;
               s0_axi_rresp <= m1_axi_rresp;
+              if(m1_axi_arready) begin
               read_state = IDLE_READ; 
+              end
             if(m2_axi_rresp == 0 ) begin
               s0_axi_rdata <= cached_slave2_read_data;
               s0_axi_rvalid <= m2_axi_rvalid;
