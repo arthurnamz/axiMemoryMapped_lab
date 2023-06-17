@@ -160,7 +160,6 @@ begin
         // s1_axi_arready <= 1;
         s1_axi_rvalid <= 0;
         s1_axi_rresp <= 0;
-	     s1_axi_rdata <= 'bz; 
 	     
 	     
 	  end
