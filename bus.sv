@@ -284,9 +284,9 @@ always @(posedge s0_axi_aclk) begin
           
         end
         WRITE_TO_MASTER: begin 
-                     
+                       
               if(m1_axi_arready) begin
-                s0_axi_rdata <= cached_slave1_read_data;  
+                s0_axi_rdata <= cached_slave1_read_data; 
                 s0_axi_rvalid <= 1;
                 s0_axi_rresp <= 0;
                 read_state = IDLE_READ; 

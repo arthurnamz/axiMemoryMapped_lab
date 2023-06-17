@@ -167,17 +167,17 @@ begin
 end
 
 
-// always@(posedge s1_axi_aclk)
-// begin
-//  if(s1_axi_aresetn == 1'b0) 
-//   begin
-//    s1_axi_arready_tmp <= 0;
-//   end 
-//  else
-//    if(s1_axi_arvalid && ~s1_axi_arready_tmp )
-//       s1_axi_arready_tmp <= 1'b1;    
-//    else
-//       s1_axi_arready_tmp <= 1'b0; 
-//  end
+always@(posedge s1_axi_aclk)
+begin
+ if(s1_axi_aresetn == 1'b0) 
+  begin
+   s1_axi_arready_tmp <= 0;
+  end 
+ else
+   if(s1_axi_arvalid && ~s1_axi_arready_tmp )
+      s1_axi_arready_tmp <= 1'b1;    
+   else
+      s1_axi_arready_tmp <= 1'b0; 
+ end
 
 endmodule
