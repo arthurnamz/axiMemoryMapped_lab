@@ -150,7 +150,7 @@ begin
                end
             default: begin
                   // s1_axi_rdata <= 'bz; 
-                  // s1_axi_rvalid <= 0;
+                  //  s1_axi_rvalid <= 0;
                   s1_axi_rresp <= 0;
                end
          endcase
@@ -158,7 +158,7 @@ begin
    else
 	  begin
         // s1_axi_arready <= 1;
-      //   s1_axi_rvalid <= 0;
+         // s1_axi_rvalid <= 0;
         s1_axi_rresp <= 0;
 	     
 	     
@@ -167,17 +167,17 @@ begin
 end
 
 
-always@(posedge s1_axi_aclk)
-begin
- if(s1_axi_aresetn == 1'b0) 
-  begin
-   s1_axi_arready_tmp <= 0;
-  end 
- else
-   if(s1_axi_rvalid )
-      s1_axi_arready_tmp <= 1'b0;    
-   else
-      s1_axi_arready_tmp <= 1'b1; 
- end
+// always@(posedge s1_axi_aclk)
+// begin
+//  if(s1_axi_aresetn == 1'b0) 
+//   begin
+//    s1_axi_arready_tmp <= 0;
+//   end 
+//  else
+//    if(s1_axi_rvalid )
+//       s1_axi_arready_tmp <= 1'b0;    
+//    else
+//       s1_axi_arready_tmp <= 1'b1; 
+//  end
 
 endmodule
