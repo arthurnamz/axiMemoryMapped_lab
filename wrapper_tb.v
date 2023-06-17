@@ -98,12 +98,14 @@ module wrapper_tb;
     s3_axi_wdata = 34; // 32 bits
     s3_axi_wstrb = 15; // 4 bits
     s3_axi_bready = 1;   // 1 bit
-     #130;
+     #10;
     s3_axi_awvalid = 0;      // 1 bit
     s3_axi_wvalid = 0; 
     s3_axi_bready = 0; 
-     #30;
 
+
+
+/////// read
     #230;
      s3_axi_rready = 0;
     #250;
