@@ -11,14 +11,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="4,485.001 ns"></ZoomEndTime>
-      <Cursor1Time time="165.000 ns"></Cursor1Time>
+      <ZoomEndTime time="4,445.001 ns"></ZoomEndTime>
+      <Cursor1Time time="315.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="166"></NameColumnWidth>
+      <NameColumnWidth column_width="158"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="14" />
+   <WVObjectSize size="18" />
    <wvobject type="protoinst" fp_name="/wrapper_tb/ALL_WRAPPER_PORTS">
       <obj_property name="children_use_element_short_name">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_ENUM_TRANSACTION</obj_property>
@@ -43,6 +43,7 @@
       <wvobject type="group" fp_name="group224">
          <obj_property name="label">slave interface</obj_property>
          <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
          <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_aclk">
             <obj_property name="ElementShortName">s0_axi_aclk</obj_property>
             <obj_property name="ObjectShortName">s0_axi_aclk</obj_property>
@@ -95,6 +96,7 @@
          <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_araddr">
             <obj_property name="ElementShortName">s0_axi_araddr[7:0]</obj_property>
             <obj_property name="ObjectShortName">s0_axi_araddr[7:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
          </wvobject>
          <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/s0_axi_arvalid">
             <obj_property name="ElementShortName">s0_axi_arvalid</obj_property>
@@ -205,6 +207,7 @@
       <wvobject type="group" fp_name="group92">
          <obj_property name="label">Master2 Interface</obj_property>
          <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
          <wvobject type="logic" fp_name="/wrapper_tb/dut/bus_instiate/m2_axi_aclk">
             <obj_property name="ElementShortName">m2_axi_aclk</obj_property>
             <obj_property name="ObjectShortName">m2_axi_aclk</obj_property>
@@ -228,6 +231,7 @@
          <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/m2_axi_wdata">
             <obj_property name="ElementShortName">m2_axi_wdata[31:0]</obj_property>
             <obj_property name="ObjectShortName">m2_axi_wdata[31:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
          </wvobject>
          <wvobject type="array" fp_name="/wrapper_tb/dut/bus_instiate/m2_axi_wstrb">
             <obj_property name="ElementShortName">m2_axi_wstrb[4:0]</obj_property>
@@ -482,5 +486,25 @@
          <obj_property name="ElementShortName">s2_axi_rready</obj_property>
          <obj_property name="ObjectShortName">s2_axi_rready</obj_property>
       </wvobject>
+   </wvobject>
+   <wvobject type="array" fp_name="/wrapper_tb/dut/multiplier_instiate/operandA">
+      <obj_property name="ElementShortName">operandA[31:0]</obj_property>
+      <obj_property name="ObjectShortName">operandA[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/wrapper_tb/dut/multiplier_instiate/operandB">
+      <obj_property name="ElementShortName">operandB[31:0]</obj_property>
+      <obj_property name="ObjectShortName">operandB[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/wrapper_tb/dut/multiplier_instiate/result_tmp">
+      <obj_property name="ElementShortName">result_tmp[63:0]</obj_property>
+      <obj_property name="ObjectShortName">result_tmp[63:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/wrapper_tb/dut/multiplier_instiate/overflow_adder">
+      <obj_property name="ElementShortName">overflow_adder[31:0]</obj_property>
+      <obj_property name="ObjectShortName">overflow_adder[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>

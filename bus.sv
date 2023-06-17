@@ -188,10 +188,10 @@ always @(posedge s0_axi_aclk) begin
 
         WRITE_TO_SLAVE2: begin
             m2_axi_awaddr <= cached_slave2_write_address;
-            m2_axi_awvalid <= cached_slave1_write_valid_address;
+            m2_axi_awvalid <= 1;
             m2_axi_wdata <= cached_slave2_write_data;
             m2_axi_wstrb <= cached_slave2_wstrb;
-            m2_axi_wvalid <= cached_slave2_write_valid_data;
+            m2_axi_wvalid <= 1;
             m2_axi_bready <= s0_axi_bready;
             write_state = NOTIFY_MASTER_FROM_SLAVE2;
           end

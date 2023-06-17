@@ -57,7 +57,7 @@ begin
 	else if(s2_axi_awvalid == 1 && s2_axi_wvalid == 1 )
 	  begin
 	     case(s2_axi_awaddr)
-		   0:
+		   16:
 		     begin
             s2_axi_awready <= 0;
             s2_axi_wready <= 0;
@@ -78,7 +78,7 @@ begin
                   end
               
 			 end  
-		   4: 
+		   20: 
 		     begin
             s2_axi_awready <= 0;
             s2_axi_wready <= 0;
@@ -138,12 +138,12 @@ begin
 	else if(s2_axi_rready == 1 && s2_axi_arvalid == 1)
       begin
          case(s2_axi_araddr)
-            8: begin
+            24: begin
                   s2_axi_rvalid <= 1;
                   s2_axi_rresp <= 0;
                   s2_axi_rdata <= result_tmp[31:0];
                end
-            12: begin
+            28: begin
                   s2_axi_rvalid <= 1;
                   s2_axi_rresp <= 0;
                   s2_axi_rdata <= overflow_adder;
