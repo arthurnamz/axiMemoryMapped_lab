@@ -42,8 +42,8 @@ wire [DATA_WIDTH-1:0] overflow_adder;
 reg [1:0] operandCounters = 0;
 reg s2_axi_arready_tmp;
 
-//assign s2_axi_arready = s2_axi_arready_tmp;
- assign s2_axi_arready = 1'b1;
+assign s2_axi_arready = s2_axi_arready_tmp;
+ //assign s2_axi_arready = 1'b1;
 
 //getting data from the master
 always@(posedge s2_axi_aclk)
@@ -149,16 +149,17 @@ begin
                   s2_axi_rdata <= overflow_adder;
                end
             default: begin
-                  s2_axi_rdata <= 'bz; 
-                  s2_axi_rvalid <= 0;
+                  // s2_axi_rdata <= 'bz; 
+                  // s2_axi_rvalid <= 0;
                   s2_axi_rresp <= 0;
                end
          endcase
       end
    else
 	  begin
-        //s2_axi_arready <= 1;
-	     s2_axi_rdata <= 'bz; 
+        // s2_axi_arready <= 1;
+      //   s2_axi_rvalid <= 0;
+        s2_axi_rresp <= 0;
 	     
 	     
 	  end
@@ -177,6 +178,6 @@ begin
       s2_axi_arready_tmp <= 1'b1;    
    else
       s2_axi_arready_tmp <= 1'b0; 
-end
+ end
 
 endmodule
